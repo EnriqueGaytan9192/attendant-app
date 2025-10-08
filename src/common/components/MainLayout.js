@@ -4,7 +4,6 @@ import { StyleSheet, View } from "react-native";
 import routes from "../../presentation/navigation/routes";
 import CustomHeader from "./CustomHeader";
 
-
 const MainLayout = ({ routeKey }) => {
     const navigation = useNavigation();
     const [isModalVisible, setIsModalVisible] = useState(false);

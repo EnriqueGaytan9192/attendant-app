@@ -1,21 +1,22 @@
 import { useRouter } from "expo-router";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
+import { useSelector } from "react-redux";
 
 export default function Index() {
-    const [isLoading, setIsLoading] = useState(true);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const router = useRouter();
+    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
+    console.log("isAuthenticated index: ", isAuthenticated);
 
     useEffect(() => {
-        setTimeout(() => {
-            {/*if (isAuthenticated) {
-                router.replace('/drawer/home');
-            } else {
-                router.replace('/login');
-            }*/}
+        if (isAuthenticated) {
+            console.log('/drawer/home');
+            router.replace('/drawer/home');
+        } else {
+            console.log('/login');
             router.replace('/login');
-        }, 5000);
+        }
     }, [isAuthenticated]);
 
     return (
