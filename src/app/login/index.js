@@ -1,4 +1,5 @@
-import LoginScreen from "../../presentation/screens/login/components/LoginScreen";
+import { LoginScreen } from "../../presentation/screens/login";
+
 
 const Login = () => {
     

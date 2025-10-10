@@ -6,7 +6,7 @@
     "orientation": "default",
     "icon": "./src/assets/image/icon.png",
     "scheme": "attendantapp",
-    "userInterfaceStyle": "automatic",
+    "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true

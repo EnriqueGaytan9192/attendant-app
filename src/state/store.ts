@@ -8,7 +8,7 @@ import { authReducer } from './slices';
 const persistConfig = {
     key: 'root',
     storage: AsyncStorage,
-    whitelist: ['auth'], // Solo el estado de "auth" será persistido
+    whitelist: [''], // Solo el estado de "auth" será persistido
 };
 
 // Combinar reducers

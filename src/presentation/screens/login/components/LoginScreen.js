@@ -1,96 +1,121 @@
-import { useState } from 'react';
-import { Image, StyleSheet, View } from 'react-native';
-import { Text, TextInput } from 'react-native-paper';
+import { Dimensions, Image, Keyboard, ScrollView, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import { Button, Divider, Text, TextInput } from "react-native-paper";
+import useLoginHook from "../hooks/useLoginHook";
+import stylesLogin from "../styles/stylesLogin";
 
-export default function LoginScreen({ navigation }) {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [passwordVisible, setPasswordVisible] = useState(true);
+const LoginScreen = () => {
+    const { deviceId } = useLoginHook();
 
-    return(
-        <View style = { [styles.container]}>
-            {/* Sección izquierda */}
-            <View style = { [styles.leftSection, {backgroundColor: '"ffffff'}]}>
-                    <Image
-                        source={require('../../../../assets/images/logo_parking_go.png')}
-                        style = {[styles.logo, {marginTop: 35}]}
-                        resizeMode="contain"
-                    />
+    const screenHeight = Dimensions.get("window").height;
+    const screenWidth = Dimensions.get("window").width;
 
-                    <Image
-                        source={require('../../../../assets/images/footer_green.png')}
-                        style={styles.footerGreen}
-                        resizeMode="contain"
-                    />
-            </View>
+    return (
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View style={{ flex: 1 }}>
+                <ScrollView
+                    contentContainerStyle={{ flexGrow: 1 }}
+                    keyboardShouldPersistTaps="handled"
+                >
+                    <View style={stylesLogin.major}>
+                        <Text style={stylesLogin.device}>{deviceId}</Text>
+                        <View style={stylesLogin.container}>
+                            <View style={stylesLogin.leftSection}>
+                                <Image
+                                    source={require('../../../../assets/images/logoParkingGo.png')}
+                                    style={stylesLogin.logo}
+                                    resizeMode="contain"
+                                />
+                            </View>
 
-            {/* Línea verde divisoria */}
-            <View style = { styles.divider } />
+                            <View style={stylesLogin.divider} />
 
-            {/* Sección derecha */}
-            <View style = { styles.rightSection }>
-
-                <View>
-                    <Text>Iniciar Sesión</Text>
-
-                    <TextInput
-                        label="Nombre de Usuario"
-                        value={email}
-                        onChangeText={setEmail}
-                        mode="outlined"
-                        style={styles.input}
-                        keyboardType="default"
-                        left={
-                            <TextInput.Icon
-                                icon={() => (
-                                    <Image
-                                        source={require('../../../../assets/icons/lock_open.png')}
-                                    />
-                                )}
+                            <View style={stylesLogin.rightSection}>
+                                <Text style={stylesLogin.title}>
+                                    Iniciar Sesión
+                                </Text>
+                                <TextInput
+                                    label="Nombre de Usuario *"
+                                    mode="outlined"
+                                    theme={{
+                                        colors: {
+                                            outline: "#E5E5E5",
+                                            primary: "#90D400",
+                                        }
+                                    }}
+                                    style={stylesLogin.input}
+                                    keyboardType="default"
+                                    left={
+                                        <TextInput.Icon
+                                            icon={() => (
+                                                <Image
+                                                    source={require("../../../../assets/icons/person.png")}
+                                                    style={stylesLogin.iconInput}
+                                                />
+                                            )}
+                                        />
+                                    }
+                                />
+                                <TextInput
+                                    label="Contraseña *"
+                                    mode="outlined"
+                                    theme={{
+                                        colors: {
+                                            outline: "#E5E5E5",
+                                            primary: "#90D400",
+                                        }
+                                    }}
+                                    style={stylesLogin.input}
+                                    keyboardType="visible-password"
+                                    left={
+                                        <TextInput.Icon
+                                            icon={() => (
+                                                <Image
+                                                    source={require("../../../../assets/icons/lock.png")}
+                                                    style={stylesLogin.iconInput}
+                                                />
+                                            )}
+                                        />
+                                    }
+                                    right={
+                                        <TextInput.Icon
+                                            icon={() => (
+                                                <Image
+                                                    source={require("../../../../assets/icons/visibility_off.png")}
+                                                    style={stylesLogin.iconInput}
+                                                />
+                                            )}
+                                        />
+                                    }
+                                />
+                                <Button mode="contained" style={stylesLogin.button}>
+                                    Iniciar Sesión
+                                </Button>
+                                <Divider style={stylesLogin.dividerForm} />
+                                <TouchableOpacity>
+                                    <Text style={stylesLogin.registerLink}>
+                                        ¿Olvidaste tu contraseña?
+                                    </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity>
+                                    <Text style={stylesLogin.registerLink}>
+                                        ¿Olvidaste tu usuario?
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                        <View>
+                            <Image
+                                source={require('../../../../assets/images/footerParkingGo.png')}
+                                style={[stylesLogin.footer, { width: screenWidth }]}
+                                resizeMode="contain"
                             />
-                        }
-                    />
-                    <TextInput
-                        label="Correo Electrónico"
-                        value={email}
-                        onChangeText={setEmail}
-                        mode="outlined"
-                        style={styles.input}
-                        keyboardType="email-address"
-                    />
-                </View>
-
-                <Image
-                    source={require('../../../../assets/images/footer_blue.png')}
-                    resizeMode="contain"
-                />
+                            <Text style={{ alignSelf: 'flex-end', flex: 1 }}>Versión 1.0.1</Text>
+                        </View>
+                    </View>
+                </ScrollView>
             </View>
-        </View>
-    );
+        </TouchableWithoutFeedback>
+    )
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexDirection: 'row',
-    },
-    leftSection: {
-        flex: 1,
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        backgroundColor: '#ffffff',
-    },
-    divider: {
-        width: 2,
-        backgroundColor: '#60c51c',
-    },
-    logo: {
-        width: '40%',
-        height: '50%',
-    },
-    rightSection: {
-        flex: 1,
-        padding: 20,
-        justifyContent: 'center',
-    },
-});
+export default LoginScreen;
