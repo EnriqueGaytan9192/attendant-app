@@ -4,10 +4,10 @@ import useLoginHook from "../hooks/useLoginHook";
 import stylesLogin from "../styles/stylesLogin";
 
 const LoginScreen = () => {
-    const { deviceId } = useLoginHook();
-
     const screenHeight = Dimensions.get("window").height;
     const screenWidth = Dimensions.get("window").width;
+
+    const { deviceId, passwordVisible, setPasswordVisible, passwordModal, userModal } = useLoginHook();
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -65,7 +65,8 @@ const LoginScreen = () => {
                                         }
                                     }}
                                     style={stylesLogin.input}
-                                    keyboardType="visible-password"
+                                    keyboardType="default"
+                                    secureTextEntry={passwordVisible}
                                     left={
                                         <TextInput.Icon
                                             icon={() => (
@@ -78,6 +79,7 @@ const LoginScreen = () => {
                                     }
                                     right={
                                         <TextInput.Icon
+                                            onPress={() => setPasswordVisible(!passwordVisible)}
                                             icon={() => (
                                                 <Image
                                                     source={require("../../../../assets/icons/visibility_off.png")}
@@ -87,16 +89,16 @@ const LoginScreen = () => {
                                         />
                                     }
                                 />
-                                <Button mode="contained" style={stylesLogin.button}>
+                                <Button mode="contained" style={stylesLogin.button} onPress={() => { }}>
                                     Iniciar Sesión
                                 </Button>
                                 <Divider style={stylesLogin.dividerForm} />
-                                <TouchableOpacity>
+                                <TouchableOpacity onPress={passwordModal}>
                                     <Text style={stylesLogin.registerLink}>
                                         ¿Olvidaste tu contraseña?
                                     </Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity>
+                                <TouchableOpacity onPress={userModal}>
                                     <Text style={stylesLogin.registerLink}>
                                         ¿Olvidaste tu usuario?
                                     </Text>

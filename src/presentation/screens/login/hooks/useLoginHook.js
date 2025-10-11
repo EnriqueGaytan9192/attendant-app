@@ -1,10 +1,14 @@
 import * as Application from "expo-application";
 import { useEffect, useState } from "react";
 import { Platform } from "react-native";
+import { useDispatch } from "react-redux";
+import { showForgotPasswordModal, showForgotUsernameModal } from "../../../../state/slices/authSlice";
 
 const useLoginHook = () => {
 
     const [deviceId, setDeviceId] = useState('Cargando...');
+    const [passwordVisible, setPasswordVisible] = useState(true);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const getDeviceId = async () => {
@@ -30,8 +34,16 @@ const useLoginHook = () => {
         getDeviceId();
     }, []);
 
+    const passwordModal = () => dispatch(showForgotPasswordModal(true));
+    const userModal = () => dispatch(showForgotUsernameModal(true));
+
+
     return{
         deviceId,
+        passwordVisible,
+        setPasswordVisible,
+        passwordModal,
+        userModal,
     };
 };
 
