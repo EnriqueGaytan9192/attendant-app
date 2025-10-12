@@ -111,7 +111,7 @@ const LoginScreen = () => {
                                 style={[stylesLogin.footer, { width: screenWidth }]}
                                 resizeMode="contain"
                             />
-                            <Text style={{ alignSelf: 'flex-end', flex: 1 }}>Versión 1.0.1</Text>
+                            <Text style={{ alignSelf: 'flex-end', flex: 1, color: "#000", marginRight: 10 }}>Versión 1.0.2</Text>
                         </View>
                     </View>
                 </ScrollView>

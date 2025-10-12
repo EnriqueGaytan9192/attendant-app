@@ -25,12 +25,47 @@ const styleForgotPassword = StyleSheet.create({
     title: {
         fontSize: 20,
         marginLeft: 15,
+        //color: '#272727',
         //borderColor: '#d80000ff',
         //borderWidth: 2,
     },
     divider: {
         color: "#E5E5E5",
+        //borderColor: '#d80000ff',
+        //borderWidth: 2,
     },
+    textModal: {
+        fontSize: 16,
+        color: '#00000099',
+        marginTop: 40,
+        marginBlockEnd: 20,
+    },
+    input: {
+        width: '100%',
+        backgroundColor: "#FFFFFF",
+        fontSize: 16,
+    },
+    iconInput: {
+        width: 28,
+        height: 28,
+    },
+    buttonContent: {
+        //borderColor: '#d80000ff',
+        //borderWidth: 2,
+        flexDirection: "row",
+        justifyContent: 'flex-end',
+        marginTop: 37,
+    },
+    cancelModal: {
+        borderRadius: 6,
+        borderColor: "#8C8C8C",
+        backgroundColor: "#FFFFFF",
+    },
+    saveModal: {
+        borderRadius: 6,
+        backgroundColor: "#80C300",
+        marginLeft: 17,
+    }
 })
 
 export default styleForgotPassword;
