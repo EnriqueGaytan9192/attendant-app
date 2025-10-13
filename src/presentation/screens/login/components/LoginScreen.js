@@ -1,14 +1,29 @@
 import { Dimensions, Image, Keyboard, ScrollView, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import * as Animatable from 'react-native-animatable';
 import { Button, Divider, Text, TextInput } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
+import CustomAlert from "../../../../common/components/CustomAlert";
 import useLoginHook from "../hooks/useLoginHook";
 import stylesLogin from "../styles/stylesLogin";
 
 const LoginScreen = () => {
     const screenHeight = Dimensions.get("window").height;
     const screenWidth = Dimensions.get("window").width;
-
-    const { deviceId, passwordVisible, setPasswordVisible, passwordModal, userModal } = useLoginHook();
+    const { 
+        form,
+        deviceId,
+        passwordVisible,
+        setPasswordVisible,
+        passwordModal, 
+        userModal,
+        emailRef, 
+        passwordRef, 
+        showErrors, 
+        showSnackbar,
+        setShowSnackbar,
+        handleLogin,
+        handleDataForm
+    } = useLoginHook();
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -34,63 +49,77 @@ const LoginScreen = () => {
                                 <Text style={stylesLogin.title}>
                                     Iniciar Sesión
                                 </Text>
-                                <TextInput
-                                    label="Nombre de Usuario *"
-                                    mode="outlined"
-                                    theme={{
-                                        colors: {
-                                            outline: "#E5E5E5",
-                                            primary: "#90D400",
+                                <Animatable.View style={{ width: '70%', marginBottom: 15 }} ref={emailRef}>
+                                    <TextInput
+                                        label="Nombre de Usuario *"
+                                        value={form.email}
+                                        onChangeText={(text) =>{
+                                            setShowSnackbar(false);
+                                            handleDataForm('email', text);
+                                        }}
+                                        mode="outlined"
+                                        theme={{
+                                            colors: {
+                                                outline: showErrors && !form.email ? 'red' : "#E5E5E5",
+                                                primary: "#90D400",
+                                            }
+                                        }}
+                                        style={{ backgroundColor: "#FFFFFF", fontSize: 16 }}
+                                        keyboardType="default"
+                                        left={
+                                            <TextInput.Icon
+                                                icon={() => (
+                                                    <Image
+                                                        source={require("../../../../assets/icons/person.png")}
+                                                        style={stylesLogin.iconInput}
+                                                    />
+                                                )}
+                                            />
                                         }
-                                    }}
-                                    style={stylesLogin.input}
-                                    keyboardType="default"
-                                    left={
-                                        <TextInput.Icon
-                                            icon={() => (
-                                                <Image
-                                                    source={require("../../../../assets/icons/person.png")}
-                                                    style={stylesLogin.iconInput}
-                                                />
-                                            )}
-                                        />
-                                    }
-                                />
-                                <TextInput
-                                    label="Contraseña *"
-                                    mode="outlined"
-                                    theme={{
-                                        colors: {
-                                            outline: "#E5E5E5",
-                                            primary: "#90D400",
+                                    />
+                                </Animatable.View>
+                                <Animatable.View style={{ width: '70%', marginBottom: 15 }} ref={passwordRef}>
+                                    <TextInput
+                                        label="Contraseña *"
+                                        value={form.password}
+                                        onChangeText={(text) =>{
+                                            setShowSnackbar(false);
+                                            handleDataForm('password', text);
+                                        }}
+                                        mode="outlined"
+                                        theme={{
+                                            colors: {
+                                                outline: showErrors && !form.password ? 'red' : "#E5E5E5",
+                                                primary: "#90D400",
+                                            }
+                                        }}
+                                        style={{ backgroundColor: "#FFFFFF", fontSize: 16 }}
+                                        keyboardType="default"
+                                        secureTextEntry={passwordVisible}
+                                        left={
+                                            <TextInput.Icon
+                                                icon={() => (
+                                                    <Image
+                                                        source={require("../../../../assets/icons/lock.png")}
+                                                        style={stylesLogin.iconInput}
+                                                    />
+                                                )}
+                                            />
                                         }
-                                    }}
-                                    style={stylesLogin.input}
-                                    keyboardType="default"
-                                    secureTextEntry={passwordVisible}
-                                    left={
-                                        <TextInput.Icon
-                                            icon={() => (
-                                                <Image
-                                                    source={require("../../../../assets/icons/lock.png")}
-                                                    style={stylesLogin.iconInput}
-                                                />
-                                            )}
-                                        />
-                                    }
-                                    right={
-                                        <TextInput.Icon
-                                            onPress={() => setPasswordVisible(!passwordVisible)}
-                                            icon={() => (
-                                                <Image
-                                                    source={require("../../../../assets/icons/visibility_off.png")}
-                                                    style={stylesLogin.iconInput}
-                                                />
-                                            )}
-                                        />
-                                    }
-                                />
-                                <Button mode="contained" style={stylesLogin.button} onPress={() => { }}>
+                                        right={
+                                            <TextInput.Icon
+                                                onPress={() => setPasswordVisible(!passwordVisible)}
+                                                icon={() => (
+                                                    <Image
+                                                        source={require("../../../../assets/icons/visibility_off.png")}
+                                                        style={stylesLogin.iconInput}
+                                                    />
+                                                )}
+                                            />
+                                        }
+                                    />
+                                </Animatable.View>
+                                <Button mode="contained" style={stylesLogin.button} onPress={handleLogin}>
                                     Iniciar Sesión
                                 </Button>
                                 <Divider style={stylesLogin.dividerForm} />
@@ -112,12 +141,12 @@ const LoginScreen = () => {
                                 style={[stylesLogin.footer, { width: screenWidth }]}
                                 resizeMode="contain"
                             />
-                            <Text 
-                                style={{ 
+                            <Text
+                                style={{
                                     alignSelf: 'flex-end',
                                     flex: 1,
-                                    color: "#000", 
-                                    marginRight: 10 
+                                    color: "#000",
+                                    marginRight: 10
                                 }}
                             >
                                 Versión 1.0.4
@@ -125,6 +154,12 @@ const LoginScreen = () => {
                         </View>
                     </View>
                 </ScrollView>
+                <CustomAlert
+                    visible={showSnackbar}
+                    onDismiss={() => setShowSnackbar(false)}
+                    type='error'
+                    message="Por favor completa todos los campos obligatorios."
+                />
             </SafeAreaView>
         </TouchableWithoutFeedback>
     )

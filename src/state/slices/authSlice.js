@@ -5,6 +5,10 @@ const initialState = {
     isAuthenticated: false,
     isModalOneVisible: false,
     isModalTwoVisible: false,
+    form: {
+        email: '',
+        password: '',
+    }
 }
 
 // Slice
@@ -23,7 +27,15 @@ const authSlice = createSlice({
         },
         showForgotUsernameModal(state, action) {
             state.isModalTwoVisible = action.payload;
-        }
+        },
+        setDataForm(state, action) {
+            const { name, value } = action.payload;
+            if (!name) return;
+            state.form[name] = value;
+        },
+        changeValueForm(state, action) {
+            state.form[action.payload.name] = action.payload.value;
+        },
     },
 });
 
@@ -33,6 +45,8 @@ export const {
     logout,
     showForgotPasswordModal,
     showForgotUsernameModal,
+    setDataForm,
+    changeValueForm,
 } = authSlice.actions;
 
 // Exportar el reducer

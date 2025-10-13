@@ -1,14 +1,19 @@
 import * as Application from "expo-application";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Platform } from "react-native";
 import { useDispatch } from "react-redux";
-import { showForgotPasswordModal, showForgotUsernameModal } from "../../../../state/slices/authSlice";
+import { useAppSelector } from '../../../../state/hooks';
+import { setDataForm, showForgotPasswordModal, showForgotUsernameModal } from "../../../../state/slices/authSlice";
 
 const useLoginHook = () => {
-
+    const dispatch = useDispatch();
+    const form = useAppSelector((state) => state.auth.form);
     const [deviceId, setDeviceId] = useState('Cargando...');
     const [passwordVisible, setPasswordVisible] = useState(true);
-    const dispatch = useDispatch();
+    const emailRef = useRef(null);
+    const passwordRef = useRef(null);
+    const [showSnackbar, setShowSnackbar] = useState(false);
+    const [showErrors, setShowErrors] = useState(false);
 
     useEffect(() => {
         const getDeviceId = async () => {
@@ -37,13 +42,44 @@ const useLoginHook = () => {
     const passwordModal = () => dispatch(showForgotPasswordModal(true));
     const userModal = () => dispatch(showForgotUsernameModal(true));
 
+    const handleDataForm = (name, value) => {
+        dispatch(setDataForm({name, value}))
+    };
+
+    const handleLogin = () => {
+        const isEmailEmpty = form.email.trim() === '';
+        const isPasswordEmpty = form.password.trim() === '';
+
+        if (isEmailEmpty || isPasswordEmpty) {
+            setShowErrors(true);
+            setShowSnackbar(true);
+
+            if (isEmailEmpty && emailRef.current?.shake) {
+                emailRef.current.shake(600);
+            }
+
+            if (isPasswordEmpty && passwordRef.current?.shake) {
+                passwordRef.current.shake(600);
+            }
+
+            return;
+        }
+    };
 
     return{
+        form,
         deviceId,
         passwordVisible,
         setPasswordVisible,
         passwordModal,
         userModal,
+        emailRef,
+        passwordRef,
+        showErrors,
+        showSnackbar,
+        setShowSnackbar,
+        handleLogin,
+        handleDataForm
     };
 };
 
