@@ -47,8 +47,8 @@ const stylesLogin = StyleSheet.create({
         marginLeft: 260,
     },
     logo: {
-        width: '80%',
-        height: 200,
+        width: 225,
+        height: 180,
     },
     title: {
         fontSize: 30,
@@ -85,7 +85,7 @@ const stylesLogin = StyleSheet.create({
         color: "#005A6D",
     },
     footer: {
-        paddingHorizontal: 80,
+        //paddingHorizontal: 80,
         paddingVertical: 111,
         width: "100%",
         alignSelf: "center",

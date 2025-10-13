@@ -40,7 +40,7 @@ const Login = () => {
     };
     const handleDismissTwoModal = () => {
         if (keyboardOpen) {
-            keyboardOpen.dismiss();
+            Keyboard.dismiss();
         } else {
             dispatch(showForgotUsernameModal(false));
         }

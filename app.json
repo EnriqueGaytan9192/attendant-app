@@ -3,7 +3,7 @@
     "name": "Attendant",
     "slug": "attendant-app",
     "version": "1.0.0",
-    "orientation": "default",
+    "orientation": "landscape",
     "icon": "./src/assets/image/icon.png",
     "scheme": "attendantapp",
     "userInterfaceStyle": "light",
@@ -55,7 +55,9 @@
       "policy": "appVersion"
     },
     "updates": {
-      "url": "https://u.expo.dev/bfc3a7b1-a5e3-4fcb-8237-082dcb2e81a4"
+      "url": "https://u.expo.dev/bfc3a7b1-a5e3-4fcb-8237-082dcb2e81a4",
+      "enabled" : true,
+      "fallbackToCacheTimeout": 0
     }
   }
 }

@@ -1,5 +1,6 @@
 import { Dimensions, Image, Keyboard, ScrollView, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import { Button, Divider, Text, TextInput } from "react-native-paper";
+import { SafeAreaView } from "react-native-safe-area-context";
 import useLoginHook from "../hooks/useLoginHook";
 import stylesLogin from "../styles/stylesLogin";
 
@@ -11,7 +12,7 @@ const LoginScreen = () => {
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <View style={{ flex: 1 }}>
+            <SafeAreaView style={{ flex: 1 }}>
                 <ScrollView
                     contentContainerStyle={{ flexGrow: 1 }}
                     keyboardShouldPersistTaps="handled"
@@ -111,11 +112,20 @@ const LoginScreen = () => {
                                 style={[stylesLogin.footer, { width: screenWidth }]}
                                 resizeMode="contain"
                             />
-                            <Text style={{ alignSelf: 'flex-end', flex: 1, color: "#000", marginRight: 10 }}>Versión 1.0.2</Text>
+                            <Text 
+                                style={{ 
+                                    alignSelf: 'flex-end',
+                                    flex: 1,
+                                    color: "#000", 
+                                    marginRight: 10 
+                                }}
+                            >
+                                Versión 1.0.4
+                            </Text>
                         </View>
                     </View>
                 </ScrollView>
-            </View>
+            </SafeAreaView>
         </TouchableWithoutFeedback>
     )
 }
