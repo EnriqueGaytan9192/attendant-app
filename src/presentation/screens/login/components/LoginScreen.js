@@ -24,7 +24,17 @@ const LoginScreen = () => {
         showSnackbar,
         setShowSnackbar,
         handleLogin,
-        handleDataForm
+        handleDataForm,
+        alertNetworkVisible,
+        alertNetworkMessage,
+        alertNetworkType,
+        setAlertNetworkVisible,
+        reconnectedAlertVisible,
+        setReconnectedAlertVisible,
+        reconnectedMessage,
+        unstableNetworkVisible,
+        setUnstableNetworkVisible,
+        unstableMessage,
     } = useLoginHook();
     const [showNoSpacesAlertUsername, setShowNoSpacesAlertUsername] = useState(false);
     const [showNoSpacesAlertPassword, setShowNoSpacesAlertPassword] = useState(false);
@@ -169,7 +179,7 @@ const LoginScreen = () => {
                                     marginRight: 10
                                 }}
                             >
-                                Versión 1.0.6
+                                Versión 1.0.8.1
                             </Text>
                         </View>
                     </View>
@@ -192,6 +202,30 @@ const LoginScreen = () => {
                     type='warning'
                     message="La contraseña no puede contener espacios."
                 />
+                {reconnectedAlertVisible ? (
+                    <CustomAlert
+                        visible={true}
+                        onDismiss={() => setReconnectedAlertVisible(false)}
+                        type="success"
+                        message={reconnectedMessage}
+                    />
+                ) : (
+                    <>
+                        <CustomAlert
+                            visible={unstableNetworkVisible}
+                            onDismiss={() => setUnstableNetworkVisible(false)}
+                            type="warning"
+                            message={unstableMessage}
+                        />
+                        <CustomAlert
+                            visible={alertNetworkVisible}
+                            onDismiss={() => setAlertNetworkVisible(false)}
+                            type={alertNetworkType}
+                            message={alertNetworkMessage}
+                        />
+                    </>
+                )}
+
             </SafeAreaView>
         </TouchableWithoutFeedback>
     )
