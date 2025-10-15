@@ -3,9 +3,10 @@ import { useEffect, useState } from "react";
 import { Keyboard, StyleSheet } from "react-native";
 import { Modal, Portal } from "react-native-paper";
 import { useDispatch } from "react-redux";
+import CustomAlert from "../../common/components/CustomAlert";
 import { ForgotPasswordModal, ForgotUsernameModal, LoginScreen } from "../../presentation/screens/login";
 import { useAppSelector } from "../../state/hooks";
-import { showForgotPasswordModal, showForgotUsernameModal } from "../../state/slices/authSlice";
+import { changeValueForm, changeValueFormRecovery, showForgotPasswordModal, showForgotUsernameModal } from "../../state/slices/authSlice";
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -16,6 +17,11 @@ const Login = () => {
         (state) => state.auth.isModalTwoVisible
     );
     const [keyboardOpen, setKeyboardOpen] = useState(false);
+    const [showOneModalErrorAlert, setShowOneModalErrorAlert] = useState(false);
+    const [showTwoModalErrorAlert, setShowTwoModalErrorAlert] = useState(false);
+    const [showNoSpacesAlertOneModalUsername, setShowNoSpacesAlertOneModalUsername] = useState(false);
+    const [showNoSpacesAlertOneModalEmail, setShowNoSpacesAlertOneModalEmail] = useState(false);
+    const [showNoSpacesAlertTwoModalEmail, setShowNoSpacesAlertTwoModalEmail] = useState(false);
 
     useEffect(() => {
         const keyboardDidShowListener = Keyboard.addListener("keyboardDidShow", () =>
@@ -36,6 +42,8 @@ const Login = () => {
             Keyboard.dismiss();
         } else {
             dispatch(showForgotPasswordModal(false));
+            dispatch(changeValueForm({ name: "usernameOneModal", value: '' }));
+            dispatch(changeValueForm({ name: "emailOneModal", value: '' }));
         }
     };
     const handleDismissTwoModal = () => {
@@ -43,6 +51,7 @@ const Login = () => {
             Keyboard.dismiss();
         } else {
             dispatch(showForgotUsernameModal(false));
+            dispatch(changeValueFormRecovery({ name: "emailTwoModal", value: '' }))
         }
     };
 
@@ -73,17 +82,54 @@ const Login = () => {
                     dismissable
                     style={{ backgroundColor: "transparent" }}
                 >
-                    <ForgotPasswordModal />
+                    <ForgotPasswordModal
+                        setShowOneModalErrorAlert={setShowOneModalErrorAlert}
+                        setShowNoSpacesAlertOneModalUsername={setShowNoSpacesAlertOneModalUsername}
+                        setShowNoSpacesAlertOneModalEmail={setShowNoSpacesAlertOneModalEmail}
+                    />
                 </Modal>
                 <Modal
                     visible={isModalTwoVisible}
                     onDismiss={handleDismissTwoModal}
                     contentContainerStyle={styles.modalContent}
                     dismissable
-                    style={{ backgroundColor:"transparent" }}
+                    style={{ backgroundColor: "transparent" }}
                 >
-                    <ForgotUsernameModal />
+                    <ForgotUsernameModal
+                        setShowTwoModalErrorAlert={setShowTwoModalErrorAlert}
+                        setShowNoSpacesAlertTwoModalEmail={setShowNoSpacesAlertTwoModalEmail}
+                    />
                 </Modal>
+                <CustomAlert
+                    visible={showOneModalErrorAlert}
+                    onDismiss={() => setShowOneModalErrorAlert(false)}
+                    type="error"
+                    message="Por favor completa todos los campos obligatorios."
+                />
+                <CustomAlert
+                    visible={showTwoModalErrorAlert}
+                    onDismiss={() => setShowTwoModalErrorAlert(false)}
+                    type="error"
+                    message="Por favor completa todos los campos obligatorios."
+                />
+                <CustomAlert
+                    visible={showNoSpacesAlertOneModalUsername}
+                    onDismiss={() => setShowNoSpacesAlertOneModalUsername(false)}
+                    type="warning"
+                    message="El nombre de usuario no puede contener espacios."
+                />
+                <CustomAlert
+                    visible={showNoSpacesAlertOneModalEmail}
+                    onDismiss={() => setShowNoSpacesAlertOneModalEmail(false)}
+                    type="warning"
+                    message="El correo electrónico no puede contener espacios."
+                />
+                <CustomAlert
+                    visible={showNoSpacesAlertTwoModalEmail}
+                    onDismiss={() => setShowNoSpacesAlertTwoModalEmail(false)}
+                    type="warning"
+                    message="El correo electrónico no puede contener espacios."
+                />
             </Portal>
         </>
     );
@@ -97,8 +143,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 10,
         padding: 20,
-        width: "50%",
-        alignSelf: 'center'
+        width: '50%',
+        height: 'auto',
+        maxHeight: '54%',
+        alignSelf: 'center',
     },
 });
 

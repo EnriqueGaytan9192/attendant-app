@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// Estado inicial
 const initialState = {
     isAuthenticated: false,
     isModalOneVisible: false,
@@ -8,10 +7,14 @@ const initialState = {
     form: {
         email: '',
         password: '',
+        usernameOneModal: '',
+        emailOneModal: '',
+    },
+    formTwo: {
+        emailTwoModal: '',
     }
 }
 
-// Slice
 const authSlice = createSlice({
     name:'auth',
     initialState,
@@ -36,10 +39,12 @@ const authSlice = createSlice({
         changeValueForm(state, action) {
             state.form[action.payload.name] = action.payload.value;
         },
+        changeValueFormRecovery(state, action) {
+            state.formTwo[action.payload.name] = action.payload.value;
+        }
     },
 });
 
-//Exportar las acciones
 export const { 
     login,
     logout,
@@ -47,7 +52,7 @@ export const {
     showForgotUsernameModal,
     setDataForm,
     changeValueForm,
+    changeValueFormRecovery,
 } = authSlice.actions;
 
-// Exportar el reducer
 export default authSlice.reducer;

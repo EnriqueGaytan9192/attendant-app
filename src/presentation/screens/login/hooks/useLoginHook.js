@@ -1,6 +1,6 @@
 import * as Application from "expo-application";
 import { useEffect, useRef, useState } from "react";
-import { Platform } from "react-native";
+import { Keyboard, Platform } from "react-native";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from '../../../../state/hooks';
 import { setDataForm, showForgotPasswordModal, showForgotUsernameModal } from "../../../../state/slices/authSlice";
@@ -39,8 +39,18 @@ const useLoginHook = () => {
         getDeviceId();
     }, []);
 
-    const passwordModal = () => dispatch(showForgotPasswordModal(true));
-    const userModal = () => dispatch(showForgotUsernameModal(true));
+    const passwordModal = () => {
+        Keyboard.dismiss();
+        setTimeout(() => {
+            dispatch(showForgotPasswordModal(true))
+        }, 100);
+    };
+    const userModal = () => {
+        Keyboard.dismiss();
+        setTimeout(() => {
+            dispatch(showForgotUsernameModal(true));
+        }, 100)
+    };
 
     const handleDataForm = (name, value) => {
         dispatch(setDataForm({name, value}))

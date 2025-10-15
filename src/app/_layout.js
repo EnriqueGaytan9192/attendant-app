@@ -1,6 +1,6 @@
 import { BlurView } from "expo-blur";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
-import { Button, Modal, PaperProvider, Portal, Text } from "react-native-paper";
+import { ActivityIndicator, Button, Modal, PaperProvider, Portal, ProgressBar, Text } from "react-native-paper";
 import { Provider } from "react-redux";
 import useCheckForUpdates from "../common/hook/useCheckForUpdates";
 import AppNavigator from "../presentation/navigation/AppNavigator";
@@ -58,7 +58,14 @@ const getModalColors = (type) => {
 };
 
 const RootLayout = () => {
-    const { modalData, hideModal, handleAcceptUpdate } = useCheckForUpdates();
+    const {
+        modalData,
+        hideModal,
+        handleAcceptUpdate,
+        isDownloading,
+        downloadProgress,
+        timeRemaining
+    } = useCheckForUpdates();
     const currentColor = getModalColors(modalData.type);
 
     return (
@@ -111,7 +118,7 @@ const RootLayout = () => {
                                 {modalData.message}
                             </Text>
 
-                            {modalData.type === 'success' && (
+                            {modalData.type === 'success' && !isDownloading && (
                                 <Button
                                     mode="contained"
                                     onPress={handleAcceptUpdate}
@@ -120,6 +127,24 @@ const RootLayout = () => {
                                     Actualizar
                                 </Button>
                             )}
+
+                            {isDownloading && (
+                                <View style={{ width: '100%', marginTop: 20 }}>
+                                    <Text style={{ marginBottom: 10, color: currentColor.text }}>
+                                        Descargando actualización... Esto puede tardar unos segundos.
+                                    </Text>
+                                    <ProgressBar progress={downloadProgress} color={currentColor.button} />
+                                    <Text style={{ marginTop: 10, color: currentColor.text }}>
+                                        Tiempo estimado restante: {timeRemaining}s
+                                    </Text>
+                                    <ActivityIndicator
+                                        size="small"
+                                        color={currentColor.button}
+                                        style={{ marginTop: 10 }}
+                                    />
+                                </View>
+                            )}
+
                             {modalData.type === 'warning' && (
                                 <Button
                                     mode="contained"

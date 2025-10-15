@@ -1,8 +1,30 @@
+import { useEffect } from "react";
 import { Image, Keyboard, ScrollView, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import * as Animatable from "react-native-animatable";
 import { Button, Divider, Text, TextInput } from "react-native-paper";
+import CustomTextInput from "../../../../common/components/CustomTextInput";
+import useForgotPasswordHook from "../hooks/useForgotPasswordHook";
 import styleForgotPassword from "../styles/stylesForgotPassword";
 
-const ForgotPasswordModal = () => {
+const ForgotPasswordModal = ({ setShowOneModalErrorAlert, setShowNoSpacesAlertOneModalUsername, setShowNoSpacesAlertOneModalEmail }) => {
+    const {
+        usernameModalRef,
+        emailModalRef,
+        form,
+        onChangeText,
+        showErrorsOneModal,
+        handleSend,
+        onCloseOneModal,
+    } = useForgotPasswordHook(setShowOneModalErrorAlert);
+
+    useEffect(() => {
+        const timeOut = setTimeout(() => {
+            usernameModalRef?.current?.focus();
+        }, 300);
+
+        return () => clearTimeout(timeOut);
+    }, []);
+
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <ScrollView
@@ -19,7 +41,7 @@ const ForgotPasswordModal = () => {
                                 ¿Olvidaste tu contraseña?
                             </Text>
                         </View>
-                        <TouchableOpacity onPress={() => { }}>
+                        <TouchableOpacity onPress={onCloseOneModal}>
                             <Image
                                 source={require("../../../../assets/icons/close.png")}
                                 style={styleForgotPassword.icon}
@@ -31,64 +53,96 @@ const ForgotPasswordModal = () => {
                         <Text style={styleForgotPassword.textModal}>
                             Ingresa tu correo y nombre de usuario asociados a tu cuenta para enviarte las instrucciones y ayudarte a recuperar tu contraseña.
                         </Text>
-                        <TextInput
-                            label="Usuario *"
-                            mode="outlined"
-                            theme={{
-                                colors: {
-                                    outline: "#E5E5E5",
-                                    primary: "#09D400"
+                        <Animatable.View>
+                            <CustomTextInput
+                                ref={usernameModalRef}
+                                label="Usuario *"
+                                value={form.usernameOneModal}
+                                onChangeText={(text) => {
+                                    setShowOneModalErrorAlert(false);
+
+                                    const hasSpaces = /\s/.test(text);
+                                    const noSpaces = text.replace(/\s/g, '');
+
+                                    onChangeText('usernameOneModal', noSpaces);
+
+                                    if (hasSpaces) {
+                                        setShowNoSpacesAlertOneModalUsername(true);
+                                    }
+                                }}
+                                mode="outlined"
+                                theme={{
+                                    colors: {
+                                        outline: showErrorsOneModal && !form.usernameOneModal ? 'red' : "#E5E5E5",
+                                        primary: "#09D400"
+                                    }
+                                }}
+                                style={styleForgotPassword.input}
+                                keyboardType="default"
+                                left={
+                                    <TextInput.Icon
+                                        icon={() => (
+                                            <Image
+                                                source={require("../../../../assets/icons/person_outline.png")}
+                                                style={styleForgotPassword.iconInput}
+                                            />
+                                        )}
+                                    />
                                 }
-                            }}
-                            style={styleForgotPassword.input}
-                            keyboardType="default"
-                            left={
-                                <TextInput.Icon
-                                    icon={() => (
-                                        <Image
-                                            source={require("../../../../assets/icons/person_outline.png")}
-                                            style={styleForgotPassword.iconInput}
-                                        />
-                                    )}
-                                />
-                            }
-                        />
-                        <TextInput
-                            label="Correo Electrónico *"
-                            mode="outlined"
-                            theme={{
-                                colors: {
-                                    outline: "#E5E5E5",
-                                    primary: "#09D400"
+                            />
+                        </Animatable.View>
+                        <Animatable.View>
+                            <CustomTextInput
+                                ref={emailModalRef}
+                                label="Correo Electrónico *"
+                                value={form.emailOneModal}
+                                onChangeText={(text) => {
+                                    setShowOneModalErrorAlert(false);
+
+                                    const hasSpaces = /\s/.test(text);
+                                    const noSpaces = text.replace(/\s/g, '');
+
+                                    onChangeText('emailOneModal', noSpaces)
+
+                                    if (hasSpaces) {
+                                        setShowNoSpacesAlertOneModalEmail(true);
+                                    }
+                                }}
+                                mode="outlined"
+                                theme={{
+                                    colors: {
+                                        outline: showErrorsOneModal && !form.emailOneModal ? 'red' : "#E5E5E5",
+                                        primary: "#09D400"
+                                    }
+                                }}
+                                style={styleForgotPassword.input}
+                                keyboardType="email-address"
+                                left={
+                                    <TextInput.Icon
+                                        icon={() => (
+                                            <Image
+                                                source={require("../../../../assets/icons/mail.png")}
+                                                style={styleForgotPassword.iconInput}
+                                            />
+                                        )}
+                                    />
                                 }
-                            }}
-                            style={styleForgotPassword.input}
-                            keyboardType="email-address"
-                            left={
-                                <TextInput.Icon
-                                    icon={() => (
-                                        <Image
-                                            source={require("../../../../assets/icons/mail.png")}
-                                            style={styleForgotPassword.iconInput}
-                                        />
-                                    )}
-                                />
-                            }
-                        />
+                            />
+                        </Animatable.View>
                     </View>
                     <View style={styleForgotPassword.buttonContent}>
-                        <Button 
-                            mode="outlined" 
-                            style={styleForgotPassword.cancelModal} 
-                            textColor="#8C8C8C" 
-                            onPress={() => { }}
+                        <Button
+                            mode="outlined"
+                            style={styleForgotPassword.cancelModal}
+                            textColor="#8C8C8C"
+                            onPress={onCloseOneModal}
                         >
                             Cancelar
                         </Button>
-                        <Button 
-                            mode="contained" 
-                            style={styleForgotPassword.saveModal} 
-                            onPress={() => { }}
+                        <Button
+                            mode="contained"
+                            style={styleForgotPassword.saveModal}
+                            onPress={handleSend}
                         >
                             Guardar
                         </Button>

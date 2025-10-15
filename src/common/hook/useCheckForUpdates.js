@@ -9,6 +9,10 @@ const useCheckForUpdates = () => {
         title: '',
         message: '',
     });
+    const [isDownloading, setIsDownloading] = useState(false);
+    const [downloadProgress, setDownloadProgress] = useState(0);
+    const [timeRemaining, setTimeRemaining] = useState(30);
+
     const showModal = (type, title, message) => {
         setModalData({
             visible: true,
@@ -58,7 +62,37 @@ const useCheckForUpdates = () => {
 
     const handleAcceptUpdate = async () => {
         try {
+            setIsDownloading(true);
+            setDownloadProgress(0);
+            setTimeRemaining(30);
+
+            const progressInterval = setInterval(() => {
+                setDownloadProgress((prev) => {
+                    if (prev >= 0.95) {
+                        clearInterval(progressInterval);
+                        return prev;
+                    }
+                    return prev + 0.01;
+                });
+            }, 300);
+
+            const timerInterval = setInterval(() => {
+                setTimeRemaining((prev) => {
+                    if (prev <= 1) {
+                        clearInterval(timerInterval);
+                        return 0;
+                    }
+                    return prev - 1;
+                });
+            }, 1000);
+
             await Updates.fetchUpdateAsync();
+
+            clearInterval(progressInterval);
+            clearInterval(timerInterval);
+            setDownloadProgress(1);
+            setTimeRemaining(0);
+
             await AsyncStorage.setItem("showUpdatedModal", "true");
             await Updates.reloadAsync();
         } catch (e) {
@@ -68,6 +102,8 @@ const useCheckForUpdates = () => {
                 'Error al actualizar',
                 'No se pudo completar la actualización. Inténtalo más tarde.',
             );
+        } finally {
+            setIsDownloading(false);
         }
     };
 
@@ -75,6 +111,9 @@ const useCheckForUpdates = () => {
         modalData,
         hideModal,
         handleAcceptUpdate,
+        isDownloading,
+        downloadProgress,
+        timeRemaining
     };
 }
 

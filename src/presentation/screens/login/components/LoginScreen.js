@@ -1,29 +1,33 @@
+import { useState } from "react";
 import { Dimensions, Image, Keyboard, ScrollView, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import * as Animatable from 'react-native-animatable';
 import { Button, Divider, Text, TextInput } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomAlert from "../../../../common/components/CustomAlert";
+import CustomTextInput from "../../../../common/components/CustomTextInput";
 import useLoginHook from "../hooks/useLoginHook";
 import stylesLogin from "../styles/stylesLogin";
 
 const LoginScreen = () => {
     const screenHeight = Dimensions.get("window").height;
     const screenWidth = Dimensions.get("window").width;
-    const { 
+    const {
         form,
         deviceId,
         passwordVisible,
         setPasswordVisible,
-        passwordModal, 
+        passwordModal,
         userModal,
-        emailRef, 
-        passwordRef, 
-        showErrors, 
+        emailRef,
+        passwordRef,
+        showErrors,
         showSnackbar,
         setShowSnackbar,
         handleLogin,
         handleDataForm
     } = useLoginHook();
+    const [showNoSpacesAlertUsername, setShowNoSpacesAlertUsername] = useState(false);
+    const [showNoSpacesAlertPassword, setShowNoSpacesAlertPassword] = useState(false);
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -50,19 +54,27 @@ const LoginScreen = () => {
                                     Iniciar Sesión
                                 </Text>
                                 <Animatable.View style={{ width: '70%', marginBottom: 15 }} ref={emailRef}>
-                                    <TextInput
+                                    <CustomTextInput
+                                        ref={emailRef}
                                         label="Nombre de Usuario *"
                                         value={form.email}
-                                        onChangeText={(text) =>{
+                                        onChangeText={(text) => {
+                                            const hasSpaces = /\s/.test(text);
+                                            const noSpaces = text.replace(/\s/g, '');
+
                                             setShowSnackbar(false);
-                                            handleDataForm('email', text);
+                                            handleDataForm('email', noSpaces);
+
+                                            if (hasSpaces && !showNoSpacesAlertUsername) {
+                                                setShowNoSpacesAlertUsername(true);
+                                            }
                                         }}
                                         mode="outlined"
                                         theme={{
                                             colors: {
                                                 outline: showErrors && !form.email ? 'red' : "#E5E5E5",
                                                 primary: "#90D400",
-                                            }
+                                            },
                                         }}
                                         style={{ backgroundColor: "#FFFFFF", fontSize: 16 }}
                                         keyboardType="default"
@@ -79,12 +91,20 @@ const LoginScreen = () => {
                                     />
                                 </Animatable.View>
                                 <Animatable.View style={{ width: '70%', marginBottom: 15 }} ref={passwordRef}>
-                                    <TextInput
+                                    <CustomTextInput
+                                        ref={passwordRef}
                                         label="Contraseña *"
                                         value={form.password}
-                                        onChangeText={(text) =>{
+                                        onChangeText={(text) => {
+                                            const hasSpaces = /\s/.test(text);
+                                            const noSpaces = text.replace(/\s/g, '');
+
                                             setShowSnackbar(false);
-                                            handleDataForm('password', text);
+                                            handleDataForm('password', noSpaces);
+
+                                            if (hasSpaces && !showNoSpacesAlertPassword) {
+                                                setShowNoSpacesAlertPassword(true);
+                                            }
                                         }}
                                         mode="outlined"
                                         theme={{
@@ -149,7 +169,7 @@ const LoginScreen = () => {
                                     marginRight: 10
                                 }}
                             >
-                                Versión 1.0.4
+                                Versión 1.0.6
                             </Text>
                         </View>
                     </View>
@@ -159,6 +179,18 @@ const LoginScreen = () => {
                     onDismiss={() => setShowSnackbar(false)}
                     type='error'
                     message="Por favor completa todos los campos obligatorios."
+                />
+                <CustomAlert
+                    visible={showNoSpacesAlertUsername}
+                    onDismiss={() => setShowNoSpacesAlertUsername(false)}
+                    type='warning'
+                    message="El nombre de usuario no puede contener espacios."
+                />
+                <CustomAlert
+                    visible={showNoSpacesAlertPassword}
+                    onDismiss={() => setShowNoSpacesAlertPassword(false)}
+                    type='warning'
+                    message="La contraseña no puede contener espacios."
                 />
             </SafeAreaView>
         </TouchableWithoutFeedback>
