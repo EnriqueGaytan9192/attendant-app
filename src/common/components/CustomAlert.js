@@ -51,6 +51,7 @@ const CustomAlert = ({
     type = "error",
     message = "Error",
     duration = 3000,
+    offsetTop = 35,
 }) => {
     const colors = getAlertColors(type);
     const translateX = useSharedValue(300);
@@ -92,6 +93,7 @@ const CustomAlert = ({
         <Animated.View style={[styles.container, animatedStyle, {
             borderColor: colors.border,
             backgroundColor: colors.background,
+            top: offsetTop || 35,
         }]}>
             <Image source={colors.icon} style={styles.icon} />
             <Text style={[styles.text, { color: colors.text }]}>{message}</Text>

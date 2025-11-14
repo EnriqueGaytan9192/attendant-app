@@ -1,9 +1,10 @@
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
+import { showAlert } from "../../../../common/components/AlertManager";
 import { useAppSelector } from "../../../../state/hooks";
 import { changeValueFormRecovery, showForgotUsernameModal } from "../../../../state/slices/authSlice";
 
-const useForgotUsernameHook = (setShowTwoModalErrorAlert) => {
+const useForgotUsernameHook = () => {
     const dispatch = useDispatch();
     const formTwo = useAppSelector((state) => state.auth.formTwo);
     const emailTwoModalRef = useRef(null);
@@ -23,7 +24,7 @@ const useForgotUsernameHook = (setShowTwoModalErrorAlert) => {
 
         if (isEmailEmpty) {
             setShowErrorsTwoModal(true);
-            setShowTwoModalErrorAlert(true)
+            showAlert("error", "Por favor completa todos los campo obligatorios.");
 
             if (isEmailEmpty && emailTwoModalRef.current?.shake) {
                 emailTwoModalRef.current.shake(600);

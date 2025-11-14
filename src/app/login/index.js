@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Keyboard, StyleSheet } from "react-native";
 import { Modal, Portal } from "react-native-paper";
 import { useDispatch } from "react-redux";
-import CustomAlert from "../../common/components/CustomAlert";
+import AlertManager from "../../common/components/AlertManager";
 import { ForgotPasswordModal, ForgotUsernameModal, LoginScreen } from "../../presentation/screens/login";
 import { useAppSelector } from "../../state/hooks";
 import { changeValueForm, changeValueFormRecovery, showForgotPasswordModal, showForgotUsernameModal } from "../../state/slices/authSlice";
@@ -17,12 +17,7 @@ const Login = () => {
         (state) => state.auth.isModalTwoVisible
     );
     const [keyboardOpen, setKeyboardOpen] = useState(false);
-    const [showOneModalErrorAlert, setShowOneModalErrorAlert] = useState(false);
-    const [showTwoModalErrorAlert, setShowTwoModalErrorAlert] = useState(false);
-    const [showNoSpacesAlertOneModalUsername, setShowNoSpacesAlertOneModalUsername] = useState(false);
-    const [showNoSpacesAlertOneModalEmail, setShowNoSpacesAlertOneModalEmail] = useState(false);
-    const [showNoSpacesAlertTwoModalEmail, setShowNoSpacesAlertTwoModalEmail] = useState(false);
-
+    
     useEffect(() => {
         const keyboardDidShowListener = Keyboard.addListener("keyboardDidShow", () =>
             setKeyboardOpen(true)
@@ -82,11 +77,7 @@ const Login = () => {
                     dismissable
                     style={{ backgroundColor: "transparent" }}
                 >
-                    <ForgotPasswordModal
-                        setShowOneModalErrorAlert={setShowOneModalErrorAlert}
-                        setShowNoSpacesAlertOneModalUsername={setShowNoSpacesAlertOneModalUsername}
-                        setShowNoSpacesAlertOneModalEmail={setShowNoSpacesAlertOneModalEmail}
-                    />
+                    <ForgotPasswordModal />
                 </Modal>
                 <Modal
                     visible={isModalTwoVisible}
@@ -95,41 +86,10 @@ const Login = () => {
                     dismissable
                     style={{ backgroundColor: "transparent" }}
                 >
-                    <ForgotUsernameModal
-                        setShowTwoModalErrorAlert={setShowTwoModalErrorAlert}
-                        setShowNoSpacesAlertTwoModalEmail={setShowNoSpacesAlertTwoModalEmail}
-                    />
+                    <ForgotUsernameModal />
                 </Modal>
-                <CustomAlert
-                    visible={showOneModalErrorAlert}
-                    onDismiss={() => setShowOneModalErrorAlert(false)}
-                    type="error"
-                    message="Por favor completa todos los campos obligatorios."
-                />
-                <CustomAlert
-                    visible={showTwoModalErrorAlert}
-                    onDismiss={() => setShowTwoModalErrorAlert(false)}
-                    type="error"
-                    message="Por favor completa todos los campos obligatorios."
-                />
-                <CustomAlert
-                    visible={showNoSpacesAlertOneModalUsername}
-                    onDismiss={() => setShowNoSpacesAlertOneModalUsername(false)}
-                    type="warning"
-                    message="El nombre de usuario no puede contener espacios."
-                />
-                <CustomAlert
-                    visible={showNoSpacesAlertOneModalEmail}
-                    onDismiss={() => setShowNoSpacesAlertOneModalEmail(false)}
-                    type="warning"
-                    message="El correo electrónico no puede contener espacios."
-                />
-                <CustomAlert
-                    visible={showNoSpacesAlertTwoModalEmail}
-                    onDismiss={() => setShowNoSpacesAlertTwoModalEmail(false)}
-                    type="warning"
-                    message="El correo electrónico no puede contener espacios."
-                />
+                
+                <AlertManager />
             </Portal>
         </>
     );

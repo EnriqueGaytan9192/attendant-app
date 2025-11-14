@@ -1,9 +1,8 @@
-import { useState } from "react";
 import { Dimensions, Image, Keyboard, ScrollView, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import * as Animatable from 'react-native-animatable';
 import { Button, Divider, Text, TextInput } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
-import CustomAlert from "../../../../common/components/CustomAlert";
+import { showAlert } from "../../../../common/components/AlertManager";
 import CustomTextInput from "../../../../common/components/CustomTextInput";
 import useLoginHook from "../hooks/useLoginHook";
 import stylesLogin from "../styles/stylesLogin";
@@ -20,25 +19,11 @@ const LoginScreen = () => {
         userModal,
         emailRef,
         passwordRef,
-        showErrors,
-        showSnackbar,
-        setShowSnackbar,
         handleLogin,
         handleDataForm,
-        alertNetworkVisible,
-        alertNetworkMessage,
-        alertNetworkType,
-        setAlertNetworkVisible,
-        reconnectedAlertVisible,
-        setReconnectedAlertVisible,
-        reconnectedMessage,
-        unstableNetworkVisible,
-        setUnstableNetworkVisible,
-        unstableMessage,
+        showErrors,
     } = useLoginHook();
-    const [showNoSpacesAlertUsername, setShowNoSpacesAlertUsername] = useState(false);
-    const [showNoSpacesAlertPassword, setShowNoSpacesAlertPassword] = useState(false);
-
+    
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <SafeAreaView style={{ flex: 1 }}>
@@ -65,18 +50,15 @@ const LoginScreen = () => {
                                 </Text>
                                 <Animatable.View style={{ width: '70%', marginBottom: 15 }} ref={emailRef}>
                                     <CustomTextInput
-                                        ref={emailRef}
                                         label="Nombre de Usuario *"
                                         value={form.email}
                                         onChangeText={(text) => {
                                             const hasSpaces = /\s/.test(text);
                                             const noSpaces = text.replace(/\s/g, '');
-
-                                            setShowSnackbar(false);
                                             handleDataForm('email', noSpaces);
 
-                                            if (hasSpaces && !showNoSpacesAlertUsername) {
-                                                setShowNoSpacesAlertUsername(true);
+                                            if (hasSpaces) {
+                                                showAlert("warning", "El nombre de usuario no puede contener espacios.");
                                             }
                                         }}
                                         mode="outlined"
@@ -87,7 +69,6 @@ const LoginScreen = () => {
                                             },
                                         }}
                                         style={{ backgroundColor: "#FFFFFF", fontSize: 16 }}
-                                        keyboardType="default"
                                         left={
                                             <TextInput.Icon
                                                 icon={() => (
@@ -98,22 +79,20 @@ const LoginScreen = () => {
                                                 )}
                                             />
                                         }
+                                        keyboardType="default"
                                     />
                                 </Animatable.View>
                                 <Animatable.View style={{ width: '70%', marginBottom: 15 }} ref={passwordRef}>
                                     <CustomTextInput
-                                        ref={passwordRef}
                                         label="Contraseña *"
                                         value={form.password}
                                         onChangeText={(text) => {
                                             const hasSpaces = /\s/.test(text);
                                             const noSpaces = text.replace(/\s/g, '');
-
-                                            setShowSnackbar(false);
                                             handleDataForm('password', noSpaces);
 
-                                            if (hasSpaces && !showNoSpacesAlertPassword) {
-                                                setShowNoSpacesAlertPassword(true);
+                                            if (hasSpaces) {
+                                                showAlert("warning", "La contraseña no puede contener espacios.");
                                             }
                                         }}
                                         mode="outlined"
@@ -124,7 +103,6 @@ const LoginScreen = () => {
                                             }
                                         }}
                                         style={{ backgroundColor: "#FFFFFF", fontSize: 16 }}
-                                        keyboardType="default"
                                         secureTextEntry={passwordVisible}
                                         left={
                                             <TextInput.Icon
@@ -147,6 +125,7 @@ const LoginScreen = () => {
                                                 )}
                                             />
                                         }
+                                        keyboardType="default"
                                     />
                                 </Animatable.View>
                                 <Button mode="contained" style={stylesLogin.button} onPress={handleLogin}>
@@ -179,53 +158,11 @@ const LoginScreen = () => {
                                     marginRight: 10
                                 }}
                             >
-                                Versión 1.0.8.1
+                                Versión 1.0.9
                             </Text>
                         </View>
                     </View>
                 </ScrollView>
-                <CustomAlert
-                    visible={showSnackbar}
-                    onDismiss={() => setShowSnackbar(false)}
-                    type='error'
-                    message="Por favor completa todos los campos obligatorios."
-                />
-                <CustomAlert
-                    visible={showNoSpacesAlertUsername}
-                    onDismiss={() => setShowNoSpacesAlertUsername(false)}
-                    type='warning'
-                    message="El nombre de usuario no puede contener espacios."
-                />
-                <CustomAlert
-                    visible={showNoSpacesAlertPassword}
-                    onDismiss={() => setShowNoSpacesAlertPassword(false)}
-                    type='warning'
-                    message="La contraseña no puede contener espacios."
-                />
-                {reconnectedAlertVisible ? (
-                    <CustomAlert
-                        visible={true}
-                        onDismiss={() => setReconnectedAlertVisible(false)}
-                        type="success"
-                        message={reconnectedMessage}
-                    />
-                ) : (
-                    <>
-                        <CustomAlert
-                            visible={unstableNetworkVisible}
-                            onDismiss={() => setUnstableNetworkVisible(false)}
-                            type="warning"
-                            message={unstableMessage}
-                        />
-                        <CustomAlert
-                            visible={alertNetworkVisible}
-                            onDismiss={() => setAlertNetworkVisible(false)}
-                            type={alertNetworkType}
-                            message={alertNetworkMessage}
-                        />
-                    </>
-                )}
-
             </SafeAreaView>
         </TouchableWithoutFeedback>
     )

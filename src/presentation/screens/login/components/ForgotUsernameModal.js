@@ -2,11 +2,12 @@ import { useEffect } from "react";
 import { Image, Keyboard, ScrollView, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import * as Animatable from 'react-native-animatable';
 import { Button, Divider, Text, TextInput } from "react-native-paper";
+import { showAlert } from "../../../../common/components/AlertManager";
 import CustomTextInput from "../../../../common/components/CustomTextInput";
 import useForgotUsernameHook from "../hooks/useForgotUsernameHook";
 import styleForgotUsername from "../styles/stylesForgotUsername";
 
-const ForgotUsernameModal = ({ setShowTwoModalErrorAlert, setShowNoSpacesAlertTwoModalEmail }) => {
+const ForgotUsernameModal = () => {
     const {
         emailTwoModalRef,
         formTwo,
@@ -14,7 +15,7 @@ const ForgotUsernameModal = ({ setShowTwoModalErrorAlert, setShowNoSpacesAlertTw
         onChangeText,
         showErrorsTwoModal,
         onCloseTwoModal
-    } = useForgotUsernameHook(setShowTwoModalErrorAlert);
+    } = useForgotUsernameHook();
 
     useEffect(() => {
         const timeOut = setTimeout(() => {
@@ -58,15 +59,13 @@ const ForgotUsernameModal = ({ setShowTwoModalErrorAlert, setShowNoSpacesAlertTw
                                 label="Correo Electrónico *"
                                 value={formTwo.emailTwoModal}
                                 onChangeText={(text) => {
-                                    setShowTwoModalErrorAlert(false);
-
                                     const hasSpaces = /\s/.test(text);
                                     const noSpaces = text.replace(/\s/g, '');
 
                                     onChangeText('emailTwoModal', noSpaces);
 
                                     if (hasSpaces) {
-                                        setShowNoSpacesAlertTwoModalEmail(true);
+                                        showAlert("warning", "El correo electrónico no puede contener espacios.");
                                     }
                                 }}
                                 mode="outlined"

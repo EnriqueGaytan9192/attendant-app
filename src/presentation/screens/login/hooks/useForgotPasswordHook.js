@@ -1,9 +1,10 @@
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
+import { showAlert } from "../../../../common/components/AlertManager";
 import { useAppSelector } from "../../../../state/hooks";
 import { changeValueForm, showForgotPasswordModal } from "../../../../state/slices/authSlice";
 
-const useForgotPasswordHook = (setShowOneModalErrorAlert) => {
+const useForgotPasswordHook = () => {
     const dispatch = useDispatch();
     const form = useAppSelector((state) => state.auth.form);
     const usernameModalRef = useRef(null);
@@ -26,7 +27,7 @@ const useForgotPasswordHook = (setShowOneModalErrorAlert) => {
 
         if (isUsernameEmpty || isEmailEmpty) {
             setShowErrorsOneModal(true);
-            setShowOneModalErrorAlert(true);
+            showAlert("error", "Por favor completa todos los campos obligatorios.");
 
             if (isUsernameEmpty && usernameModalRef.current?.shake) {
                 usernameModalRef.current.shake(600);

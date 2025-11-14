@@ -2,11 +2,12 @@ import { useEffect } from "react";
 import { Image, Keyboard, ScrollView, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { Button, Divider, Text, TextInput } from "react-native-paper";
+import { showAlert } from "../../../../common/components/AlertManager";
 import CustomTextInput from "../../../../common/components/CustomTextInput";
 import useForgotPasswordHook from "../hooks/useForgotPasswordHook";
 import styleForgotPassword from "../styles/stylesForgotPassword";
 
-const ForgotPasswordModal = ({ setShowOneModalErrorAlert, setShowNoSpacesAlertOneModalUsername, setShowNoSpacesAlertOneModalEmail }) => {
+const ForgotPasswordModal = () => {
     const {
         usernameModalRef,
         emailModalRef,
@@ -15,7 +16,7 @@ const ForgotPasswordModal = ({ setShowOneModalErrorAlert, setShowNoSpacesAlertOn
         showErrorsOneModal,
         handleSend,
         onCloseOneModal,
-    } = useForgotPasswordHook(setShowOneModalErrorAlert);
+    } = useForgotPasswordHook();
 
     useEffect(() => {
         const timeOut = setTimeout(() => {
@@ -59,7 +60,6 @@ const ForgotPasswordModal = ({ setShowOneModalErrorAlert, setShowNoSpacesAlertOn
                                 label="Usuario *"
                                 value={form.usernameOneModal}
                                 onChangeText={(text) => {
-                                    setShowOneModalErrorAlert(false);
 
                                     const hasSpaces = /\s/.test(text);
                                     const noSpaces = text.replace(/\s/g, '');
@@ -67,7 +67,7 @@ const ForgotPasswordModal = ({ setShowOneModalErrorAlert, setShowNoSpacesAlertOn
                                     onChangeText('usernameOneModal', noSpaces);
 
                                     if (hasSpaces) {
-                                        setShowNoSpacesAlertOneModalUsername(true);
+                                        showAlert("warning", "El nombre de usuario no puede contener espacios.");
                                     }
                                 }}
                                 mode="outlined"
@@ -97,15 +97,13 @@ const ForgotPasswordModal = ({ setShowOneModalErrorAlert, setShowNoSpacesAlertOn
                                 label="Correo Electrónico *"
                                 value={form.emailOneModal}
                                 onChangeText={(text) => {
-                                    setShowOneModalErrorAlert(false);
-
                                     const hasSpaces = /\s/.test(text);
                                     const noSpaces = text.replace(/\s/g, '');
 
                                     onChangeText('emailOneModal', noSpaces)
 
                                     if (hasSpaces) {
-                                        setShowNoSpacesAlertOneModalEmail(true);
+                                        showAlert("warning", "El correo electrónico no puede contener espacios.");
                                     }
                                 }}
                                 mode="outlined"
