@@ -4,6 +4,7 @@ import { Button, Divider, Text, TextInput } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { showAlert } from "../../../../common/components/AlertManager";
 import CustomTextInput from "../../../../common/components/CustomTextInput";
+import useInternetAlerts from "../../../../common/hook/useInternetAlerts";
 import useLoginHook from "../hooks/useLoginHook";
 import stylesLogin from "../styles/stylesLogin";
 
@@ -22,7 +23,9 @@ const LoginScreen = () => {
         handleLogin,
         handleDataForm,
         showErrors,
+        fakeLogin
     } = useLoginHook();
+    useInternetAlerts();
     
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -128,7 +131,7 @@ const LoginScreen = () => {
                                         keyboardType="default"
                                     />
                                 </Animatable.View>
-                                <Button mode="contained" style={stylesLogin.button} onPress={handleLogin}>
+                                <Button mode="contained" style={stylesLogin.button} /*onPress={handleLogin}*/ onPress={fakeLogin}>
                                     Iniciar Sesión
                                 </Button>
                                 <Divider style={stylesLogin.dividerForm} />

@@ -1,4 +1,5 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
+import { Image } from "react-native";
 import MainLayout from "../../common/components/MainLayout";
 import routes from "./routes";
 
@@ -22,6 +23,12 @@ const DrawerNavigator = () => {
                     name={route.key}
                     component={RenderMainLayout}
                     options={{
+                        drawerIcon: ({size}) => (
+                            <Image
+                                source={route.icon}
+                                style={{ width: size, height: size }}
+                            />
+                        ),
                         title: route.title,
                     }}
                 />

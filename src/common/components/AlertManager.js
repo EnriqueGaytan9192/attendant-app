@@ -43,7 +43,7 @@ const AlertManager = () => {
                     type={alert.type}
                     message={alert.message}
                     duration={alert.duration}
-                    offsetTop={35 + index * 90} 
+                    offsetTop={35 + index * 105} 
                     onDismiss={() =>
                         setAlerts((prev) => prev.filter((a) => a.id !== alert.id))
                     }

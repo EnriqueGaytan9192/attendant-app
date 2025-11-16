@@ -104,7 +104,7 @@ const ForgotUsernameModal = () => {
                             style={styleForgotUsername.saveModal}
                             onPress={handleSend}
                         >
-                            Guardar
+                            Enviar
                         </Button>
                     </View>
                 </View>

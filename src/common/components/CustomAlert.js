@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Animated, {
     Easing,
     useAnimatedStyle,
@@ -11,34 +11,42 @@ const getAlertColors = (type) => {
     switch (type) {
         case 'success':
             return {
+                title: 'Éxito',
                 background: '#E8F5E9',
                 border: '#90D400',
-                text: '#90D400',
+                titleText: '#90D400',
+                text: '#8C8C8C',
                 icon: require('../../assets/icons/check-circle.png'),
-                button: '#80C300',
+                //button: '#80C300',
                 closeIcon: require('../../assets/icons/closeSuccess.png')
             };
         case 'warning':
             return {
+                title: 'Advertencia',
                 background: '#FFF8E1',
                 border: '#FFA000',
-                text: '#FFA000',
+                titleText: '#FFA000',
+                text: '#8C8C8C',
                 icon: require('../../assets/icons/exclamation-triangle.png'),
                 closeIcon: require('../../assets/icons/closeWarning.png'),
             };
         case 'error':
             return {
+                title: 'Error',
                 background: '#FFEBEE',
                 border: '#EB465A',
-                text: '#EB465A',
+                titleText: '#EB465A',
+                text: '#8C8C8C',
                 icon: require('../../assets/icons/exclemation-circle.png'),
                 closeIcon: require('../../assets/icons/closeError.png'),
             };
         default:
             return {
+                title: 'Información',
                 background: '#ebfcffff',
                 border: '#008A9B',
-                text: '#008A9B',
+                titleText: '#008A9B',
+                text: '#8C8C8C',
                 icon: require('../../assets/icons/info-circle.png'),
                 closeIcon: require('../../assets/icons/closeInfo.png'),
             };
@@ -90,17 +98,34 @@ const CustomAlert = ({
     if (!visible) return null;
 
     return (
-        <Animated.View style={[styles.container, animatedStyle, {
-            borderColor: colors.border,
-            backgroundColor: colors.background,
-            top: offsetTop || 35,
-        }]}>
+        <Animated.View
+            style={[
+                styles.container,
+                animatedStyle,
+                {
+                    borderColor: colors.border,
+                    backgroundColor: colors.background,
+                    top: offsetTop || 35,
+                },
+            ]}
+        >
             <Image source={colors.icon} style={styles.icon} />
-            <Text style={[styles.text, { color: colors.text }]}>{message}</Text>
+
+            <View style={[styles.textBlock]}>
+                <Text style={[styles.title, { color: colors.titleText }]}>
+                    {colors.title}
+                </Text>
+
+                <Text style={[styles.message, { color: colors.text }]}>
+                    {message}
+                </Text>
+            </View>
+
             <TouchableOpacity onPress={onDismiss}>
                 <Image source={colors.closeIcon} style={styles.closeIcon} />
             </TouchableOpacity>
         </Animated.View>
+
     );
 };
 
@@ -126,6 +151,7 @@ const styles = StyleSheet.create({
         width: 24,
         height: 24,
         marginRight: 10,
+        marginBottom: 35,
     },
     closeIcon: {
         width: 20,
@@ -135,6 +161,18 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 16,
         flex: 1,
+    },
+    textBlock: {
+        flex: 1,
+        flexDirection: "column",
+    },
+    title: {
+        fontSize: 16,
+        fontWeight: "bold",
+        marginBottom: 2,
+    },
+    message: {
+        fontSize: 14,
     },
 });
 
