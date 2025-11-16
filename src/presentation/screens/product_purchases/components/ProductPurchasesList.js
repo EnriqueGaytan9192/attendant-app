@@ -1,7 +1,7 @@
 import { Dimensions, Keyboard, ScrollView, TouchableWithoutFeedback, View } from "react-native";
 import { Text } from "react-native-paper";
 
-const ArchingSelector = () => {
+const ProductPurchasesList = () => {
     const screenHeight = Dimensions.get('window').height;
     const screenWidth = Dimensions.get('window').width;
 
@@ -17,11 +17,11 @@ const ArchingSelector = () => {
                     borderColor: '#d80000ff',
                     borderWidth: 5,
                 }}>
-                    <Text>ArchingSelector Component</Text>
+                    <Text>ProductPurchases Component</Text>
                 </View>
             </ScrollView>
         </TouchableWithoutFeedback>
     )
 }
 
-export default ArchingSelector;
+export default ProductPurchasesList;

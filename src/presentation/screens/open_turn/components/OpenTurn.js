@@ -1,4 +1,4 @@
-import { Dimensions, Keyboard, TouchableWithoutFeedback, View } from "react-native";
+import { Dimensions, Keyboard, ScrollView, TouchableWithoutFeedback, View } from "react-native";
 import { Text } from "react-native-paper";
 
 const OpenTurnScreen = () => {
@@ -7,13 +7,19 @@ const OpenTurnScreen = () => {
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <View style={{
-                backgroundColor: 'white',
-                height: screenHeight,
-                width: screenWidth,
-            }}>
-                <Text>Open Turn Component</Text>
-            </View>
+            <ScrollView
+                contentContainerStyle={{ flexGrow: 1 }}
+                keyboardShouldPersistTaps="handled"
+            >
+                <View style={{
+                    backgroundColor: 'white',
+                    height: screenHeight,
+                    borderColor: '#d80000ff',
+                    borderWidth: 5,
+                }}>
+                    <Text>OpenTurn Component</Text>
+                </View>
+            </ScrollView>
         </TouchableWithoutFeedback>
     )
 }

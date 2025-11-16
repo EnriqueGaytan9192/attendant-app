@@ -7,6 +7,7 @@ const Drawer = createDrawerNavigator();
 
 const RenderMainLayout = ({ route }) => {
     const routeKey = route.name;
+    console.log(routeKey);
     return <MainLayout routeKey={routeKey} />;
 };
 

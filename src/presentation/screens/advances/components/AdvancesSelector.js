@@ -1,9 +1,9 @@
 import { Dimensions, Keyboard, ScrollView, TouchableWithoutFeedback, View } from "react-native";
 import { Text } from "react-native-paper";
 
-const ArchingSelector = () => {
+const AdvancesSelector = () => {
     const screenHeight = Dimensions.get('window').height;
-    const screenWidth = Dimensions.get('window').width;
+    const screensWidth = Dimensions.get('window').width;
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -17,11 +17,11 @@ const ArchingSelector = () => {
                     borderColor: '#d80000ff',
                     borderWidth: 5,
                 }}>
-                    <Text>ArchingSelector Component</Text>
+                    <Text>AdvancesSelector Component</Text>
                 </View>
             </ScrollView>
         </TouchableWithoutFeedback>
     )
 }
 
-export default ArchingSelector;
+export default AdvancesSelector;

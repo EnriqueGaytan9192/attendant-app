@@ -1,12 +1,12 @@
-// MiniSidebar.js
 import { Ionicons } from "@expo/vector-icons";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Tooltip } from "react-native-paper"; // ✅ IMPORTANTE
 import routes from "../../presentation/navigation/routes";
 
 const MiniSidebar = ({ navigation, isDrawerOpen }) => {
     return (
         <View style={[styles.sidebar, { paddingTop: 10 }]}>
-            
+
             <TouchableOpacity
                 onPress={() => navigation.toggleDrawer()}
                 style={styles.menuButton}
@@ -21,13 +21,19 @@ const MiniSidebar = ({ navigation, isDrawerOpen }) => {
             <View style={styles.greenLine} />
 
             {routes.map((route) => (
-                <TouchableOpacity
+                <Tooltip 
                     key={route.key}
-                    style={styles.iconWrapper}
-                    onPress={() => navigation.navigate(route.key)}
+                    title={route.title}
+                    enterTouchDelay={300}
+                    leaveTouchDelay={150}
                 >
-                    <Image source={route.icon} style={styles.icon} />
-                </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.iconWrapper}
+                        onPress={() => navigation.navigate(route.key)}
+                    >
+                        <Image source={route.icon} style={styles.icon} />
+                    </TouchableOpacity>
+                </Tooltip>
             ))}
         </View>
     );
@@ -45,7 +51,6 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 25
     },
     menuButton: {
-        //marginBottom: 25,
         padding: 10,
         borderRadius: 10,
     },
@@ -57,7 +62,7 @@ const styles = StyleSheet.create({
         marginBottom: 15,
     },
     iconWrapper: {
-        paddingVertical: 15,
+        paddingVertical: 5,
     },
     icon: {
         width: 35,
