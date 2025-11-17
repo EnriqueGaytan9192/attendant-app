@@ -27,12 +27,6 @@ import sinister from "../../assets/icons/sinister.png";
 
 const routes = [
     {
-        key: 'profile',
-        title: 'Perfil',
-        //icon: openTurn,
-        component: Profile,
-    },
-    {
         key: 'open-turn',
         title: 'Abrir Turno',
         icon: openTurn,
@@ -116,6 +110,12 @@ const routes = [
         title: 'Compras',
         icon: productPurchases,
         component: ProductPurchases,
+    },
+    {
+        key: 'profile',
+        title: 'Perfil',
+        //icon: openTurn,
+        component: Profile,
     },
 ]
 
