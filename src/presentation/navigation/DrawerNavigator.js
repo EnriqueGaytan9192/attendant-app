@@ -1,6 +1,10 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { Image } from "react-native";
+import { useState } from "react";
+import { Image, ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Text } from "react-native-paper";
+import { useDispatch } from "react-redux";
 import MainLayout from "../../common/components/MainLayout";
+import { resetAuth as resetAuthAuth } from "../../state/slices/authSlice";
 import routes from "./routes";
 
 const Drawer = createDrawerNavigator();
@@ -11,31 +15,269 @@ const RenderMainLayout = ({ route }) => {
     return <MainLayout routeKey={routeKey} />;
 };
 
+const CustomDrawerContent = ({ navigation }) => {
+    const [expandedMenus, setExpandedMenus] = useState({});
+    const menus = routes.filter(route => route.key !== 'profile');
+    console.log("Menus", menus)
+    const toggleSubMenu = (key) => {
+        setExpandedMenus((prevState) => ({
+            ...prevState,
+            [key]: !prevState[key],
+        }));
+    };
+
+    const dispatch = useDispatch();
+    const handleLogOut = () => {
+        dispatch(resetAuthAuth());
+    };
+
+    return (
+        <ScrollView>
+            <View style={{ flex: 1 }}>
+                <View style={styles.drawerContainer}>
+                    {/*<Image
+                        source={require('../../assets/icons/logoParking.png')}
+                        style={styles.logoParking}
+                    />*/}
+                    <View style={styles.profileSection}>
+                        <TouchableOpacity onPress={() => navigation.navigate('profile')}>
+                            <View style={{ flexDirection: 'row' }}>
+                                <Image
+                                    source={require('../../assets/icons/avatar.png')}
+                                    style={styles.profileImage}
+                                />
+                                <View style={{ marginLeft: 10 }}>
+                                    <Text style={styles.profileName}>José Antonio Villarraga</Text>
+                                    <Text style={styles.profileRole}>Administrador</Text>
+                                </View>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                    {/*<View style={styles.greenLine} />*/}
+                    {menus.map((menu) => {
+                        const route = menu;
+
+                        if (!route) return null;
+
+                        if (route.children) {
+                            return (
+                                <View key={route.key}>
+                                    <TouchableOpacity
+                                        style={styles.menuItem}
+                                        onPress={() => toggleSubMenu(route.key)}
+                                    >
+                                        <Image
+                                            source={route.icon}
+                                            style={styles.icon}
+                                        />
+                                        <Text style={styles.menuText}>{route.title}</Text>
+                                        <Text style={styles.arrow}>
+                                            {expandedMenus[route.key] ? "▲" : "▼"}
+                                        </Text>
+                                    </TouchableOpacity>
+
+                                    {expandedMenus[route.key] &&
+                                        route.children.map((subRoute) => (
+                                            <TouchableOpacity
+                                                key={subRoute.key}
+                                                style={styles.subMenuItem}
+                                                onPress={() => navigation.navigate(subRoute.key)}
+                                            >
+                                                <Image
+                                                    source={subRoute.icon}
+                                                    style={styles.subIcon}
+                                                />
+                                                <Text style={styles.subMenuText}>{subRoute.title}</Text>
+                                            </TouchableOpacity>
+                                        ))}
+                                </View>
+                            );
+                        }
+
+                        return (
+                            <TouchableOpacity
+                                key={route.key}
+                                style={styles.menuItem}
+                                onPress={() => navigation.navigate(route.key)}
+                            >
+                                <Image source={route.icon} style={styles.icon} />
+                                <Text style={styles.menuText}>{route.title}</Text>
+                            </TouchableOpacity>
+                        )
+                    })}
+                    <TouchableOpacity style={styles.menuItem} onPress={handleLogOut}>
+                        <Image
+                            source={require("../../assets/icons/logOut.png")}
+                            style={styles.icon}
+                        />
+                        <Text style={styles.menuText}>Cerrar sesión</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        </ScrollView>
+    )
+}
+
 const DrawerNavigator = () => {
+    const menus = routes;
+
     return (
         <Drawer.Navigator
-            screenOptions={{
-                headerShown: false,
-            }}
+            screenOptions={{ headerShown: false }}
+            drawerContent={(props) => <CustomDrawerContent {...props} />}
         >
-            {routes.map((route) => (
-                <Drawer.Screen
-                    key={route.key}
-                    name={route.key}
-                    component={RenderMainLayout}
-                    options={{
-                        drawerIcon: ({size}) => (
-                            <Image
-                                source={route.icon}
-                                style={{ width: size, height: size }}
-                            />
-                        ),
-                        title: route.title,
-                    }}
-                />
-            ))}
+            {menus.map((menu) => {
+                const route = menu;
+
+                return (
+                    <Drawer.Screen
+                        key={route.key}
+                        name={route.key}
+                        component={RenderMainLayout}
+                        options={{
+                            title: route.title,
+                            drawerIcon: ({ size }) => (
+                                <Image
+                                    source={route.icon}
+                                    style={{ width: size, height: size, resizeMode: "contain" }}
+                                />
+                            ),
+                        }}
+                    />
+                )
+            })}
+
+            {routes
+                .filter((route) => route.children)
+                .flatMap((route) =>
+                    route.children.map((subRoute) => (
+                        <Drawer.Screen
+                            key={subRoute.key}
+                            name={subRoute.key}
+                            component={RenderMainLayout}
+                            options={{
+                                title: subRoute.title,
+                                drawerIcon: ({ size }) => (
+                                    <Image
+                                        source={subRoute.icon}
+                                        style={{ width: size, height: size, resizeMode: "contain" }}
+                                    />
+                                ),
+                            }}
+                        />
+                    ))
+                )}
         </Drawer.Navigator>
     )
 }
+
+const styles = StyleSheet.create({
+    drawerContainer: {
+        flex: 1,
+        marginTop: 25,
+        marginBottom: 46,
+        backgroundColor: "#fff",
+        paddingVertical: 5,
+        paddingHorizontal: 15,
+        width: "95%",
+        //borderColor: '#d80000ff',
+        //borderWidth: 5,
+    },
+    logoParking: {
+        width: "75%",
+        height: 50,
+        //alignSelf: 'center'
+        //borderRadius: 25,
+    },
+    profileSection: {
+        paddingVertical: 15,
+        borderBottomWidth: 2,
+        borderBlockColor: "#90D400",
+    },
+    profileImage: {
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+        alignSelf: 'center',
+    },
+    profileName: {
+        fontSize: 16,
+        fontWeight: "bold",
+        color: "#90D400",
+        marginTop: 5,
+    },
+    profileRole: {
+        backgroundColor: "#666666",
+        fontSize: 12,
+        color: "white",
+        paddingHorizontal: 10,
+        paddingVertical: 2,
+        borderRadius: 5,
+        marginTop: 5,
+        width: 125,
+        textAlign: 'center'
+    },
+    menuItem: {
+        flexDirection: "row",
+        alignItems: "center",
+        padding: 12,
+    },
+    subMenuItem: {
+        flexDirection: "row",
+        alignItems: "center",
+        padding: 15,
+        paddingLeft: 40,
+    },
+    menuText: {
+        flex: 1,
+        fontSize: 16,
+        color: "#333",
+    },
+    subMenuText: {
+        fontSize: 14,
+        color: "#777",
+    },
+    icon: {
+        width: 28,
+        height: 28,
+        marginRight: 10,
+    },
+    subIcon: {
+        width: 22,
+        height: 22,
+        marginRight: 10,
+    },
+    arrow: {
+        fontSize: 16,
+        color: "#777",
+    },
+    logoutContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        padding: 15,
+    },
+    logoutButton: {
+        flexDirection: "row",
+        alignItems: "center",
+        padding: 12,
+    },
+    logoutIcon: {
+        width: 24,
+        height: 24,
+        marginRight: 10,
+    },
+    logoutText: {
+        flex: 1,
+        fontSize: 16,
+        color: "#333",
+    },
+    greenLine: {
+        width: "100%",
+        height: 4,
+        backgroundColor: "#7ED957",
+        borderRadius: 10,
+        marginBottom: 15,
+    },
+})
 
 export default DrawerNavigator

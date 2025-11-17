@@ -1,3 +1,4 @@
+import { useDrawerStatus } from "@react-navigation/drawer";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
@@ -6,11 +7,28 @@ import MiniSidebar from "../../presentation/navigation/MisiSidebar";
 import routes from "../../presentation/navigation/routes";
 import CustomHeader from "./CustomHeader";
 
+const findRouteByKey = (key) => {
+    // 1. Buscar en rutas principales
+    const main = routes.find(r => r.key === key);
+    if (main) return main;
+
+    // 2. Buscar en submenús
+    for (const r of routes) {
+        if (r.children) {
+            const child = r.children.find(c => c.key === key);
+            if (child) return child;
+        }
+    }
+
+    return null;
+};
+
 const MainLayout = ({ routeKey }) => {
     const navigation = useNavigation();
+    const drawerStatus = useDrawerStatus();
     const [isModalVisible, setIsModalVisible] = useState(false);
 
-    const currentRoute = routes.find((route) => route.key === routeKey);
+    const currentRoute = findRouteByKey(routeKey);
     const CurrentComponent = currentRoute?.component;
 
     const leftRoutes = routes.slice(0, 2);

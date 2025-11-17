@@ -1,9 +1,17 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
-import { Tooltip } from "react-native-paper"; // ✅ IMPORTANTE
+import { Tooltip } from "react-native-paper";
+import { useDispatch } from "react-redux";
 import routes from "../../presentation/navigation/routes";
+import { resetAuth as resetAuthAuth } from "../../state/slices/authSlice";
 
 const MiniSidebar = ({ navigation, isDrawerOpen }) => {
+
+    const dispatch = useDispatch();
+    const handleLogOut = () => {
+        dispatch(resetAuthAuth());
+    };
+
     return (
         <View style={[styles.sidebar, { paddingTop: 10 }]}>
 
@@ -20,24 +28,48 @@ const MiniSidebar = ({ navigation, isDrawerOpen }) => {
 
             <View style={styles.greenLine} />
 
-            {routes.map((route) => (
-                <Tooltip 
-                    key={route.key}
-                    title={route.title}
-                    enterTouchDelay={300}
-                    leaveTouchDelay={150}
-                >
-                    <TouchableOpacity
-                        style={styles.iconWrapper}
-                        onPress={() => navigation.navigate(route.key)}
+            {routes
+                .filter(route => route.key !== 'profile')
+                .map((route) => (
+                    <Tooltip
+                        key={route.key}
+                        title={route.title}
+                        enterTouchDelay={300}
+                        leaveTouchDelay={150}
                     >
-                        <Image source={route.icon} style={styles.icon} />
-                    </TouchableOpacity>
-                </Tooltip>
-            ))}
+                        <TouchableOpacity
+                            key={route.key}
+                            style={styles.iconWrapper}
+                            onPress={() => {
+                                if (isDrawerOpen) {
+                                    navigation.closeDrawer();
+                                }
+
+                                setTimeout(() => {
+                                    if (route.children) {
+                                        navigation.navigate(route.children[0].key);
+                                    } else {
+                                        navigation.navigate(route.key);
+                                    }
+                                }, 120);
+                            }}
+                        >
+                            <Image source={route.icon} style={styles.icon} />
+                        </TouchableOpacity>
+                    </Tooltip>
+                ))}
+            <View style={styles.logoutContainer}>
+                <TouchableOpacity style={styles.logoutButton} onPress={handleLogOut}>
+                    <Image
+                        source={require("../../assets/icons/logOut.png")}
+                        style={styles.icon}
+                    />
+                </TouchableOpacity>
+            </View>
         </View>
     );
 };
+
 
 const styles = StyleSheet.create({
     sidebar: {
@@ -68,6 +100,26 @@ const styles = StyleSheet.create({
         width: 35,
         height: 35,
         resizeMode: "contain",
+    },
+    logoutContainer: {
+        paddingVertical: 15,
+        marginTop: "auto",
+        //paddingHorizontal: 15,
+    },
+    logoutButton: {
+        flexDirection: "row",
+        alignItems: "center",
+        padding: 15,
+    },
+    logoutIcon: {
+        width: 24,
+        height: 24,
+        marginRight: 10,
+    },
+    logoutText: {
+        flex: 1,
+        fontSize: 16,
+        color: "#333",
     },
 });
 

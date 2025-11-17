@@ -8,6 +8,7 @@ import Movements from "../../app/movements";
 import OpenTurn from "../../app/open_turn";
 import PayrollDeductions from "../../app/payroll_deductions";
 import ProductPurchases from "../../app/product_purchases";
+import Profile from "../../app/profile";
 
 import advances from "../../assets/icons/advances.png";
 import applications from "../../assets/icons/applications.png";
@@ -25,6 +26,12 @@ import productPurchases from "../../assets/icons/product_purchases.png";
 import sinister from "../../assets/icons/sinister.png";
 
 const routes = [
+    {
+        key: 'profile',
+        title: 'Perfil',
+        //icon: openTurn,
+        component: Profile,
+    },
     {
         key: 'open-turn',
         title: 'Abrir Turno',
@@ -52,19 +59,19 @@ const routes = [
                 key: 'pqrs',
                 title: 'PQRS',
                 icon: pqrs,
-                //component: Arching,
+                component: OpenTurn,
             },
             {
                 key: 'sinister',
                 title: 'Siniestro',
                 icon: sinister,
-                //component: Arching,
+                component: Movements,
             },
             {
                 key: 'applications',
                 title: 'Solicitudes',
                 icon: applications,
-                //component: Arching,
+                component: Inventory,
             },
         ]
     },

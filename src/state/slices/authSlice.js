@@ -41,7 +41,8 @@ const authSlice = createSlice({
         },
         changeValueFormRecovery(state, action) {
             state.formTwo[action.payload.name] = action.payload.value;
-        }
+        },
+        resetAuth: () => initialState,
     },
 });
 
@@ -53,6 +54,7 @@ export const {
     setDataForm,
     changeValueForm,
     changeValueFormRecovery,
+    resetAuth,
 } = authSlice.actions;
 
 export default authSlice.reducer;
