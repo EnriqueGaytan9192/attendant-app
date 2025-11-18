@@ -1,3 +1,4 @@
+import { Ionicons } from "@expo/vector-icons";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { useState } from "react";
 import { Image, ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
@@ -72,7 +73,19 @@ const CustomDrawerContent = ({ navigation }) => {
                                         />
                                         <Text style={styles.menuText}>{route.title}</Text>
                                         <Text style={styles.arrow}>
-                                            {expandedMenus[route.key] ? "▲" : "▼"}
+                                            {expandedMenus[route.key] ?
+                                                <Ionicons
+                                                    name="chevron-up"
+                                                    size={16}
+                                                    color={"#4DADB9"}
+                                                /> 
+                                                : 
+                                                <Ionicons
+                                                    name="chevron-down"
+                                                    size={16}
+                                                    color={"#4DADB9"}
+                                                /> 
+                                            }
                                         </Text>
                                     </TouchableOpacity>
 

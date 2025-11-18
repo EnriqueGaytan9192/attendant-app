@@ -1,5 +1,6 @@
-import { Dimensions, Keyboard, ScrollView, TouchableWithoutFeedback, View } from "react-native";
+import { Dimensions, Image, Keyboard, ScrollView, TouchableWithoutFeedback, View } from "react-native";
 import { Text } from "react-native-paper";
+import stylesInventoryVehicle from "../styles/stylesInventoryVehicle";
 
 const InventoryVehicle = () => {
     const screenHeight = Dimensions.get('window').height;
@@ -11,13 +12,20 @@ const InventoryVehicle = () => {
                 contentContainerStyle={{ flexGrow: 1 }}
                 keyboardShouldPersistTaps="handled"
             >
-                <View style={{
-                    backgroundColor: 'white',
-                    height: screenHeight,
-                    borderColor: '#d80000ff',
-                    borderWidth: 5,
-                }}>
-                    <Text>InventoryVehicle Component</Text>
+                <View style={[stylesInventoryVehicle.container, { height: screenHeight - 25 }]}>
+                    <View style={stylesInventoryVehicle.subContainer}>
+                        <View style={stylesInventoryVehicle.containerTitle}>
+                            <Image
+                                source={require("../../../../assets/images/inventoryIcon.png")}
+                                style={stylesInventoryVehicle.iconTitle}
+                            />
+                            <View style={stylesInventoryVehicle.textContainer}>
+                                <Text style={stylesInventoryVehicle.textTitle}>Inventario de Vehiculos</Text>
+                                <Text style={stylesInventoryVehicle.textSubtitle}>Estado de los Vehículos Ingresados</Text>
+                            </View>
+                        </View>
+                        <View style={stylesInventoryVehicle.greenLine} />
+                    </View>
                 </View>
             </ScrollView>
         </TouchableWithoutFeedback>

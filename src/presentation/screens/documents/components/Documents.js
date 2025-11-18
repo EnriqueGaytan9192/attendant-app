@@ -1,5 +1,6 @@
-import { Dimensions, Keyboard, ScrollView, TouchableWithoutFeedback, View } from "react-native";
+import { Dimensions, Image, Keyboard, ScrollView, TouchableWithoutFeedback, View } from "react-native";
 import { Text } from "react-native-paper";
+import stylesDocuments from "../styles/stylesDocuments";
 
 const DocumentsScreen = () => {
     const screenHeight = Dimensions.get('window').height;
@@ -11,13 +12,20 @@ const DocumentsScreen = () => {
                 contentContainerStyle={{ flexGrow: 1 }}
                 keyboardShouldPersistTaps="handled"
             >
-                <View style={{
-                    backgroundColor: 'white',
-                    height: screenHeight,
-                    borderColor: '#d80000ff',
-                    borderWidth: 5,
-                }}>
-                    <Text>Documents Component</Text>
+                <View style={[stylesDocuments.container, { height: screenHeight - 25 }]}>
+                    <View style={stylesDocuments.subContainer}>
+                        <View style={stylesDocuments.containerTitle}>
+                            <Image
+                                source={require("../../../../assets/images/documentsIcon.png")}
+                                style={stylesDocuments.iconTitle}
+                            />
+                            <View style={stylesDocuments.textContainer}>
+                                <Text style={stylesDocuments.textTitle}>Documentos</Text>
+                                <Text style={stylesDocuments.textSubtitle}>Descarga de documentos</Text>
+                            </View>
+                        </View>
+                        <View style={stylesDocuments.greenLine} />
+                    </View>
                 </View>
             </ScrollView>
         </TouchableWithoutFeedback>

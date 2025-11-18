@@ -1,9 +1,12 @@
 import Advances from "../../app/advances";
 import Arching from "../../app/arching";
 import CloseTurn from "../../app/close_turn";
-import Document from "../../app/document";
+import Consultations from "../../app/consultations";
 import Documents from "../../app/documents";
 import Inventory from "../../app/inventory";
+import Applications from "../../app/management/applications";
+import Pqrs from "../../app/management/pqrs";
+import Sinister from "../../app/management/sinister";
 import Movements from "../../app/movements";
 import OpenTurn from "../../app/open_turn";
 import PayrollDeductions from "../../app/payroll_deductions";
@@ -14,7 +17,7 @@ import advances from "../../assets/icons/advances.png";
 import applications from "../../assets/icons/applications.png";
 import arching from "../../assets/icons/arching.png";
 import closeTurn from "../../assets/icons/closeTurn.png";
-import document from "../../assets/icons/document.png";
+import consultations from "../../assets/icons/consultations.png";
 import documents from "../../assets/icons/documents.png";
 import inventory from "../../assets/icons/inventory.png";
 import management from "../../assets/icons/management.png";
@@ -53,19 +56,19 @@ const routes = [
                 key: 'pqrs',
                 title: 'PQRS',
                 icon: pqrs,
-                component: OpenTurn,
+                component: Pqrs,
             },
             {
                 key: 'sinister',
                 title: 'Siniestro',
                 icon: sinister,
-                component: Movements,
+                component: Sinister,
             },
             {
                 key: 'applications',
                 title: 'Solicitudes',
                 icon: applications,
-                component: Inventory,
+                component: Applications,
             },
         ]
     },
@@ -100,10 +103,10 @@ const routes = [
         component: CloseTurn,
     },
     {
-        key: 'document',
-        title: 'Documento',
-        icon: document,
-        component: Document,
+        key: 'consultations',
+        title: 'Consultas',
+        icon: consultations,
+        component: Consultations,
     },
     {
         key: 'product-purchases',
