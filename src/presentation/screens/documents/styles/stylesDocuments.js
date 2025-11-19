@@ -50,9 +50,40 @@ const stylesDocuments = StyleSheet.create({
         marginTop: 15,
         //marginBottom: 15,
     },
+    textContent: {
+        color: "#005A6D",
+        fontSize: 18
+    },
     iconInput: {
         width: 18,
         height: 18,
+    },
+    card: {
+        marginTop: 30,
+        backgroundColor: "#FFFFFF"
+    },
+    contentCard: {
+        flexDirection: "row",
+        alignItems: "center"
+    },
+    imageDocument: {
+        width: 80,
+        height: 60,
+        marginBottom: -10,
+    },
+    iconDocument: {
+        width: 25,
+        height: 25, 
+        marginLeft: "auto"
+    },
+    titleCard: {
+        fontSize: 14,
+        color: "#666666",
+    },
+    subtitleCard: {
+        color: "#8C8C8C",
+        fontSize: 12,
+        marginLeft: 10,
     },
 })
 

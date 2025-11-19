@@ -27,7 +27,7 @@ const DocumentsScreen = () => {
                         </View>
                         <View style={stylesDocuments.greenLine} />
                         <View style={{ flex: 1, marginTop: 60, }}>
-                            <Text>Documentos Generales y De Parqueadero</Text>
+                            <Text style={stylesDocuments.textContent}>Documentos Generales y De Parqueadero</Text>
                             <View style={{ marginTop: 20 }}>
                                 <CustomTextInput
                                     label="Buscar..."
@@ -52,96 +52,96 @@ const DocumentsScreen = () => {
                                 />
                             </View>
                             <View>
-                                <Card style={{ marginTop: 30, backgroundColor: "#FFFFFF" }}>
+                                <Card style={ stylesDocuments.card }>
                                     <Card.Content>
-                                        <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                        <View style={ stylesDocuments.contentCard }>
                                             <Image
                                                 source={require("../../../../assets/images/greenDocumentIcon.png")}
-                                                style={{ width: 80, height: 60, marginTop: 5, marginLeft: -15 }}
+                                                style={ stylesDocuments.imageDocument }
                                             />
                                             <View>
-                                                <Text>Lorem ipsum</Text>
-                                                <Text>dd/mm/aaaa</Text>
+                                                <Text style={ stylesDocuments.titleCard }>Lorem ipsum</Text>
+                                                <Text style={ stylesDocuments.subtitleCard }>dd/mm/aaaa</Text>
                                             </View>
                                             <Image
                                                 source={require("../../../../assets/icons/downloadIcon.png")}
-                                                style={{ width: 30, height: 30, marginLeft: "auto" }}
+                                                style={ stylesDocuments.iconDocument }
                                             />
                                         </View>
                                     </Card.Content>
                                 </Card>
 
-                                <Card style={{ marginTop: 30, backgroundColor: "#FFFFFF" }}>
+                                <Card style={ stylesDocuments.card }>
                                     <Card.Content>
-                                        <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                        <View style={ stylesDocuments.contentCard }>
                                             <Image
                                                 source={require("../../../../assets/images/yellowDocumentIcon.png")}
-                                                style={{ width: 80, height: 60, marginTop: 5, marginLeft: -15 }}
+                                                style={ stylesDocuments.imageDocument }
                                             />
                                             <View>
-                                                <Text>Lorem ipsum</Text>
-                                                <Text>dd/mm/aaaa</Text>
+                                                <Text style={ stylesDocuments.titleCard }>Lorem ipsum</Text>
+                                                <Text style={ stylesDocuments.subtitleCard }>dd/mm/aaaa</Text>
                                             </View>
                                             <Image
                                                 source={require("../../../../assets/icons/downloadIcon.png")}
-                                                style={{ width: 30, height: 30, marginLeft: "auto" }}
+                                                style={ stylesDocuments.iconDocument }
                                             />
                                         </View>
                                     </Card.Content>
                                 </Card>
 
-                                <Card style={{ marginTop: 30, backgroundColor: "#FFFFFF" }}>
+                                <Card style={ stylesDocuments.card }>
                                     <Card.Content>
-                                        <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                        <View style={ stylesDocuments.contentCard }>
                                             <Image
                                                 source={require("../../../../assets/images/blueDocumentIcon.png")}
-                                                style={{ width: 80, height: 60, marginTop: 5, marginLeft: -15 }}
+                                                style={ stylesDocuments.imageDocument }
                                             />
                                             <View>
-                                                <Text>Lorem ipsum</Text>
-                                                <Text>dd/mm/aaaa</Text>
+                                                <Text style={ stylesDocuments.titleCard }>Lorem ipsum</Text>
+                                                <Text style={ stylesDocuments.subtitleCard }>dd/mm/aaaa</Text>
                                             </View>
                                             <Image
                                                 source={require("../../../../assets/icons/downloadIcon.png")}
-                                                style={{ width: 30, height: 30, marginLeft: "auto" }}
+                                                style={ stylesDocuments.iconDocument }
                                             />
                                         </View>
                                     </Card.Content>
                                 </Card>
 
-                                <Card style={{ marginTop: 30, backgroundColor: "#FFFFFF" }}>
+                                <Card style={stylesDocuments.card }>
                                     <Card.Content>
-                                        <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                        <View style={ stylesDocuments.contentCard }>
                                             <Image
                                                 source={require("../../../../assets/images/redDocumentIcon.png")}
-                                                style={{ width: 80, height: 60, marginTop: 5, marginLeft: -15 }}
+                                                style={ stylesDocuments.imageDocument }
                                             />
                                             <View>
-                                                <Text>Lorem ipsum</Text>
-                                                <Text>dd/mm/aaaa</Text>
+                                                <Text style={ stylesDocuments.titleCard }>Lorem ipsum</Text>
+                                                <Text style={ stylesDocuments.subtitleCard }>dd/mm/aaaa</Text>
                                             </View>
                                             <Image
                                                 source={require("../../../../assets/icons/downloadIcon.png")}
-                                                style={{ width: 30, height: 30, marginLeft: "auto" }}
+                                                style={ stylesDocuments.iconDocument }
                                             />
                                         </View>
                                     </Card.Content>
                                 </Card>
 
-                                <Card style={{ marginTop: 30, backgroundColor: "#FFFFFF" }}>
+                                <Card style={ stylesDocuments.card }>
                                     <Card.Content>
-                                        <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                        <View style={ stylesDocuments.contentCard }>
                                             <Image
                                                 source={require("../../../../assets/images/greenDocumentIcon.png")}
-                                                style={{ width: 80, height: 60, marginTop: 5, marginLeft: -15 }}
+                                                style={ stylesDocuments.imageDocument }
                                             />
                                             <View>
-                                                <Text>Lorem ipsum</Text>
-                                                <Text>dd/mm/aaaa</Text>
+                                                <Text style={ stylesDocuments.titleCard }>Lorem ipsum</Text>
+                                                <Text style={ stylesDocuments.subtitleCard }>dd/mm/aaaa</Text>
                                             </View>
                                             <Image
                                                 source={require("../../../../assets/icons/downloadIcon.png")}
-                                                style={{ width: 30, height: 30, marginLeft: "auto" }}
+                                                style={ stylesDocuments.iconDocument }
                                             />
                                         </View>
                                     </Card.Content>

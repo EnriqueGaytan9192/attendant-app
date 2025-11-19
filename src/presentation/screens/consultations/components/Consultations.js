@@ -25,6 +25,9 @@ const ConsultationsScreen = () => {
                             </View>
                         </View>
                         <View style={stylesConsultations.greenLine} />
+                        <View style={{ flex: 1, marginTop: 20, borderColor: "#000", borderWidth: 2 }}>
+                            
+                        </View>
                     </View>
                 </View>
             </ScrollView>
