@@ -11,8 +11,14 @@ const ArchingSelector = () => {
     const screenWidth = Dimensions.get('window').width;
     const {
         docType,
+        turnos,
+        arqueoValue,
+        isFocused,
         setDocType,
-        turnos
+        setArqueoValue,
+        setIsFocused,
+        formatThousands,
+        formatCurrency
     } = useArchingSelectorHook();
 
     return (
@@ -67,20 +73,21 @@ const ArchingSelector = () => {
                                 <Animatable.View style={{ width: '100%', marginBottom: 15, marginTop: 50 }} /*ref={emailRef}*/>
                                     <CustomTextInput
                                         label="Valor del Arqueo *"
-                                        //value={form.email}
-                                        /*onChangeText={(text) => {
-                                            const hasSpaces = /\s/.test(text);
-                                            const noSpaces = text.replace(/\s/g, '');
-                                            handleDataForm('email', noSpaces);
-
-                                            if (hasSpaces) {
-                                                showAlert("warning", "El nombre de usuario no puede contener espacios.");
-                                            }
-                                        }}*/
+                                        value={
+                                            isFocused
+                                                ? arqueoValue
+                                                : formatCurrency(arqueoValue)
+                                        }
+                                        onChangeText={(text) => {
+                                            const cleaned = text.replace(/\D/g, '');
+                                            const formatted = formatThousands(cleaned);
+                                            setArqueoValue(formatted);
+                                        }}
+                                        onFocus={() => setIsFocused(true)}
+                                        onBlur={() => setIsFocused(false)}
                                         mode="outlined"
                                         theme={{
                                             colors: {
-                                                //outline: showErrors && !form.email ? 'red' : "#E5E5E5",
                                                 outline: "#E5E5E5",
                                                 primary: "#90D400",
                                             },
@@ -96,7 +103,7 @@ const ArchingSelector = () => {
                                                 )}
                                             />
                                         }
-                                        keyboardType="default"
+                                        keyboardType="numeric"
                                     />
                                 </Animatable.View>
                                 <View
@@ -106,7 +113,7 @@ const ArchingSelector = () => {
                                         marginTop: "auto"
                                     }}
                                 >
-                                    <Button mode="contained" style={stylesArchingSelector.button} /*onPress={handleLogin}*/ onPress={() => {}}>
+                                    <Button mode="contained" style={stylesArchingSelector.button} /*onPress={handleLogin}*/ onPress={() => { }}>
                                         Guardar
                                     </Button>
                                 </View>

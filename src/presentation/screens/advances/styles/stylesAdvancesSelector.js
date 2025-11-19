@@ -66,6 +66,25 @@ const stylesAdvancesSelector = StyleSheet.create({
         marginTop: 15,
         //marginBottom: 15,
     },
+    titleMenu: {
+        fontSize: 18,
+        color: "#666666",
+    },
+    subtitleMenu: {
+        color: "#8C8C8C",
+        fontSize: 16,
+        marginLeft: 10,
+        marginTop: 10,
+    },
+    iconInput: {
+        width: 28,
+        height: 28,
+    },
+    button: {
+        backgroundColor: '#80C300',
+        width: "15%",
+        borderRadius: 6,
+    },
 })
 
 export default stylesAdvancesSelector;

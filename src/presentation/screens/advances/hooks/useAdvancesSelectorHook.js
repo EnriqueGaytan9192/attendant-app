@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-const useArchingSelectorHook = () => {
+const useAdvancesSelectorHook = () => {
     const [docType, setDocType] = useState("");
-    const [arqueoValue, setArqueoValue] = useState("");
+    const [avanceValue, setAvanceValue] = useState("");
     const [isFocused, setIsFocused] = useState(false);
 
     const turnos = [
@@ -15,11 +15,11 @@ const useArchingSelectorHook = () => {
     ];
 
     const formatThousands = (value) => {
-        if (!value) return "$ 0.00";
+        if (!value) return "";
         const numericValue = value.replace(/\D/g, "");
         return new Intl.NumberFormat("es-CO").format(Number(numericValue));
     };
-
+    
     const formatCurrency = (value) => {
         if (!value) return "$ 0.00";
 
@@ -36,14 +36,14 @@ const useArchingSelectorHook = () => {
     return {
         docType,
         turnos,
-        arqueoValue,
+        avanceValue,
         isFocused,
         setDocType,
-        setArqueoValue,
+        setAvanceValue,
         setIsFocused,
         formatThousands,
         formatCurrency
     }
 }
 
-export default useArchingSelectorHook;
+export default useAdvancesSelectorHook;

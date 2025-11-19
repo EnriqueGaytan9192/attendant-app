@@ -9,8 +9,8 @@ const stylesDocuments = StyleSheet.create({
     },
     subContainer: {
         flex: 1,
-        borderColor: '#00d800ff',
-        borderWidth: 5,
+        //borderColor: '#00d800ff',
+        //borderWidth: 5,
         marginLeft: 65,
         marginRight: 45,
         marginVertical: 20,
@@ -49,6 +49,10 @@ const stylesDocuments = StyleSheet.create({
         borderRadius: 10,
         marginTop: 15,
         //marginBottom: 15,
+    },
+    iconInput: {
+        width: 18,
+        height: 18,
     },
 })
 
