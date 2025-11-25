@@ -38,7 +38,7 @@ const stylesConsultations = StyleSheet.create({
         marginBottom: 2.5,
     },
     textSubtitle: {
-        fontSize: 18,
+        fontSize: 20,
         color: '#8C8C8C',
         marginTop: 2.5,
     },
@@ -49,6 +49,55 @@ const stylesConsultations = StyleSheet.create({
         borderRadius: 10,
         marginTop: 15,
         //marginBottom: 15,
+    },
+    textContent: {
+        color: "#80C300",
+        fontSize: 20,
+    },
+    inputContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 10,
+        justifyContent: 'space-between',
+        //borderColor: "#000",
+        //borderWidth: 3
+    },
+    input: {
+        backgroundColor: "#FFFFFF",
+        fontSize: 16,
+        marginBottom: 5,
+        width: '685%',
+    },
+    iconInput: {
+        width: 18,
+        height: 18
+    },
+    button: {
+        backgroundColor: "#90D400",
+        borderTopRightRadius: 8,
+        borderTopLeftRadius: 8,
+        borderBottomRightRadius: 8,
+        borderBottomLeftRadius: 8,
+        height: 48,
+        justifyContent: "center",
+        paddingHorizontal: 65,
+    },
+    greyLine: {
+        width: "100%",
+        height: 1,
+        backgroundColor: "#E5E5E5",
+        borderRadius: 10,
+        marginTop: 35,
+        //marginBottom: 15,
+    },
+    titleContent: {
+        color: "#005A6D",
+        fontSize: 20,
+    },
+    subtitleContent: {
+        color: "#666666",
+        fontSize: 16,
+        marginTop: 5
     },
 })
 

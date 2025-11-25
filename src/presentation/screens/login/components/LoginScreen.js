@@ -26,7 +26,7 @@ const LoginScreen = () => {
         fakeLogin
     } = useLoginHook();
     useInternetAlerts();
-    
+
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <SafeAreaView style={{ flex: 1 }}>
@@ -161,7 +161,7 @@ const LoginScreen = () => {
                                     marginRight: 10
                                 }}
                             >
-                                Versión 1.0.9
+                                Versión 1.0.10
                             </Text>
                         </View>
                     </View>
