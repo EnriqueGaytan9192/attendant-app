@@ -9,7 +9,8 @@ import Pqrs from "../../app/management/pqrs";
 import Sinister from "../../app/management/sinister";
 import Movements from "../../app/movements";
 import OpenTurn from "../../app/open_turn";
-import PayrollDeductions from "../../app/payroll_deductions";
+import AreaManagers from "../../app/payroll_deductions/area_managers";
+import Operators from "../../app/payroll_deductions/operators";
 import ProductPurchases from "../../app/product_purchases";
 import Profile from "../../app/profile";
 
@@ -18,6 +19,7 @@ import applications from "../../assets/icons/applications.png";
 import arching from "../../assets/icons/arching.png";
 import closeTurn from "../../assets/icons/closeTurn.png";
 import consultations from "../../assets/icons/consultations.png";
+import deductionsNomina from "../../assets/icons/deductionsNomina.png";
 import documents from "../../assets/icons/documents.png";
 import inventory from "../../assets/icons/inventory.png";
 import management from "../../assets/icons/management.png";
@@ -82,7 +84,20 @@ const routes = [
         key: 'payroll-deductions',
         title: 'Descuentos de Nomina',
         icon: payrollDeductions,
-        component: PayrollDeductions,
+        children: [
+            {
+                key: 'operators',
+                title: 'Operarios',
+                icon: deductionsNomina,
+                component: Operators,
+            },
+            {
+                key: 'area-managers',
+                title: 'Jefes',
+                icon: deductionsNomina,
+                component: AreaManagers,
+            },
+        ]
     },
     {
         key: 'advances',

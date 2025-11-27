@@ -1,16 +1,16 @@
-const { StyleSheet } = require("react-native");
+import { StyleSheet } from "react-native";
 
-const stylesOpenTurn = StyleSheet.create({
+const stylesOperatorsScreen = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'white',
-        borderColor: '#d80000ff',
-        borderWidth: 5,
+        //borderColor: '#d80000ff',
+        //borderWidth: 5,
     },
     subContainer: {
         flex: 1,
-        borderColor: '#00d800ff',
-        borderWidth: 5,
+        //borderColor: '#00d800ff',
+        //borderWidth: 5,
         marginLeft: 65,
         marginRight: 45,
         marginVertical: 20,
@@ -24,8 +24,8 @@ const stylesOpenTurn = StyleSheet.create({
         marginLeft: 30,
     },
     iconTitle: {
-        height: 55,
-        width: 42,
+        height: 38,
+        width: 45,
         marginTop: 5
     },
     textContainer: {
@@ -52,4 +52,4 @@ const stylesOpenTurn = StyleSheet.create({
     },
 })
 
-export default stylesOpenTurn;
+export default stylesOperatorsScreen;
