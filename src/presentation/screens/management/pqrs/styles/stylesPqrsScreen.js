@@ -9,8 +9,8 @@ const stylesPqrsScreen = StyleSheet.create({
     },
     subContainer: {
         flex: 1,
-        borderColor: '#00d800ff',
-        borderWidth: 5,
+        //borderColor: '#00d800ff',
+        //borderWidth: 5,
         marginLeft: 65,
         marginRight: 45,
         marginVertical: 20,

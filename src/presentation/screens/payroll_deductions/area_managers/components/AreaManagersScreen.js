@@ -58,7 +58,7 @@ const AreaManagersScreen = () => {
                         <View style={{ flexDirection: "row", justifyContent: 'flex-end' }}>
                             <Animatable.View style={{ width: "35%", marginBottom: 15, marginTop: 50 }} ref={searchInputRef}>
                                 <CustomTextInput
-                                    label="Buscar..."
+                                    label="Buscar...."
                                     mode="outlined"
                                     value={search}
                                     onChangeText={(t) => {
