@@ -4,13 +4,13 @@ const stylesOpenTurn = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'white',
-        borderColor: '#d80000ff',
-        borderWidth: 5,
+        //borderColor: '#d80000ff',
+        //borderWidth: 5,
     },
     subContainer: {
         flex: 1,
-        borderColor: '#00d800ff',
-        borderWidth: 5,
+        //borderColor: '#00d800ff',
+        //borderWidth: 5,
         marginLeft: 65,
         marginRight: 45,
         marginVertical: 20,
@@ -49,6 +49,19 @@ const stylesOpenTurn = StyleSheet.create({
         borderRadius: 10,
         marginTop: 15,
         //marginBottom: 15,
+    },
+    vehiclesTotal: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 15,
+    },
+    vehiclesT: {
+      fontSize: 18,
+      color: "#005A6D",
+      fontWeight: 'medium'
+    },
+    dividerModal: {
+        marginVertical: -10,
     },
 })
 

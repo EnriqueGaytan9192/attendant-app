@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { Button, DataTable, Menu, Text } from "react-native-paper";
+import { DataTable, Text } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 const STATUS_STYLES = {
-    Activo: { bg: "#A7E52F", dot: "#6FB80D", text: "#ffffff" },
-    Inactivo: { bg: "#FF6B6B", dot: "#CC3B3B", text: "#ffffff" },
-    Justificado: { bg: "#FFA534", dot: "#D17C00", text: "#ffffff" },
+    Activo: { bg: "#90D400", dot: "#80C300", text: "#FFFFFF" },
+    Inactivo: { bg: "#FF6B6B", dot: "#CC3B3B", text: "#FFFFFF" },
+    Justificado: { bg: "#FFA000", dot: "#FF7D00", text: "#FFFFFF" },
 };
 
 const CustomDataTable = ({
@@ -33,7 +33,7 @@ const CustomDataTable = ({
 
                 {/* Encabezado */}
                 <DataTable>
-                    <View style={{ height: 3, backgroundColor: "#A6D400", }} />
+                    <View style={{ height: 2, backgroundColor: "#90D400", }} />
 
                     <DataTable.Header style={styles.header}>
                         {columns.map((col) => (
@@ -77,13 +77,13 @@ const CustomDataTable = ({
                             {/* Acciones */}
                             <DataTable.Cell style={styles.actionsCell}>
                                 <TouchableOpacity onPress={() => onView(row)}>
-                                    <Icon name="eye-outline" size={21} color="#6D6D6D" />
+                                    <Icon name="eye-outline" size={21} color="#666666" />
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => onEdit(row)} style={styles.actionButton}>
-                                    <Icon name="pencil-outline" size={21} color="#6D6D6D" />
+                                    <Icon name="pencil-outline" size={21} color="#666666" />
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => onDelete(row)} style={styles.actionButton}>
-                                    <Icon name="trash-can-outline" size={21} color="#6D6D6D" />
+                                    <Icon name="trash-can-outline" size={21} color="#666666" />
                                 </TouchableOpacity>
                             </DataTable.Cell>
                         </DataTable.Row>
@@ -92,10 +92,10 @@ const CustomDataTable = ({
 
             </View>
             {/* Pagination */}
-            <View style={styles.paginationContainer}>
+            {/*<View style={styles.paginationContainer}>
 
                 {/* SELECTOR DE ITEMS POR PÁGINA */}
-                <View style={styles.itemsPerPage}>
+                {/*<View style={styles.itemsPerPage}>
                     <Text style={styles.paginationLabel}>Items por página:</Text>
 
                     <Menu
@@ -128,21 +128,21 @@ const CustomDataTable = ({
                 </View>
 
                 {/* CONTADOR E ICONOS */}
-                <View style={styles.pageInfo}>
+                {/*<View style={styles.pageInfo}>
                     <Text style={styles.paginationLabel}>
                         {from + 1}-{to} de {totalItems}
                     </Text>
 
                     <TouchableOpacity disabled={page === 0} onPress={() => setPage(page - 1)}>
-                        <Icon name="chevron-left" size={25} color="#6D6D6D" />
+                        <Icon name="chevron-left" size={25} color="#666666" />
                     </TouchableOpacity>
 
                     <TouchableOpacity disabled={to >= totalItems} onPress={() => setPage(page + 1)}>
-                        <Icon name="chevron-right" size={25} color="#6D6D6D" />
+                        <Icon name="chevron-right" size={25} color="#666666" />
                     </TouchableOpacity>
                 </View>
 
-            </View>
+            </View>*/}
         </View>
     );
 };
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     },
     header: {
         borderBottomWidth: 2,
-        borderBottomColor: "#A7C957",
+        borderBottomColor: "#90D400",
     },
     headerCell: {
         justifyContent: "flex-start",

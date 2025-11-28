@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'; // Para al
 import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 import { persistReducer, persistStore } from 'redux-persist';
-import { authReducer } from './slices';
+import { authReducer, openTurnReducer } from './slices';
 
 // Configuración de persistencia
 const persistConfig = {
@@ -14,6 +14,7 @@ const persistConfig = {
 // Combinar reducers
 const rootReducer = combineReducers({
     auth: authReducer,
+    openTurn: openTurnReducer
 });
 
 // Reducer persistido
