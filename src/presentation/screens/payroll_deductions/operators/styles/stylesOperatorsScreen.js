@@ -50,6 +50,56 @@ const stylesOperatorsScreen = StyleSheet.create({
         marginTop: 15,
         //marginBottom: 15,
     },
+    contentSearch: {
+        flexDirection: "row",
+        justifyContent: "flex-end",
+    },
+    animationSearch: {
+        width: '35%',
+        marginBottom: 15,
+        marginTop: 50
+    },
+    textInputSearch: {
+        backgroundColor: "#FFFFFF",
+        fontSize: 16
+    },
+    textInputIcon: {
+        width: 15,
+        height: 15
+    },
+    contentTable: { 
+        marginTop: 20 
+    },
+    cardTable: { 
+        elevation: 3,
+        paddingHorizontal: 10,
+        paddingVertical: 10,
+        borderRadius: 10,
+        backgroundColor: "#FFFFFF" 
+    },
+    headerTable: { 
+        borderTopColor: "#90D400", 
+        borderTopWidth: 2, 
+        borderBottomColor: "#90D400", 
+        borderBottomWidth: 2 
+    },
+    titleTable: { 
+        justifyContent: 'flex-start' 
+    },
+    textTitleTable: { 
+        fontWeight: "500", 
+        fontSize: 14, 
+        color: "#666666" 
+    },
+    rowTable: { 
+        borderBottomWidth: 1, 
+        borderBottomColor: "#eee" 
+    },
+    contentPagination: { 
+        flexDirection: "row", 
+        justifyContent: 'space-between', 
+        marginTop: 5 
+    }
 })
 
 export default stylesOperatorsScreen;

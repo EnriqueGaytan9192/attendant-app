@@ -161,7 +161,7 @@ const LoginScreen = () => {
                                     marginRight: 10
                                 }}
                             >
-                                Versión 1.0.10
+                                Versión 1.0.11
                             </Text>
                         </View>
                     </View>

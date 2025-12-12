@@ -2,7 +2,9 @@ import { Ionicons } from "@expo/vector-icons";
 import { Dimensions, Image, Keyboard, ScrollView, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { Card, DataTable, Text, TextInput } from "react-native-paper";
+import { useDispatch } from "react-redux";
 import CustomTextInput from "../../../../../common/components/CustomTextInput";
+import { setSelectedOperator, showModalOperators } from "../../../../../state/slices/payrollDeductionsSlice";
 import useOperatorsScreenHook from "../hooks/useOperatorsScreenHook";
 import stylesOperatorsScreen from "../styles/stylesOperatorsScreen";
 
@@ -27,6 +29,7 @@ const OperatorsScreen = () => {
         getStatusBg,
         getStatusDot,
     } = useOperatorsScreenHook();
+    const dispatch = useDispatch();
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -47,8 +50,8 @@ const OperatorsScreen = () => {
                             </View>
                         </View>
                         <View style={stylesOperatorsScreen.greenLine} />
-                        <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-                            <Animatable.View style={{ width: '35%', marginBottom: 15, marginTop: 50 }} ref={searchInputRef}>
+                        <View style={stylesOperatorsScreen.contentSearch}>
+                            <Animatable.View style={stylesOperatorsScreen.animationSearch} ref={searchInputRef}>
                                 <CustomTextInput
                                     label="Buscar...."
                                     mode="outlined"
@@ -63,13 +66,13 @@ const OperatorsScreen = () => {
                                             primary: "#90D400",
                                         },
                                     }}
-                                    style={{ backgroundColor: "#FFFFFF", fontSize: 16 }}
+                                    style={stylesOperatorsScreen.textInputSearch}
                                     left={
                                         <TextInput.Icon
                                             icon={() => (
                                                 <Image
                                                     source={require("../../../../../assets/icons/searchIcon.png")}
-                                                    style={{ width: 15, height: 15 }}
+                                                    style={stylesOperatorsScreen.textInputIcon}
                                                 />
                                             )}
                                         />
@@ -77,36 +80,36 @@ const OperatorsScreen = () => {
                                 />
                             </Animatable.View>
                         </View>
-                        <View style={{ marginTop: 20 }}>
+                        <View style={stylesOperatorsScreen.contentTable}>
                             <Animatable.View ref={tableRef}>
-                                <Card style={{ elevation: 3, paddingHorizontal: 10, paddingVertical: 10, borderRadius: 10, backgroundColor: "#FFFFFF" }}>
+                                <Card style={stylesOperatorsScreen.cardTable}>
                                     <DataTable>
-                                        <DataTable.Header style={{ borderTopColor: "#90D400", borderTopWidth: 2, borderBottomColor: "#90D400", borderBottomWidth: 2 }}>
-                                            <DataTable.Title style={{ justifyContent: 'flex-start' }}>
-                                                <Text style={{ fontWeight: "500", fontSize: 14, color: "#666666" }}>Fecha De Descuento</Text>
+                                        <DataTable.Header style={stylesOperatorsScreen.headerTable}>
+                                            <DataTable.Title style={stylesOperatorsScreen.titleTable}>
+                                                <Text style={stylesOperatorsScreen.textTitleTable}>Fecha De Descuento</Text>
                                             </DataTable.Title>
-                                            <DataTable.Title style={{ justifyContent: 'flex-start' }}>
-                                                <Text style={{ fontWeight: "500", fontSize: 14, color: "#666666" }}>Valor Descuento</Text>
+                                            <DataTable.Title style={stylesOperatorsScreen.titleTable}>
+                                                <Text style={stylesOperatorsScreen.textTitleTable}>Valor Descuento</Text>
                                             </DataTable.Title>
-                                            <DataTable.Title style={{ justifyContent: 'flex-start' }}>
-                                                <Text style={{ fontWeight: "500", fontSize: 14, color: "#666666" }}>Tipo De Descuento</Text>
+                                            <DataTable.Title style={stylesOperatorsScreen.titleTable}>
+                                                <Text style={stylesOperatorsScreen.textTitleTable}>Tipo De Descuento</Text>
                                             </DataTable.Title>
-                                            <DataTable.Title style={{ justifyContent: 'flex-start' }}>
-                                                <Text style={{ fontWeight: "500", fontSize: 14, color: "#666666" }}>Estado</Text>
+                                            <DataTable.Title style={stylesOperatorsScreen.titleTable}>
+                                                <Text style={stylesOperatorsScreen.textTitleTable}>Estado</Text>
                                             </DataTable.Title>
-                                            <DataTable.Title style={{ justifyContent: 'flex-start' }}>
-                                                <Text style={{ fontWeight: "500", fontSize: 14, color: "#666666" }}>Acciónes</Text>
+                                            <DataTable.Title style={stylesOperatorsScreen.titleTable}>
+                                                <Text style={stylesOperatorsScreen.textTitleTable}>Acciónes</Text>
                                             </DataTable.Title>
                                         </DataTable.Header>
 
-                                        <ScrollView 
+                                        <ScrollView
                                             style={{ maxHeight: 240 }}
                                             nestedScrollEnabled
                                         >
                                             {paginatedData.map((row, idx) => (
                                                 <DataTable.Row
                                                     key={idx}
-                                                    style={{ borderBottomWidth: 1, borderBottomColor: "#eee" }}
+                                                    style={stylesOperatorsScreen.rowTable}
                                                 >
                                                     <DataTable.Cell>{row.fechaDescuento}</DataTable.Cell>
                                                     <DataTable.Cell>{row.valorDescuento}</DataTable.Cell>
@@ -133,7 +136,11 @@ const OperatorsScreen = () => {
                                                     </DataTable.Cell>
 
                                                     <DataTable.Cell>
-                                                        <TouchableOpacity>
+                                                        <TouchableOpacity onPress={() => {
+                                                                dispatch(setSelectedOperator(row));
+                                                                dispatch(showModalOperators(true));
+                                                            }}
+                                                        >
                                                             <Ionicons name="eye-outline" size={22} color="#666" />
                                                         </TouchableOpacity>
                                                     </DataTable.Cell>
@@ -142,7 +149,7 @@ const OperatorsScreen = () => {
                                         </ScrollView>
                                     </DataTable>
                                 </Card>
-                                <View style={{ flexDirection: "row", justifyContent: 'space-between', marginTop: 5 }}>
+                                <View style={stylesOperatorsScreen.contentPagination}>
                                     <View style={{ flexDirection: "row", alignItems: "center" }}>
                                         <Text style={{ marginRight: 8 }}>Items por página:</Text>
 
