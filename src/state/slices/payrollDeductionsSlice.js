@@ -8,6 +8,7 @@ const initialState = {
     
     //Descuento de Nómina: Jefes
     isModalManagersVisible: false,
+    selectedManagers: null,
 };
 
 const payrollDeductionsSlice = createSlice({
@@ -21,13 +22,18 @@ const payrollDeductionsSlice = createSlice({
         setSelectedOperator(state, action) {
             //console.log("Operador en Redux: ", action.payload)
             state.selectedOperator = action.payload;
-            console.log("Operador en Slice: ", state.selectedOperator)
+            console.log("Operador en Slice: ", state.selectedOperator);
         },
 
         //Descuento de Nómina: Jefes
         showModalManagers(state, action) {
             state.isModalManagersVisible = action.payload;
         },
+        setSelectedManagers(state, action) {
+            state.selectedManagers = action.payload;
+            console.log("Jefe en Slice: ", state.selectedManagers);
+        },
+
         resetAuth: () => initialState,
     }
 });
@@ -36,6 +42,7 @@ export const {
     showModalOperators,
     showModalManagers,
     setSelectedOperator,
+    setSelectedManagers,
     resetAuth,
 } = payrollDeductionsSlice.actions;
 

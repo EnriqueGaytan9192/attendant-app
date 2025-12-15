@@ -1,16 +1,10 @@
 import { Ionicons } from "@expo/vector-icons";
-import {
-    Dimensions,
-    Image,
-    Keyboard,
-    ScrollView,
-    TouchableOpacity,
-    TouchableWithoutFeedback,
-    View
-} from "react-native";
+import { Dimensions, Image, Keyboard, ScrollView, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { Card, DataTable, Text, TextInput } from "react-native-paper";
+import { useDispatch } from "react-redux";
 import CustomTextInput from "../../../../../common/components/CustomTextInput";
+import { setSelectedManagers, showModalManagers } from "../../../../../state/slices/payrollDeductionsSlice";
 import useAreaManagersScreenHook from "../hooks/useAreaManagersScreenHook";
 import stylesAreaManagersScreen from "../styles/stylesAreaManagersScreen";
 
@@ -35,6 +29,7 @@ const AreaManagersScreen = () => {
         getStatusBg,
         getStatusDot,
     } = useAreaManagersScreenHook();
+    const dispatch = useDispatch();
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -89,7 +84,7 @@ const AreaManagersScreen = () => {
                             <Animatable.View ref={tableRef}>
                                 <Card style={{ elevation: 3, paddingHorizontal: 10, paddingVertical: 10, borderRadius: 10, backgroundColor: "#FFFFFF" }}>
                                     <DataTable>
-                                        <DataTable.Header style={{ borderTopColor: "#90D400", borderTopWidth: 2, borderBottomColor: "#90D400", borderBottomColor: 2 }}>
+                                        <DataTable.Header style={{ borderTopColor: "#90D400", borderTopWidth: 2, borderBottomColor: "#90D400", borderBottomWidth: 2 }}>
                                             <DataTable.Title style={{ justifyContent: "flex-start" }}>
                                                 <Text style={{ fontWeight: "500", fontSize: 14, color: "#666666" }}>Fecha De Descuento</Text>
                                             </DataTable.Title>
@@ -149,7 +144,10 @@ const AreaManagersScreen = () => {
                                                     </DataTable.Cell>
 
                                                     <DataTable.Cell>
-                                                        <TouchableOpacity>
+                                                        <TouchableOpacity onPress={() => {
+                                                            dispatch(setSelectedManagers(row));
+                                                            dispatch(showModalManagers(true));
+                                                        }}>
                                                             <Ionicons name="eye-outline" size={22} color="#666" />
                                                         </TouchableOpacity>
                                                     </DataTable.Cell>

@@ -4,31 +4,31 @@ import * as Animatable from "react-native-animatable";
 import { Button, Checkbox, Divider, Text } from "react-native-paper";
 import { showAlert } from "../../../../../common/components/AlertManager";
 import CustomTextInput from "../../../../../common/components/CustomTextInput";
-import useViewOperatorsModalHook from "../hooks/useViewOperatorsModalHook";
-import stylesViewOperatorsModal from "../styles/stylesViewOperatorsModal";
+import useViewManagersModalHook from "../hooks/useViewManagersModalHook";
+import stylesViewManagersModal from "../styles/stylesViewManagersModal";
 
-const ViewOperatorsModal = () => {
+const ViewManagersModal = () => {
     const {
-        operator,
+        jefe,
         isVisibleModal,
         currentStep,
-        selectedOptionOperators,
+        selectedOptionManagers,
         justifyRef,
         declineRef,
         signRef,
         nextStep,
         prevStep,
         closeModal,
-        optionChange
-    } = useViewOperatorsModalHook();
+        optionChange,
+    } = useViewManagersModalHook();
 
     useEffect(() => {
-        if (isVisibleModal && operator === null) {
+        if (isVisibleModal && jefe === null) {
             showAlert("error", "No hay información disponible del operador.");
         }
-    }, [isVisibleModal, operator]);
+    }, [isVisibleModal, jefe]);
 
-    if (!operator) return null;
+    if (!jefe) return null;
 
     const steps = {
         1: (
@@ -37,75 +37,75 @@ const ViewOperatorsModal = () => {
                     keyboardShouldPersistTaps="handled"
                 >
                     <View>
-                        <View style={stylesViewOperatorsModal.titleContent}>
-                            <View style={stylesViewOperatorsModal.leftGroup}>
-                                <Text style={stylesViewOperatorsModal.title}>
+                        <View style={stylesViewManagersModal.titleContent}>
+                            <View style={stylesViewManagersModal.leftGroup}>
+                                <Text style={stylesViewManagersModal.title}>
                                     Autorización de Descuentos
                                 </Text>
                             </View>
                             <TouchableOpacity onPress={closeModal}>
                                 <Image
                                     source={require("../../../../../assets/icons/close.png")}
-                                    style={stylesViewOperatorsModal.icon}
+                                    style={stylesViewManagersModal.icon}
                                 />
                             </TouchableOpacity>
                         </View>
-                        <Divider style={stylesViewOperatorsModal.divider} />
+                        <Divider style={stylesViewManagersModal.divider} />
                         <View>
-                            <View style={{ marginTop: 40 }}>
-                                <Text style={stylesViewOperatorsModal.textModalGray}>
+                            <View style={{ marginTop: 40}}>
+                                <Text style={stylesViewManagersModal.textModalGray}>
                                     Bogotá, {" "}
-                                    <Text style={stylesViewOperatorsModal.textModalGreen}>{operator.fechaDescuento}</Text>
+                                    <Text style={stylesViewManagersModal.textModalGreen}>{jefe.fechaDescuento}</Text>
                                 </Text>
                             </View>
-                            <View style={{ marginTop: 20 }}>
-                                <Text style={stylesViewOperatorsModal.textModalGray}>
-                                    Yo,{" "}
-                                    <Text style={stylesViewOperatorsModal.textModalGreen}>{operator.nombreOperador}</Text>
+                            <View style={{ marginTop: 20}}>
+                                <Text style={stylesViewManagersModal.textModalGray}>
+                                    Yo, {" "}
+                                    <Text style={stylesViewManagersModal.textModalGreen}>{jefe.operario}</Text>
                                     , mayor de edad, identificado con C.C. No.{" "}
-                                    <Text style={stylesViewOperatorsModal.textModalGreen}>{operator.noIdentificador}</Text>
+                                    <Text style={stylesViewManagersModal.textModalGreen}>{jefe.noIdentificador}</Text>
                                     {" "}en calidad de trabajador de{" "}
-                                    <Text style={stylesViewOperatorsModal.textModalGreen}>{operator.nombreEmpresa}</Text>
+                                    <Text style={stylesViewManagersModal.textModalGreen}>{jefe.nombreEmpresa}</Text>
                                     {" "}por medio del presente documento manifiesto que.
                                 </Text>
                             </View>
                             <View style={{ marginTop: 20 }}>
-                                <Text style={stylesViewOperatorsModal.textModalGray}>
+                                <Text style={stylesViewManagersModal.textModalGray}>
                                     1. Soy beneficiario de un préstamo efectuado por la empresa por valor de{" "}
-                                    <Text style={stylesViewOperatorsModal.textModalGreen}>{operator.valorDescuento}</Text>
+                                    <Text style={stylesViewManagersModal.textModalGreen}>{jefe.valorDescuento}</Text>
                                 </Text>
-                                <Text style={stylesViewOperatorsModal.textModalGray}>
+                                <Text style={stylesViewManagersModal.textModalGray}>
                                     2. Dicho préstamo fue desembolsado el ________________
                                 </Text>
-                                <Text style={stylesViewOperatorsModal.textModalGray}>
+                                <Text style={stylesViewManagersModal.textModalGray}>
                                     3. Dicho préstamo lo solicite por calamidad familiar.
                                 </Text>
-                                <Text style={stylesViewOperatorsModal.textModalGray}>
+                                <Text style={stylesViewManagersModal.textModalGray}>
                                     4. El plazo para pagar dicho préstamo es de _______ meses a partir de la fecha.
                                 </Text>
-                                <Text style={stylesViewOperatorsModal.textModalGray}>
+                                <Text style={stylesViewManagersModal.textModalGray}>
                                     5. Dicho préstamo no causa intereses durante el plazo de amortización.
                                 </Text>
                             </View>
                             <View style={{ marginTop: 20 }}>
-                                <Text style={stylesViewOperatorsModal.textModalGray}>
+                                <Text style={stylesViewManagersModal.textModalGray}>
                                     En virtud de lo anterior AUTORIZO a{" "}
-                                    <Text style={stylesViewOperatorsModal.textModalGreen}>{operator.nombreEmpresa}</Text>
+                                    <Text style={stylesViewManagersModal.textModalGreen}>{jefe.nombreEmpresa}</Text>
                                     {" "}a descontar quincenalmente de cada mes el valor de la cuota de amortización por este concepto.
                                 </Text>
                             </View>
                             <View style={{ marginTop: 20 }}>
-                                <Text style={stylesViewOperatorsModal.textModalGray}>
+                                <Text style={stylesViewManagersModal.textModalGray}>
                                     Al momento de pagarse la Prima Legal de Servicios en cada periodo semestral, AUTORIZO a{" "}
-                                    <Text style={stylesViewOperatorsModal.textModalGreen}>{operator.nombreEmpresa}</Text>
+                                    <Text style={stylesViewManagersModal.textModalGreen}>{jefe.nombreEmpresa}</Text>
                                     {" "}a descontar de su valor el 30% del mismo con destino a la amortización de la obligación de pago derivada del presente préstamo hecho por la Empresa.
                                 </Text>
                             </View>
                         </View>
-                        <View style={stylesViewOperatorsModal.buttonContent}>
+                        <View style={stylesViewManagersModal.buttonContent}>
                             <Button
                                 mode="outlined"
-                                style={stylesViewOperatorsModal.cancelModal}
+                                style={stylesViewManagersModal.cancelModal}
                                 textColor="#8C8C8C"
                                 onPress={closeModal}
                             >
@@ -113,7 +113,7 @@ const ViewOperatorsModal = () => {
                             </Button>
                             <Button
                                 mode="contained"
-                                style={stylesViewOperatorsModal.nextModal}
+                                style={stylesViewManagersModal.nextModal}
                                 onPress={nextStep}
                             >
                                 Continuar
@@ -131,30 +131,30 @@ const ViewOperatorsModal = () => {
                     <View>
                         <View>
                             <View style={{ marginTop: 50 }}>
-                                <Text style={stylesViewOperatorsModal.textModalGray}>
+                                <Text style={stylesViewManagersModal.textModalGray}>
                                     De igual manera AUTORIZO a{" "}
-                                    <Text style={stylesViewOperatorsModal.textModalGreen}>{operator.nombreEmpresa}</Text>
+                                    <Text style={stylesViewManagersModal.textModalGreen}>{jefe.nombreEmpresa}</Text>
                                     {" "}a descontar el saldo insoluto de este préstamo de mis prestaciones sociales el momento de registrarse la terminación de mi contrato de trabajo por cualquier causal.
                                 </Text>
                             </View>
                             <View style={{ marginTop: 20 }}>
-                                <Text style={stylesViewOperatorsModal.textModalGray}>
+                                <Text style={stylesViewManagersModal.textModalGray}>
                                     VALOR TOTAL DEL PRESTAMO{" "}
-                                    <Text style={stylesViewOperatorsModal.textModalGreen}>{operator.valorDescuento}</Text>
+                                    <Text style={stylesViewManagersModal.textModalGreen}>{jefe.valorDescuento}</Text>
                                 </Text>
                             </View>
                             <View style={{ marginTop: 20 }}>
-                                <Text style={stylesViewOperatorsModal.textModalGray}>
+                                <Text style={stylesViewManagersModal.textModalGray}>
                                     EL TRABAJADOR{" "}
-                                    <Text style={stylesViewOperatorsModal.textModalGreen}>{operator.nombreOperador}</Text>
+                                    <Text style={stylesViewManagersModal.textModalGreen}>{jefe.operario}</Text>
                                 </Text>
-                                <Text style={stylesViewOperatorsModal.textModalGray}>
+                                <Text style={stylesViewManagersModal.textModalGray}>
                                     C.C. No.{" "}
-                                    <Text style={stylesViewOperatorsModal.textModalGreen}>{operator.noIdentificador}</Text>
+                                    <Text style={stylesViewManagersModal.textModalGreen}>{jefe.noIdentificador}</Text>
                                 </Text>
-                                <Text style={stylesViewOperatorsModal.textModalGray}>
+                                <Text style={stylesViewManagersModal.textModalGray}>
                                     Centro de costos:{" "}
-                                    <Text style={stylesViewOperatorsModal.textModalGreen}>{operator.centroCostos}</Text>
+                                    <Text style={stylesViewManagersModal.textModalGreen}>{jefe.centroCostos}</Text>
                                 </Text>
                             </View>
                             <View style={{ marginTop: 20, flexDirection: 'row' }}>
@@ -162,7 +162,7 @@ const ViewOperatorsModal = () => {
                                     <Checkbox
                                         color="#90D400"
                                         uncheckedColor="#68AF00"
-                                        status={selectedOptionOperators === 'justificar' ? 'checked' : 'unchecked'}
+                                        status={selectedOptionManagers === 'justificar' ? 'checked' : 'unchecked'}
                                         onPress={() => optionChange('justificar')}
                                     />
                                     <Text style={{ fontSize: 16, color:"#666666" }}>Justificar</Text>
@@ -171,7 +171,7 @@ const ViewOperatorsModal = () => {
                                     <Checkbox
                                         color="#90D400"
                                         uncheckedColor="#68AF00"
-                                        status={selectedOptionOperators === 'rechazar' ? 'checked' : 'unchecked'}
+                                        status={selectedOptionManagers === 'rechazar' ? 'checked' : 'unchecked'}
                                         onPress={() => optionChange('rechazar')}
                                     />
                                     <Text style={{ fontSize: 16, color:"#666666" }}>Rechazar</Text>
@@ -180,14 +180,14 @@ const ViewOperatorsModal = () => {
                                     <Checkbox
                                         color="#90D400"
                                         uncheckedColor="#68AF00"
-                                        status={selectedOptionOperators === 'firmar' ? 'checked' : 'unchecked'}
+                                        status={selectedOptionManagers === 'firmar' ? 'checked' : 'unchecked'}
                                         onPress={() => optionChange('firmar')}
                                     />
                                     <Text style={{ fontSize: 16, color:"#666666" }}>Firmar</Text>
                                 </View>
                             </View>
                             <View style={{ marginTop: 20, marginBottom: 130 }}>
-                                {selectedOptionOperators  === 'justificar' && (
+                                {selectedOptionManagers  === 'justificar' && (
                                     <View>
                                         <Animatable.View ref={justifyRef}>
                                             <CustomTextInput
@@ -207,7 +207,7 @@ const ViewOperatorsModal = () => {
                                         </Animatable.View>
                                     </View>
                                 )}
-                                {selectedOptionOperators  === 'rechazar' && (
+                                {selectedOptionManagers  === 'rechazar' && (
                                     <View>
                                         <Animatable.View ref={declineRef}>
                                             <CustomTextInput
@@ -227,7 +227,7 @@ const ViewOperatorsModal = () => {
                                         </Animatable.View>
                                     </View>
                                 )}
-                                {selectedOptionOperators  === 'firmar' && (
+                                {selectedOptionManagers  === 'firmar' && (
                                     <View>
                                         <Text style={{ fontSize: 17, color: '#005A6D' }}>Firma Operario</Text>
                                     </View>
@@ -240,7 +240,7 @@ const ViewOperatorsModal = () => {
         )
     }
 
-    return <>{steps[currentStep]}</>;
+    return <>{steps[currentStep]}</>
 }
 
-export default ViewOperatorsModal;
+export default ViewManagersModal;

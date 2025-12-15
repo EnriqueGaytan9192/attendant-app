@@ -1,15 +1,15 @@
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../../../../state/hooks";
-import { showModalOperators } from "../../../../../state/slices/payrollDeductionsSlice";
+import { showModalManagers } from "../../../../../state/slices/payrollDeductionsSlice";
 
-const useViewOperatorsModalHook = () => {
-    const operator = useAppSelector((state) => state.payrollDeductions.selectedOperator);
-    const isVisibleModal = useAppSelector((state) => state.payrollDeductions.isModalOperatorsVisible);
+const useViewManagersModalHook = () => {
+    const jefe = useAppSelector((state) => state.payrollDeductions.selectedManagers);
+    const isVisibleModal = useAppSelector((state) => state.payrollDeductions.isModalManagersVisible);
 
     const dispatch = useDispatch();
     const [currentStep, setCurrentStep] = useState(1);
-    const [selectedOptionOperators, setSelectedOptionOperators] = useState('justificar');
+    const [selectedOptionManagers, setSelectedOptionManagers] = useState('justificar');
     const justifyRef = useRef(null);
     const declineRef = useRef(null);
     const signRef = useRef(null);
@@ -21,17 +21,17 @@ const useViewOperatorsModalHook = () => {
         setCurrentStep((prevStep) => (prevStep > 1 ? prevStep - 1 : prevStep));
     };
     const closeModal = () => {
-        dispatch(showModalOperators(false));
+        dispatch(showModalManagers(false));
     };
     const optionChange = (optionType) => {
-        setSelectedOptionOperators(optionType === selectedOptionOperators ? null : optionType);
+        setSelectedOptionManagers(optionType === selectedOptionManagers ? null : optionType);
     };
 
     return {
-        operator,
+        jefe,
         isVisibleModal,
         currentStep,
-        selectedOptionOperators,
+        selectedOptionManagers,
         justifyRef,
         declineRef,
         signRef,
@@ -42,4 +42,4 @@ const useViewOperatorsModalHook = () => {
     }
 }
 
-export default useViewOperatorsModalHook;
+export default useViewManagersModalHook;

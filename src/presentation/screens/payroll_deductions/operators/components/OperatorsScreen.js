@@ -137,10 +137,9 @@ const OperatorsScreen = () => {
 
                                                     <DataTable.Cell>
                                                         <TouchableOpacity onPress={() => {
-                                                                dispatch(setSelectedOperator(row));
-                                                                dispatch(showModalOperators(true));
-                                                            }}
-                                                        >
+                                                            dispatch(setSelectedOperator(row));
+                                                            dispatch(showModalOperators(true));
+                                                        }}>
                                                             <Ionicons name="eye-outline" size={22} color="#666" />
                                                         </TouchableOpacity>
                                                     </DataTable.Cell>

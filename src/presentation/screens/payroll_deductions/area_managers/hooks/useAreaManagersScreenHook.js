@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { showAlert } from "../../../../../common/components/AlertManager";
 
 const useAreaManagersScreenHook = () => {
-    
     const [search, setSearch] = useState("");
     const [page, setPage] = useState(0);
     const [itemsPerPage, setItemsPerPage] = useState(5);
@@ -10,20 +9,10 @@ const useAreaManagersScreenHook = () => {
     const searchInputRef = useRef(null);
 
     const dataInfo = [
-        { fechaDescuento: "dd/mm/aaaa", valorDescuento: "Nayibe Casas", tipoDescuento: "Siniestros", operario: "Nayibe Casas", status: "Activo" },
-        { fechaDescuento: "dd/mm/aaaa", valorDescuento: "Nayibe Casas", tipoDescuento: "Descuadre", operario: "Nayibe Casas", status: "Justificado" },
-        { fechaDescuento: "dd/mm/aaaa", valorDescuento: "Nayibe Casas", tipoDescuento: "Siniestros", operario: "Nayibe Casas", status: "Activo" },
-        { fechaDescuento: "dd/mm/aaaa", valorDescuento: "Nayibe Casas", tipoDescuento: "Descuadre", operario: "Nayibe Casas", status: "Justificado" },
-        { fechaDescuento: "dd/mm/aaaa", valorDescuento: "Nayibe Casas", tipoDescuento: "Siniestros", operario: "Nayibe Casas", status: "Activo" },
-        { fechaDescuento: "dd/mm/aaaa", valorDescuento: "Nayibe Casas", tipoDescuento: "Descuadre", operario: "Nayibe Casas", status: "Justificado" },
-        { fechaDescuento: "dd/mm/aaaa", valorDescuento: "Nayibe Casas", tipoDescuento: "Siniestros", operario: "Nayibe Casas", status: "Activo" },
-        { fechaDescuento: "dd/mm/aaaa", valorDescuento: "Nayibe Casas", tipoDescuento: "Descuadre", operario: "Nayibe Casas", status: "Justificado" },
-        { fechaDescuento: "dd/mm/aaaa", valorDescuento: "Nayibe Casas", tipoDescuento: "Siniestros", operario: "Nayibe Casas", status: "Activo" },
-        { fechaDescuento: "dd/mm/aaaa", valorDescuento: "Nayibe Casas", tipoDescuento: "Descuadre", operario: "Nayibe Casas", status: "Justificado" },
-        { fechaDescuento: "dd/mm/aaaa", valorDescuento: "Nayibe Casas", tipoDescuento: "Siniestros", operario: "Nayibe Casas", status: "Activo" },
-        { fechaDescuento: "dd/mm/aaaa", valorDescuento: "Nayibe Casas", tipoDescuento: "Descuadre", operario: "Nayibe Casas", status: "Justificado" },
-        { fechaDescuento: "dd/mm/aaaa", valorDescuento: "Nayibe Casas", tipoDescuento: "Siniestros", operario: "Nayibe Casas", status: "Activo" },
-        { fechaDescuento: "dd/mm/aaaa", valorDescuento: "Nayibe Casas", tipoDescuento: "Descuadre", operario: "Nayibe Casas", status: "Justificado" },
+        { fechaDescuento: "25/09/2025", valorDescuento: "$200.000", tipoDescuento: "Siniestros", operario: "Nayibe Casas", status: "Activo", noIdentificador: "23453457647", nombreEmpresa: "Parking International S.A.S", centroCostos: "1457" },
+        { fechaDescuento: "20/10/2025", valorDescuento: "$130.000", tipoDescuento: "Descuadre", operario: "Enrique Gaytán", status: "Justificado", noIdentificador: "24563074624", nombreEmpresa: "Parking International S.A.S", centroCostos: "2420" },
+        { fechaDescuento: "11/11/2025", valorDescuento: "$500.000", tipoDescuento: "Siniestros", operario: "Germán Chávez", status: "Activo", noIdentificador: "54217628011", nombreEmpresa: "Parking International S.A.S", centroCostos: "1150" },
+        { fechaDescuento: "14/12/2025", valorDescuento: "$350.000", tipoDescuento: "Descuadre", operario: "Erick Govea", status: "Justificado", noIdentificador: "62478200351", nombreEmpresa: "Parking International S.A.S", centroCostos: "2460" },
     ];
     
     const filteredData = dataInfo.filter((item) =>
