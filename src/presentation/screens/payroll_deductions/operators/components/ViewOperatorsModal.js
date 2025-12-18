@@ -11,11 +11,15 @@ const ViewOperatorsModal = () => {
     const {
         operator,
         isVisibleModal,
+        justifyText,
+        declineText,
         currentStep,
         selectedOptionOperators,
         justifyRef,
         declineRef,
         signRef,
+        setJustifyText,
+        setDeclineText,
         nextStep,
         prevStep,
         closeModal,
@@ -167,7 +171,7 @@ const ViewOperatorsModal = () => {
                                     />
                                     <Text style={stylesViewOperatorsModal.titleCheck}>Justificar</Text>
                                 </View>
-                                <View style={[stylesViewOperatorsModal.checkSubContent, {marginLeft: 25}]}>
+                                <View style={[stylesViewOperatorsModal.checkSubContent, { marginLeft: 25 }]}>
                                     <Checkbox
                                         color="#90D400"
                                         uncheckedColor="#68AF00"
@@ -176,7 +180,7 @@ const ViewOperatorsModal = () => {
                                     />
                                     <Text style={stylesViewOperatorsModal.titleCheck}>Rechazar</Text>
                                 </View>
-                                <View style={[stylesViewOperatorsModal.checkSubContent, {marginLeft: 25}]}>
+                                <View style={[stylesViewOperatorsModal.checkSubContent, { marginLeft: 25 }]}>
                                     <Checkbox
                                         color="#90D400"
                                         uncheckedColor="#68AF00"
@@ -193,6 +197,17 @@ const ViewOperatorsModal = () => {
                                             <CustomTextInput
                                                 label="Justificación"
                                                 mode="outline"
+                                                value={justifyText}
+                                                onChangeText={(text) => {
+                                                    let value = text;
+
+                                                    if (/^\s+/.test(value)) {
+                                                        showAlert("warning", "No se permiten espacios al inicio.");
+                                                        value = value.replace(/^\s+/, '');
+                                                    }
+
+                                                    setJustifyText(value);
+                                                }}
                                                 theme={{
                                                     colors: {
                                                         outline: "#E5E5E5",
@@ -213,6 +228,17 @@ const ViewOperatorsModal = () => {
                                             <CustomTextInput
                                                 label="Motivo Rechazo"
                                                 mode="outline"
+                                                value={declineText}
+                                                onChangeText={(text) => {
+                                                    let value = text;
+
+                                                    if (/^\s+/.test(value)) {
+                                                        showAlert("warning", "No se permiten espacios al inicio.");
+                                                        value = value.replace(/^\s+/, '');
+                                                    }
+
+                                                    setDeclineText(value);
+                                                }}
                                                 theme={{
                                                     colors: {
                                                         outline: "#E5E5E5",

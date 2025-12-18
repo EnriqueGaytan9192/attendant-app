@@ -8,6 +8,8 @@ const useViewManagersModalHook = () => {
     const isVisibleModal = useAppSelector((state) => state.payrollDeductions.isModalManagersVisible);
 
     const dispatch = useDispatch();
+    const [justifyText, setJustifyText] = useState('');
+    const [declineText, setDeclineText] = useState('');
     const [currentStep, setCurrentStep] = useState(1);
     const [selectedOptionManagers, setSelectedOptionManagers] = useState('justificar');
     const justifyRef = useRef(null);
@@ -30,11 +32,15 @@ const useViewManagersModalHook = () => {
     return {
         jefe,
         isVisibleModal,
+        justifyText,
+        declineText,
         currentStep,
         selectedOptionManagers,
         justifyRef,
         declineRef,
         signRef,
+        setJustifyText,
+        setDeclineText,
         nextStep,
         prevStep,
         closeModal,

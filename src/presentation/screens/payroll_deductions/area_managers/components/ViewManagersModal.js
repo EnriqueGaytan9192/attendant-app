@@ -11,11 +11,15 @@ const ViewManagersModal = () => {
     const {
         jefe,
         isVisibleModal,
+        justifyText,
+        declineText,
         currentStep,
         selectedOptionManagers,
         justifyRef,
         declineRef,
         signRef,
+        setJustifyText,
+        setDeclineText,
         nextStep,
         prevStep,
         closeModal,
@@ -193,6 +197,17 @@ const ViewManagersModal = () => {
                                             <CustomTextInput
                                                 label="Justificación"
                                                 mode="outline"
+                                                value={justifyText}
+                                                onChangeText={(text) => {
+                                                    let value = text;
+
+                                                    if (/^\s/.test(value)) {
+                                                        showAlert("warning", "No se permiten espacios al inicio.");
+                                                        value = value.replace(/^\s+/, '');
+                                                    }
+
+                                                    setJustifyText(value);
+                                                }}
                                                 theme={{
                                                     colors: {
                                                         outline: "#E5E5E5",
@@ -213,6 +228,17 @@ const ViewManagersModal = () => {
                                             <CustomTextInput
                                                 label="Motivo Rechazo"
                                                 mode="outline"
+                                                value={declineText}
+                                                onChangeText={(text) => {
+                                                    let value = text;
+
+                                                    if (/^\s/.test(value)) {
+                                                        showAlert("warning", "No se permiten espacios al inicio.");
+                                                        value = value.replace(/^\s+/, '');
+                                                    }
+
+                                                    setDeclineText(value);
+                                                }}
                                                 theme={{
                                                     colors: {
                                                         outline: "#E5E5E5",
