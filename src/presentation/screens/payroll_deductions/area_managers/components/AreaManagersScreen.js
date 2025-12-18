@@ -1,6 +1,7 @@
 import { Dimensions, Image, Keyboard, ScrollView, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { Card, DataTable, Text, TextInput } from "react-native-paper";
+import { showAlert } from "../../../../../common/components/AlertManager";
 import CustomTextInput from "../../../../../common/components/CustomTextInput";
 import useAreaManagersScreenHook from "../hooks/useAreaManagersScreenHook";
 import stylesAreaManagersScreen from "../styles/stylesAreaManagersScreen";
@@ -53,8 +54,19 @@ const AreaManagersScreen = () => {
                                     label="Buscar...."
                                     mode="outlined"
                                     value={search}
-                                    onChangeText={(t) => {
-                                        setSearch(t);
+                                    onChangeText={(text) => {
+                                        let value = text;
+
+                                        if (/^\s+/.test(value)) {
+                                            showAlert("warning", "No se permiten espacios al inicio.");
+                                            value = value.replace(/^\s+/, "");
+                                        }
+                                        if (/[^a-zA-Z0-9áéíóúÁÉÍÓÚüÜñÑ\s]/.test(value)) {
+                                            showAlert("warning", "No se permiten caracteres especiales.");
+                                            value = value.replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚüÜñÑ\s]/g, "");
+                                        }
+
+                                        setSearch(value);
                                         setPage(0);
                                     }}
                                     theme={{
@@ -172,7 +184,7 @@ const AreaManagersScreen = () => {
                                                     setItemsPerPage(num);
                                                     setPage(0);
                                                 }}
-                                                style={[ stylesAreaManagersScreen.buttonPagination, {backgroundColor: itemsPerPage === num ? "#90D400" : "#eaeaea"}]}
+                                                style={[stylesAreaManagersScreen.buttonPagination, { backgroundColor: itemsPerPage === num ? "#90D400" : "#eaeaea" }]}
                                             >
                                                 <Text style={{ color: itemsPerPage === num ? "#fff" : "#333" }}>
                                                     {num}

@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import AlertManager from "../../../common/components/AlertManager";
 import { AreaManagersScreen, ViewManagersModal } from "../../../presentation/screens/payroll_deductions/area_managers";
 import { useAppSelector } from "../../../state/hooks";
-import { setSelectedManagers, showModalManagers } from "../../../state/slices/payrollDeductionsSlice";
+import { closeManagersModal } from "../../../state/slices/payrollDeductionsSlice";
 
 const AreaManagers = () => {
     const dispatch = useDispatch();
@@ -14,8 +14,7 @@ const AreaManagers = () => {
     );
 
     const handleDismissManagers = () => {
-        dispatch(showModalManagers(false));
-        dispatch(setSelectedManagers(null));
+        dispatch(closeManagersModal())
     };
 
     return (

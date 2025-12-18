@@ -18,12 +18,24 @@ const useAreaManagersScreenHook = () => {
         { fechaDescuento: "14/12/2025", valorDescuento: "$350.000", tipoDescuento: "Descuadre", operario: "Erick Govea", status: "Justificado", noIdentificador: "62478200351", nombreEmpresa: "Parking International S.A.S", centroCostos: "2460" },
     ];
     
-    const filteredData = dataInfo.filter((item) =>
+    /*const filteredData = dataInfo.filter((item) =>
         Object.values(item)
             .join(" ")
             .toLowerCase()
             .includes(search.toLowerCase())
-    );
+    );*/
+
+    const filteredData = dataInfo.filter((item) => {
+        const searchText = search.toLowerCase();
+
+        return (
+            item.fechaDescuento.toLowerCase().includes(searchText) ||
+            item.valorDescuento.toLowerCase().includes(searchText) ||
+            item.tipoDescuento.toLowerCase().includes(searchText) ||
+            item.operario.toLowerCase().includes(searchText) ||
+            item.noIdentificador.toLowerCase().includes(searchText)
+        );
+    });
 
     useEffect(() => {
         console.log("Texto buscado: ", search);

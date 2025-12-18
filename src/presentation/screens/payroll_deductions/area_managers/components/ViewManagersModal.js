@@ -157,36 +157,36 @@ const ViewManagersModal = () => {
                                     <Text style={stylesViewManagersModal.textModalGreen}>{jefe.centroCostos}</Text>
                                 </Text>
                             </View>
-                            <View style={{ marginTop: 20, flexDirection: 'row' }}>
-                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <View style={stylesViewManagersModal.checkContent}>
+                                <View style={stylesViewManagersModal.checkSubContent}>
                                     <Checkbox
                                         color="#90D400"
                                         uncheckedColor="#68AF00"
                                         status={selectedOptionManagers === 'justificar' ? 'checked' : 'unchecked'}
                                         onPress={() => optionChange('justificar')}
                                     />
-                                    <Text style={{ fontSize: 16, color:"#666666" }}>Justificar</Text>
+                                    <Text style={stylesViewManagersModal.titleCheck}>Justificar</Text>
                                 </View>
-                                <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 25 }}>
+                                <View style={[stylesViewManagersModal.checkSubContent, { marginLeft: 25 }]}>
                                     <Checkbox
                                         color="#90D400"
                                         uncheckedColor="#68AF00"
                                         status={selectedOptionManagers === 'rechazar' ? 'checked' : 'unchecked'}
                                         onPress={() => optionChange('rechazar')}
                                     />
-                                    <Text style={{ fontSize: 16, color:"#666666" }}>Rechazar</Text>
+                                    <Text style={stylesViewManagersModal.titleCheck}>Rechazar</Text>
                                 </View>
-                                <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 25 }}>
+                                <View style={[stylesViewManagersModal.checkSubContent, { marginLeft: 25 }]}>
                                     <Checkbox
                                         color="#90D400"
                                         uncheckedColor="#68AF00"
                                         status={selectedOptionManagers === 'firmar' ? 'checked' : 'unchecked'}
                                         onPress={() => optionChange('firmar')}
                                     />
-                                    <Text style={{ fontSize: 16, color:"#666666" }}>Firmar</Text>
+                                    <Text style={stylesViewManagersModal.titleCheck}>Firmar</Text>
                                 </View>
                             </View>
-                            <View style={{ marginTop: 20, marginBottom: 130 }}>
+                            <View style={stylesViewManagersModal.contentOptionCheck}>
                                 {selectedOptionManagers  === 'justificar' && (
                                     <View>
                                         <Animatable.View ref={justifyRef}>
@@ -201,7 +201,7 @@ const ViewManagersModal = () => {
                                                 }}
                                                 multiline
                                                 numberOfLines={5}
-                                                style={{ backgroundColor: "#FFFFFF", fontSize: 16, minHeight: 100 }}
+                                                style={stylesViewManagersModal.textInputCheck}
                                                 keyboardType="default"
                                             />
                                         </Animatable.View>
@@ -221,7 +221,7 @@ const ViewManagersModal = () => {
                                                 }}
                                                 multiline
                                                 numberOfLines={5}
-                                                style={{ backgroundColor: "#FFFFFF", fontSize: 16, minHeight: 100 }}
+                                                style={stylesViewManagersModal.textInputCheck}
                                                 keyboardType="default"
                                             />
                                         </Animatable.View>
