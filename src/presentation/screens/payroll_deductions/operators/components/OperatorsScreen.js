@@ -108,9 +108,15 @@ const OperatorsScreen = () => {
                                                     key={idx}
                                                     style={stylesOperatorsScreen.rowTable}
                                                 >
-                                                    <DataTable.Cell>{row.fechaDescuento}</DataTable.Cell>
-                                                    <DataTable.Cell>{row.valorDescuento}</DataTable.Cell>
-                                                    <DataTable.Cell>{row.tipoDescuento}</DataTable.Cell>
+                                                    <DataTable.Cell>
+                                                        <Text style={stylesOperatorsScreen.textCell}>{row.fechaDescuento}</Text>
+                                                    </DataTable.Cell>
+                                                    <DataTable.Cell>
+                                                        <Text style={stylesOperatorsScreen.textCell}>{row.valorDescuento}</Text>
+                                                    </DataTable.Cell>
+                                                    <DataTable.Cell>
+                                                        <Text style={stylesOperatorsScreen.textCell}>{row.tipoDescuento}</Text>
+                                                    </DataTable.Cell>
 
                                                     <DataTable.Cell>
                                                         <View style={{
@@ -173,6 +179,11 @@ const OperatorsScreen = () => {
                                         //label={`Página ${page + 1} de ${totalPages}`}
                                         //showFastPaginationControls
                                         numberOfItemsPerPage={itemsPerPage}
+                                        theme={{
+                                            colors: {
+                                                onSurface: "#666666",
+                                            }
+                                        }}
                                     />
                                 </View>
                             </Animatable.View>

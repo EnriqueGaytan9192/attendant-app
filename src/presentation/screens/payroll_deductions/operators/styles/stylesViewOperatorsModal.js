@@ -25,11 +25,12 @@ const stylesViewOperatorsModal = StyleSheet.create({
     title: {
         fontSize: 21,
         marginLeft: 15,
+        color: '#272727',
         //borderColor: '#d80000ff',
         //borderWidth: 2,
     },
     divider: {
-        color: "#000"
+        color: "#E5E5E5"
     },
     textModalGray: {
         fontSize: 17,
@@ -60,7 +61,28 @@ const stylesViewOperatorsModal = StyleSheet.create({
         backgroundColor: "#80C300",
         marginLeft: 17,
         width: "20%"
-    }
+    },
+    checkContent: {
+        marginTop: 20,
+        flexDirection: 'row',
+    },
+    checkSubContent: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    titleCheck: {
+        fontSize: 16,
+        color: '#666666'
+    },
+    contentOptionCheck: {
+        marginTop: 20,
+        marginBottom: 130,
+    },
+    textInputCheck: {
+        backgroundColor: "#FFFFFF",
+        fontSize: 16,
+        minHeight: 100
+    },
 });
 
 export default stylesViewOperatorsModal;

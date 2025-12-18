@@ -157,37 +157,37 @@ const ViewOperatorsModal = () => {
                                     <Text style={stylesViewOperatorsModal.textModalGreen}>{operator.centroCostos}</Text>
                                 </Text>
                             </View>
-                            <View style={{ marginTop: 20, flexDirection: 'row' }}>
-                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <View style={stylesViewOperatorsModal.checkContent}>
+                                <View style={stylesViewOperatorsModal.checkSubContent}>
                                     <Checkbox
                                         color="#90D400"
                                         uncheckedColor="#68AF00"
                                         status={selectedOptionOperators === 'justificar' ? 'checked' : 'unchecked'}
                                         onPress={() => optionChange('justificar')}
                                     />
-                                    <Text style={{ fontSize: 16, color:"#666666" }}>Justificar</Text>
+                                    <Text style={stylesViewOperatorsModal.titleCheck}>Justificar</Text>
                                 </View>
-                                <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 25 }}>
+                                <View style={[stylesViewOperatorsModal.checkSubContent, {marginLeft: 25}]}>
                                     <Checkbox
                                         color="#90D400"
                                         uncheckedColor="#68AF00"
                                         status={selectedOptionOperators === 'rechazar' ? 'checked' : 'unchecked'}
                                         onPress={() => optionChange('rechazar')}
                                     />
-                                    <Text style={{ fontSize: 16, color:"#666666" }}>Rechazar</Text>
+                                    <Text style={stylesViewOperatorsModal.titleCheck}>Rechazar</Text>
                                 </View>
-                                <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 25 }}>
+                                <View style={[stylesViewOperatorsModal.checkSubContent, {marginLeft: 25}]}>
                                     <Checkbox
                                         color="#90D400"
                                         uncheckedColor="#68AF00"
                                         status={selectedOptionOperators === 'firmar' ? 'checked' : 'unchecked'}
                                         onPress={() => optionChange('firmar')}
                                     />
-                                    <Text style={{ fontSize: 16, color:"#666666" }}>Firmar</Text>
+                                    <Text style={stylesViewOperatorsModal.titleCheck}>Firmar</Text>
                                 </View>
                             </View>
-                            <View style={{ marginTop: 20, marginBottom: 130 }}>
-                                {selectedOptionOperators  === 'justificar' && (
+                            <View style={stylesViewOperatorsModal.contentOptionCheck}>
+                                {selectedOptionOperators === 'justificar' && (
                                     <View>
                                         <Animatable.View ref={justifyRef}>
                                             <CustomTextInput
@@ -201,13 +201,13 @@ const ViewOperatorsModal = () => {
                                                 }}
                                                 multiline
                                                 numberOfLines={5}
-                                                style={{ backgroundColor: "#FFFFFF", fontSize: 16, minHeight: 100 }}
+                                                style={stylesViewOperatorsModal.textInputCheck}
                                                 keyboardType="default"
                                             />
                                         </Animatable.View>
                                     </View>
                                 )}
-                                {selectedOptionOperators  === 'rechazar' && (
+                                {selectedOptionOperators === 'rechazar' && (
                                     <View>
                                         <Animatable.View ref={declineRef}>
                                             <CustomTextInput
@@ -221,13 +221,13 @@ const ViewOperatorsModal = () => {
                                                 }}
                                                 multiline
                                                 numberOfLines={5}
-                                                style={{ backgroundColor: "#FFFFFF", fontSize: 16, minHeight: 100 }}
+                                                style={stylesViewOperatorsModal.textInputCheck}
                                                 keyboardType="default"
                                             />
                                         </Animatable.View>
                                     </View>
                                 )}
-                                {selectedOptionOperators  === 'firmar' && (
+                                {selectedOptionOperators === 'firmar' && (
                                     <View>
                                         <Text style={{ fontSize: 17, color: '#005A6D' }}>Firma Operario</Text>
                                     </View>

@@ -33,6 +33,14 @@ const CustomTextInput = forwardRef(
           outlineColor={readonly ? "#E5E5E5" : theme?.colors?.outline || "#E5E5E5"}
           activeOutlineColor={readonly ? "#E5E5E5" : theme?.colors?.primary || "#90D400"}
           textColor={readonly ? "#7A7A7A" : undefined}
+          theme={{
+            ...theme,
+            colors: {
+              ...theme?.colors,
+              onSurfaceVariant: "#666666",
+              primary: theme?.colors?.primary || "#90D400",
+            },
+          }}
           style={[
             style,
             readonly && {

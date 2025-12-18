@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import AlertManager from "../../../common/components/AlertManager";
 import { OperatorsScreen, ViewOperatorsModal } from "../../../presentation/screens/payroll_deductions/operators";
 import { useAppSelector } from "../../../state/hooks";
-import { setSelectedOperator, showModalOperators } from "../../../state/slices/payrollDeductionsSlice";
+import { closeOperatorsModal } from "../../../state/slices/payrollDeductionsSlice";
 
 const Operators = () => {
     const dispatch = useDispatch();
@@ -14,8 +14,7 @@ const Operators = () => {
     );
 
     const handleDismissOperators = () => {
-        dispatch(showModalOperators(false));
-        dispatch(setSelectedOperator(null));
+        dispatch(closeOperatorsModal())
     };
 
     return (

@@ -95,6 +95,10 @@ const stylesAreaManagersScreen = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: "#eee"
     },
+    textCell: {
+        color: "#666666",
+        fontSize: 14,
+    },
     iconTable: {
         width: 22,
         height: 17,
@@ -109,7 +113,8 @@ const stylesAreaManagersScreen = StyleSheet.create({
         alignItems: "center",
     },
     titleContentPagination: {
-        marginRight: 8
+        marginRight: 8,
+        color: "#666666",
     },
     buttonPagination: {
         paddingHorizontal: 10,

@@ -67,49 +67,54 @@ const stylesOperatorsScreen = StyleSheet.create({
         width: 15,
         height: 15
     },
-    contentTable: { 
-        marginTop: 20 
+    contentTable: {
+        marginTop: 20
     },
-    cardTable: { 
+    cardTable: {
         elevation: 3,
         paddingHorizontal: 10,
         paddingVertical: 10,
         borderRadius: 10,
-        backgroundColor: "#FFFFFF" 
+        backgroundColor: "#FFFFFF"
     },
-    headerTable: { 
-        borderTopColor: "#90D400", 
-        borderTopWidth: 2, 
-        borderBottomColor: "#90D400", 
-        borderBottomWidth: 2 
+    headerTable: {
+        borderTopColor: "#90D400",
+        borderTopWidth: 2,
+        borderBottomColor: "#90D400",
+        borderBottomWidth: 2
     },
-    titleTable: { 
-        justifyContent: 'flex-start' 
+    titleTable: {
+        justifyContent: 'flex-start'
     },
-    textTitleTable: { 
-        fontWeight: "500", 
-        fontSize: 14, 
-        color: "#666666" 
+    textTitleTable: {
+        fontWeight: "500",
+        fontSize: 14,
+        color: "#666666"
     },
-    rowTable: { 
-        borderBottomWidth: 1, 
-        borderBottomColor: "#eee" 
+    rowTable: {
+        borderBottomWidth: 1,
+        borderBottomColor: "#eee"
+    },
+    textCell: {
+        color: "#666666",
+        fontSize: 14,
     },
     iconTable: {
         width: 22,
         height: 17,
     },
-    contentPagination: { 
-        flexDirection: "row", 
-        justifyContent: 'space-between', 
-        marginTop: 5 
+    contentPagination: {
+        flexDirection: "row",
+        justifyContent: 'space-between',
+        marginTop: 5
     },
     subContentPagination: {
         flexDirection: "row",
         alignItems: "center",
     },
     titleContentPagination: {
-        marginRight: 8
+        marginRight: 8,
+        color: "#666666",
     },
     buttonPagination: {
         paddingHorizontal: 10,

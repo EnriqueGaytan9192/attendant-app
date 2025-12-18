@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../../../../state/hooks";
-import { showModalOperators } from "../../../../../state/slices/payrollDeductionsSlice";
+import { closeOperatorsModal } from "../../../../../state/slices/payrollDeductionsSlice";
 
 const useViewOperatorsModalHook = () => {
     const operator = useAppSelector((state) => state.payrollDeductions.selectedOperator);
@@ -21,7 +21,7 @@ const useViewOperatorsModalHook = () => {
         setCurrentStep((prevStep) => (prevStep > 1 ? prevStep - 1 : prevStep));
     };
     const closeModal = () => {
-        dispatch(showModalOperators(false));
+        dispatch(closeOperatorsModal());
     };
     const optionChange = (optionType) => {
         setSelectedOptionOperators(optionType === selectedOptionOperators ? null : optionType);
