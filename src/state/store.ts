@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'; // Para al
 import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 import { persistReducer, persistStore } from 'redux-persist';
-import { authReducer, openTurnReducer, payrollDeductionsReducer } from './slices';
+import { advanceReducer, archingReducer, authReducer, closeTurnReducer, consultationsReducer, documentsReducer, inventoryReducer, managementReducer, movementsReducer, openTurnReducer, payrollDeductionsReducer, productPurchasesReducer, profileReducer } from './slices';
 
 // Configuración de persistencia
 const persistConfig = {
@@ -13,9 +13,19 @@ const persistConfig = {
 
 // Combinar reducers
 const rootReducer = combineReducers({
+    advance: advanceReducer,
+    arching: archingReducer,
     auth: authReducer,
+    closeTurn: closeTurnReducer,
+    consultations: consultationsReducer,
+    documents: documentsReducer,
+    inventory: inventoryReducer,
+    management: managementReducer,
+    movements: movementsReducer,
     openTurn: openTurnReducer,
     payrollDeductions: payrollDeductionsReducer,
+    productPurchases: productPurchasesReducer,
+    profile: profileReducer,
 });
 
 // Reducer persistido

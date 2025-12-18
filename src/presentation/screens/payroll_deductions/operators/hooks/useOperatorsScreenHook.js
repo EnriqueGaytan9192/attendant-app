@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { showAlert } from "../../../../../common/components/AlertManager";
+import { setSelectedOperator, showModalOperators } from "../../../../../state/slices/payrollDeductionsSlice";
 
 const useOperatorsScreenHook = () => {
     const [search, setSearch] = useState("");
@@ -7,6 +9,7 @@ const useOperatorsScreenHook = () => {
     const [itemsPerPage, setItemsPerPage] = useState(5);
     const tableRef = useRef(null);
     const searchInputRef = useRef(null);
+    const dispatch = useDispatch();
 
     const dataInfo = [
         { fechaDescuento: "25/09/2025", valorDescuento: "$200.000", tipoDescuento: "Siniestros", status: "Activo", nombreOperador: "Nayibe Casas", noIdentificador: "23453457647", nombreEmpresa: "Parking International S.A.S", centroCostos: "1457" },
@@ -23,6 +26,9 @@ const useOperatorsScreenHook = () => {
     );
 
     useEffect(() => {
+        console.log("Texto buscado: ", search);
+        console.log("Resultados filtrados: ", filteredData);
+
         if (search.length > 0 && filteredData.length === 0) {
             showAlert("warning", "No se encontraron coincidencias.");
 
@@ -48,6 +54,13 @@ const useOperatorsScreenHook = () => {
     const getStatusBg = (status) => statusStyles[status]?.bg || "#999";
     const getStatusDot = (status) => statusStyles[status]?.dot || "#777";
 
+    const handleViewOperator = (row) => {
+        console.log("Operador seleccionado: ", row);
+        
+        dispatch(setSelectedOperator(row));
+        dispatch(showModalOperators(true));
+    }
+
     return {
         search,
         page,
@@ -65,6 +78,7 @@ const useOperatorsScreenHook = () => {
         setItemsPerPage,
         getStatusBg,
         getStatusDot,
+        handleViewOperator,
     }
 }
 

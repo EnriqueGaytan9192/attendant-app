@@ -1,10 +1,7 @@
-import { Ionicons } from "@expo/vector-icons";
 import { Dimensions, Image, Keyboard, ScrollView, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { Card, DataTable, Text, TextInput } from "react-native-paper";
-import { useDispatch } from "react-redux";
 import CustomTextInput from "../../../../../common/components/CustomTextInput";
-import { setSelectedManagers, showModalManagers } from "../../../../../state/slices/payrollDeductionsSlice";
 import useAreaManagersScreenHook from "../hooks/useAreaManagersScreenHook";
 import stylesAreaManagersScreen from "../styles/stylesAreaManagersScreen";
 
@@ -28,8 +25,8 @@ const AreaManagersScreen = () => {
         setItemsPerPage,
         getStatusBg,
         getStatusDot,
+        handleViewManager,
     } = useAreaManagersScreenHook();
-    const dispatch = useDispatch();
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -50,8 +47,8 @@ const AreaManagersScreen = () => {
                             </View>
                         </View>
                         <View style={stylesAreaManagersScreen.greenLine} />
-                        <View style={{ flexDirection: "row", justifyContent: 'flex-end' }}>
-                            <Animatable.View style={{ width: "35%", marginBottom: 15, marginTop: 50 }} ref={searchInputRef}>
+                        <View style={stylesAreaManagersScreen.contentSearch}>
+                            <Animatable.View style={stylesAreaManagersScreen.animationSearch} ref={searchInputRef}>
                                 <CustomTextInput
                                     label="Buscar...."
                                     mode="outlined"
@@ -66,13 +63,13 @@ const AreaManagersScreen = () => {
                                             primary: "#90D400"
                                         }
                                     }}
-                                    style={{ backgroundColor: "#FFFFFF", fontSize: 16 }}
+                                    style={stylesAreaManagersScreen.textInputSearch}
                                     left={
                                         <TextInput.Icon
                                             icon={() => (
                                                 <Image
                                                     source={require("../../../../../assets/icons/searchIcon.png")}
-                                                    style={{ width: 15, height: 15 }}
+                                                    style={stylesAreaManagersScreen.textInputIcon}
                                                 />
                                             )}
                                         />
@@ -80,28 +77,28 @@ const AreaManagersScreen = () => {
                                 />
                             </Animatable.View>
                         </View>
-                        <View style={{ marginTop: 20 }}>
+                        <View style={stylesAreaManagersScreen.contentTable}>
                             <Animatable.View ref={tableRef}>
-                                <Card style={{ elevation: 3, paddingHorizontal: 10, paddingVertical: 10, borderRadius: 10, backgroundColor: "#FFFFFF" }}>
+                                <Card style={stylesAreaManagersScreen.cardTable}>
                                     <DataTable>
-                                        <DataTable.Header style={{ borderTopColor: "#90D400", borderTopWidth: 2, borderBottomColor: "#90D400", borderBottomWidth: 2 }}>
-                                            <DataTable.Title style={{ justifyContent: "flex-start" }}>
-                                                <Text style={{ fontWeight: "500", fontSize: 14, color: "#666666" }}>Fecha De Descuento</Text>
+                                        <DataTable.Header style={stylesAreaManagersScreen.headerTable}>
+                                            <DataTable.Title style={stylesAreaManagersScreen.titleTable}>
+                                                <Text style={stylesAreaManagersScreen.textTitleTable}>Fecha De Descuento</Text>
                                             </DataTable.Title>
-                                            <DataTable.Title style={{ justifyContent: "flex-start" }}>
-                                                <Text style={{ fontWeight: "500", fontSize: 14, color: "#666666" }}>Valor Descuento</Text>
+                                            <DataTable.Title style={stylesAreaManagersScreen.titleTable}>
+                                                <Text style={stylesAreaManagersScreen.textTitleTable}>Valor Descuento</Text>
                                             </DataTable.Title>
-                                            <DataTable.Title style={{ justifyContent: "flex-start" }}>
-                                                <Text style={{ fontWeight: "500", fontSize: 14, color: "#666666" }}>Tipo De Descuento</Text>
+                                            <DataTable.Title style={stylesAreaManagersScreen.titleTable}>
+                                                <Text style={stylesAreaManagersScreen.textTitleTable}>Tipo De Descuento</Text>
                                             </DataTable.Title>
-                                            <DataTable.Title style={{ justifyContent: "flex-start" }}>
-                                                <Text style={{ fontWeight: "500", fontSize: 14, color: "#666666" }}>Operario</Text>
+                                            <DataTable.Title style={stylesAreaManagersScreen.titleTable}>
+                                                <Text style={stylesAreaManagersScreen.textTitleTable}>Operario</Text>
                                             </DataTable.Title>
-                                            <DataTable.Title style={{ justifyContent: "flex-start" }}>
-                                                <Text style={{ fontWeight: "500", fontSize: 14, color: "#666666" }}>Estado</Text>
+                                            <DataTable.Title style={stylesAreaManagersScreen.titleTable}>
+                                                <Text style={stylesAreaManagersScreen.textTitleTable}>Estado</Text>
                                             </DataTable.Title>
-                                            <DataTable.Title style={{ justifyContent: "flex-start" }}>
-                                                <Text style={{ fontWeight: "500", fontSize: 14, color: "#666666" }}>Acciónes</Text>
+                                            <DataTable.Title style={stylesAreaManagersScreen.titleTable}>
+                                                <Text style={stylesAreaManagersScreen.textTitleTable}>Acciónes</Text>
                                             </DataTable.Title>
                                         </DataTable.Header>
 
@@ -112,7 +109,7 @@ const AreaManagersScreen = () => {
                                             {paginatedData.map((row, idx) => (
                                                 <DataTable.Row
                                                     key={idx}
-                                                    style={{ borderBottomWidth: 1, borderBlockColor: "#eee" }}
+                                                    style={stylesAreaManagersScreen.rowTable}
                                                 >
                                                     <DataTable.Cell>{row.fechaDescuento}</DataTable.Cell>
                                                     <DataTable.Cell>{row.valorDescuento}</DataTable.Cell>
@@ -144,11 +141,11 @@ const AreaManagersScreen = () => {
                                                     </DataTable.Cell>
 
                                                     <DataTable.Cell>
-                                                        <TouchableOpacity onPress={() => {
-                                                            dispatch(setSelectedManagers(row));
-                                                            dispatch(showModalManagers(true));
-                                                        }}>
-                                                            <Ionicons name="eye-outline" size={22} color="#666" />
+                                                        <TouchableOpacity onPress={() => handleViewManager(row)}>
+                                                            <Image
+                                                                source={require("../../../../../assets/icons/viewIcon.png")}
+                                                                style={stylesAreaManagersScreen.iconTable}
+                                                            />
                                                         </TouchableOpacity>
                                                     </DataTable.Cell>
                                                 </DataTable.Row>
@@ -156,9 +153,9 @@ const AreaManagersScreen = () => {
                                         </ScrollView>
                                     </DataTable>
                                 </Card>
-                                <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 5 }}>
-                                    <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                        <Text style={{ marginRight: 8 }}>Items por página:</Text>
+                                <View style={stylesAreaManagersScreen.contentPagination}>
+                                    <View style={stylesAreaManagersScreen.subContentPagination}>
+                                        <Text style={stylesAreaManagersScreen.titleContentPagination}>Items por página:</Text>
 
                                         {[5, 10, 15, 20].map((num) => (
                                             <TouchableOpacity
@@ -167,13 +164,7 @@ const AreaManagersScreen = () => {
                                                     setItemsPerPage(num);
                                                     setPage(0);
                                                 }}
-                                                style={{
-                                                    backgroundColor: itemsPerPage === num ? "#90D400" : "#eaeaea",
-                                                    paddingHorizontal: 10,
-                                                    paddingVertical: 6,
-                                                    borderRadius: 6,
-                                                    marginRight: 6
-                                                }}
+                                                style={[ stylesAreaManagersScreen.buttonPagination, {backgroundColor: itemsPerPage === num ? "#90D400" : "#eaeaea"}]}
                                             >
                                                 <Text style={{ color: itemsPerPage === num ? "#fff" : "#333" }}>
                                                     {num}

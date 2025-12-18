@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { showAlert } from "../../../../../common/components/AlertManager";
+import { setSelectedManagers, showModalManagers } from "../../../../../state/slices/payrollDeductionsSlice";
 
 const useAreaManagersScreenHook = () => {
     const [search, setSearch] = useState("");
@@ -7,6 +9,7 @@ const useAreaManagersScreenHook = () => {
     const [itemsPerPage, setItemsPerPage] = useState(5);
     const tableRef = useRef(null);
     const searchInputRef = useRef(null);
+    const dispatch = useDispatch();
 
     const dataInfo = [
         { fechaDescuento: "25/09/2025", valorDescuento: "$200.000", tipoDescuento: "Siniestros", operario: "Nayibe Casas", status: "Activo", noIdentificador: "23453457647", nombreEmpresa: "Parking International S.A.S", centroCostos: "1457" },
@@ -23,6 +26,9 @@ const useAreaManagersScreenHook = () => {
     );
 
     useEffect(() => {
+        console.log("Texto buscado: ", search);
+        console.log("Resultados filtrados: ", filteredData);
+
         if (search.length > 0 && filteredData.length === 0) {
             showAlert("warning", "No se encontraron coincidencias.");
 
@@ -48,6 +54,13 @@ const useAreaManagersScreenHook = () => {
     const getStatusBg = (status) => statusStyles[status]?.bg || "#999";
     const getStatusDot = (status) => statusStyles[status]?.dot || "#777";
     
+    const handleViewManager = (row) => {
+        console.log("Jefe seleccionado: ", row);
+
+        dispatch(setSelectedManagers(row));
+        dispatch(showModalManagers(true));
+    }
+
     return {
         search,
         page,
@@ -65,6 +78,7 @@ const useAreaManagersScreenHook = () => {
         setItemsPerPage,
         getStatusBg,
         getStatusDot,
+        handleViewManager,
     }
 }
 

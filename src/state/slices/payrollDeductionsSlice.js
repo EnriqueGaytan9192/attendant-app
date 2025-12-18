@@ -1,4 +1,3 @@
-
 const { createSlice } = require("@reduxjs/toolkit");
 
 const initialState = {
@@ -20,9 +19,7 @@ const payrollDeductionsSlice = createSlice({
             state.isModalOperatorsVisible = action.payload;
         },
         setSelectedOperator(state, action) {
-            //console.log("Operador en Redux: ", action.payload)
             state.selectedOperator = action.payload;
-            console.log("Operador en Slice: ", state.selectedOperator);
         },
 
         //Descuento de Nómina: Jefes
@@ -31,10 +28,9 @@ const payrollDeductionsSlice = createSlice({
         },
         setSelectedManagers(state, action) {
             state.selectedManagers = action.payload;
-            console.log("Jefe en Slice: ", state.selectedManagers);
         },
 
-        resetAuth: () => initialState,
+        resetPayrollDeductions: () => initialState,
     }
 });
 

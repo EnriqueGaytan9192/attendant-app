@@ -87,7 +87,7 @@ const PqrsScreen = () => {
                         {selectedTab === "pqrs" && (
                             <>
                                 <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-                                    <Animatable.View style={{ width: "35%", marginBottom: 15, }} ref={searchInputRef}>
+                                    <Animatable.View style={{ width: "35%", marginBottom: 15, marginTop: 25 }} ref={searchInputRef}>
                                         <CustomTextInput
                                             label="Buscar...."
                                             mode="outline"

@@ -95,10 +95,27 @@ const stylesOperatorsScreen = StyleSheet.create({
         borderBottomWidth: 1, 
         borderBottomColor: "#eee" 
     },
+    iconTable: {
+        width: 22,
+        height: 17,
+    },
     contentPagination: { 
         flexDirection: "row", 
         justifyContent: 'space-between', 
         marginTop: 5 
+    },
+    subContentPagination: {
+        flexDirection: "row",
+        alignItems: "center",
+    },
+    titleContentPagination: {
+        marginRight: 8
+    },
+    buttonPagination: {
+        paddingHorizontal: 10,
+        paddingVertical: 6,
+        borderRadius: 6,
+        marginRight: 6
     }
 })
 

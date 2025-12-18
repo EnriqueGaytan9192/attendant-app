@@ -1,10 +1,7 @@
-import { Ionicons } from "@expo/vector-icons";
 import { Dimensions, Image, Keyboard, ScrollView, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { Card, DataTable, Text, TextInput } from "react-native-paper";
-import { useDispatch } from "react-redux";
 import CustomTextInput from "../../../../../common/components/CustomTextInput";
-import { setSelectedOperator, showModalOperators } from "../../../../../state/slices/payrollDeductionsSlice";
 import useOperatorsScreenHook from "../hooks/useOperatorsScreenHook";
 import stylesOperatorsScreen from "../styles/stylesOperatorsScreen";
 
@@ -28,8 +25,8 @@ const OperatorsScreen = () => {
         setItemsPerPage,
         getStatusBg,
         getStatusDot,
+        handleViewOperator,
     } = useOperatorsScreenHook();
-    const dispatch = useDispatch();
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -136,11 +133,11 @@ const OperatorsScreen = () => {
                                                     </DataTable.Cell>
 
                                                     <DataTable.Cell>
-                                                        <TouchableOpacity onPress={() => {
-                                                            dispatch(setSelectedOperator(row));
-                                                            dispatch(showModalOperators(true));
-                                                        }}>
-                                                            <Ionicons name="eye-outline" size={22} color="#666" />
+                                                        <TouchableOpacity onPress={() => handleViewOperator(row)}>
+                                                            <Image
+                                                                source={require("../../../../../assets/icons/viewIcon.png")}
+                                                                style={stylesOperatorsScreen.iconTable}
+                                                            />
                                                         </TouchableOpacity>
                                                     </DataTable.Cell>
                                                 </DataTable.Row>
@@ -149,8 +146,8 @@ const OperatorsScreen = () => {
                                     </DataTable>
                                 </Card>
                                 <View style={stylesOperatorsScreen.contentPagination}>
-                                    <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                        <Text style={{ marginRight: 8 }}>Items por página:</Text>
+                                    <View style={stylesOperatorsScreen.subContentPagination}>
+                                        <Text style={stylesOperatorsScreen.titleContentPagination}>Items por página:</Text>
 
                                         {[5, 10, 15, 20].map((num) => (
                                             <TouchableOpacity
@@ -159,13 +156,7 @@ const OperatorsScreen = () => {
                                                     setItemsPerPage(num);
                                                     setPage(0);
                                                 }}
-                                                style={{
-                                                    backgroundColor: itemsPerPage === num ? "#90D400" : "#eaeaea",
-                                                    paddingHorizontal: 10,
-                                                    paddingVertical: 6,
-                                                    borderRadius: 6,
-                                                    marginRight: 6
-                                                }}
+                                                style={[ stylesOperatorsScreen.buttonPagination, {backgroundColor: itemsPerPage === num ? "#90D400" : "#eaeaea"}]}
                                             >
                                                 <Text style={{ color: itemsPerPage === num ? "#fff" : "#333" }}>
                                                     {num}

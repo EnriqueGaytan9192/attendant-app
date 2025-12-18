@@ -1,3 +1,13 @@
+export { default as advanceReducer } from './advanceSlice';
+export { default as archingReducer } from './archingSlice';
 export { default as authReducer } from './authSlice';
+export { default as closeTurnReducer } from './closeTurnSlice';
+export { default as consultationsReducer } from './consultationsSlice';
+export { default as documentsReducer } from './documentsSlice';
+export { default as inventoryReducer } from './inventorySlice';
+export { default as managementReducer } from './managementSlice';
+export { default as movementsReducer } from './movementsSlice';
 export { default as openTurnReducer } from './openTurnSlice';
 export { default as payrollDeductionsReducer } from './payrollDeductionsSlice';
+export { default as productPurchasesReducer } from './productPurchasesSlice';
+export { default as profileReducer } from './profileSlice';
