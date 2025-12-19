@@ -69,7 +69,7 @@ const ViewOperatorsModal = () => {
                                     , mayor de edad, identificado con C.C. No.{" "}
                                     <Text style={stylesViewOperatorsModal.textModalGreen}>{operator.noIdentificador}</Text>
                                     {" "}en calidad de trabajador de{" "}
-                                    <Text style={stylesViewOperatorsModal.textModalGreen}>{operator.nombreEmpresa}</Text>
+                                    <Text style={stylesViewOperatorsModal.textModalGreen}>Parking International S.A.S</Text>
                                     {" "}por medio del presente documento manifiesto que.
                                 </Text>
                             </View>
@@ -94,14 +94,14 @@ const ViewOperatorsModal = () => {
                             <View style={{ marginTop: 20 }}>
                                 <Text style={stylesViewOperatorsModal.textModalGray}>
                                     En virtud de lo anterior AUTORIZO a{" "}
-                                    <Text style={stylesViewOperatorsModal.textModalGreen}>{operator.nombreEmpresa}</Text>
+                                    <Text style={stylesViewOperatorsModal.textModalGreen}>Parking International S.A.S</Text>
                                     {" "}a descontar quincenalmente de cada mes el valor de la cuota de amortización por este concepto.
                                 </Text>
                             </View>
                             <View style={{ marginTop: 20 }}>
                                 <Text style={stylesViewOperatorsModal.textModalGray}>
                                     Al momento de pagarse la Prima Legal de Servicios en cada periodo semestral, AUTORIZO a{" "}
-                                    <Text style={stylesViewOperatorsModal.textModalGreen}>{operator.nombreEmpresa}</Text>
+                                    <Text style={stylesViewOperatorsModal.textModalGreen}>Parking International S.A.S</Text>
                                     {" "}a descontar de su valor el 30% del mismo con destino a la amortización de la obligación de pago derivada del presente préstamo hecho por la Empresa.
                                 </Text>
                             </View>
@@ -137,7 +137,7 @@ const ViewOperatorsModal = () => {
                             <View style={{ marginTop: 50 }}>
                                 <Text style={stylesViewOperatorsModal.textModalGray}>
                                     De igual manera AUTORIZO a{" "}
-                                    <Text style={stylesViewOperatorsModal.textModalGreen}>{operator.nombreEmpresa}</Text>
+                                    <Text style={stylesViewOperatorsModal.textModalGreen}>Parking International S.A.S</Text>
                                     {" "}a descontar el saldo insoluto de este préstamo de mis prestaciones sociales el momento de registrarse la terminación de mi contrato de trabajo por cualquier causal.
                                 </Text>
                             </View>

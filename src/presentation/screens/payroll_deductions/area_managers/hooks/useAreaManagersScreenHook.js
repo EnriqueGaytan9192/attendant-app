@@ -12,11 +12,11 @@ const useAreaManagersScreenHook = () => {
     const dispatch = useDispatch();
 
     const dataInfo = [
-        { fechaDescuento: "25/09/2025", valorDescuento: "$200.000", tipoDescuento: "Siniestros", operario: "Nayibe Casas", status: "Activo", noIdentificador: "23453457647", nombreEmpresa: "Parking International S.A.S", centroCostos: "1457" },
-        { fechaDescuento: "20/10/2025", valorDescuento: "$130.000", tipoDescuento: "Descuadre", operario: "Enrique Gaytán", status: "Justificado", noIdentificador: "24563074624", nombreEmpresa: "Parking International S.A.S", centroCostos: "2420" },
-        { fechaDescuento: "11/11/2025", valorDescuento: "$500.000", tipoDescuento: "Siniestros", operario: "Germán Chávez", status: "Activo", noIdentificador: "54217628011", nombreEmpresa: "Parking International S.A.S", centroCostos: "1150" },
-        { fechaDescuento: "14/12/2025", valorDescuento: "$350.000", tipoDescuento: "Descuadre", operario: "Erick Govea", status: "Justificado", noIdentificador: "62478200351", nombreEmpresa: "Parking International S.A.S", centroCostos: "2460" },
-    ];
+        {operario: "Nayibe Casas", noIdentificador: "23453457647", nombreParqueadero: "Parqueadero Centro", turnoId: 421, fechaDescuento: "25/09/2025", tipoDescuento: "Siniestros", valorDescuento: "$200.000", formatoDescuento: "Temporal", status: "Activo", centroCostos: "1457" },
+        {operario: "Enrique Gaytán", noIdentificador: "24563074624", nombreParqueadero: "Parqueadero Norte", turnoId: 322, fechaDescuento: "10/10/2025", tipoDescuento: "Descuadre", valorDescuento: "$150.000", formatoDescuento: "Directo", status: "Justificado", centroCostos: "2365" },
+        {operario: "Germán Chávez", noIdentificador: "54217628011", nombreParqueadero: "Parqueadero Sur", turnoId: 213, fechaDescuento: "15/10/2025", tipoDescuento: "Siniestros", valorDescuento: "$300.000", formatoDescuento: "Temporal", status: "Activo", centroCostos: "1987" },
+        {operario: "Erick Govea", noIdentificador: "62478200351", nombreParqueadero: "Parqueadero Este", turnoId: 134, fechaDescuento: "20/10/2025", tipoDescuento: "Descuadre", valorDescuento: "$250.000", formatoDescuento:"Directo" , status:"Justificado" , centroCostos:"1452"},
+    ]
     
     /*const filteredData = dataInfo.filter((item) =>
         Object.values(item)

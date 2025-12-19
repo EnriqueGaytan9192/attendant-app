@@ -90,6 +90,10 @@ const stylesConsultations = StyleSheet.create({
         marginTop: 35,
         //marginBottom: 15,
     },
+    contentSubContainer: {
+        flex: 1,
+        marginTop: 50
+    },
     titleContent: {
         color: "#005A6D",
         fontSize: 20,
@@ -98,6 +102,22 @@ const stylesConsultations = StyleSheet.create({
         color: "#666666",
         fontSize: 16,
         marginTop: 5
+    },
+    statusPlateInfo: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 40,
+    },
+    contentCard: {
+        flexDirection: 'row', 
+        marginTop: 25
+    },
+    cardInfoPlate: {
+        width: "35%", 
+        borderRadius: 8, 
+        elevation: 3,
+        backgroundColor: 'white',
+        padding: 10
     },
 })
 
