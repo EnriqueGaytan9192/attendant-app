@@ -55,15 +55,45 @@ const stylesProfileInfo = StyleSheet.create({
         color: '#80C300',
         marginBottom: 10,
     },
+    contentPersonalInput: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    textInputPPersonal: {
+        width: '30%',
+        marginBottom: 15,
+    },
     contactContainer: {
         //borderColor: '#00d800ff',
         //borderWidth: 5,
         marginTop: 20,
     },
+    contentContactInput: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    textInputContact: {
+        width: '30%',
+        marginBottom: 15,
+    },
     iconInput: {
         width: 20,
         height: 22,
     },
+    initialsAvatar: {
+        width: 90,
+        height: 90,
+        borderRadius: 45,
+        backgroundColor: "#90D400", // verde
+        justifyContent: "center",
+        alignItems: "center",
+        marginBottom: 12
+    },
+    initialsText: {
+        color: "#FFFFFF",
+        fontSize: 32,
+    },
+
 })
 
 export default stylesProfileInfo;

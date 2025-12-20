@@ -6,6 +6,7 @@ import { Text } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import MainLayout from "../../common/components/MainLayout";
 import { resetAuth as resetAuthAuth } from "../../state/slices/authSlice";
+import useProfileInfoHook from "../screens/profile/hooks/useProfileInfoHook";
 import routes from "./routes";
 
 const Drawer = createDrawerNavigator();
@@ -32,6 +33,8 @@ const CustomDrawerContent = ({ navigation }) => {
         dispatch(resetAuthAuth());
     };
 
+    const { user, initials } = useProfileInfoHook();
+
     return (
         <ScrollView>
             <View style={{ flex: 1 }}>
@@ -42,14 +45,23 @@ const CustomDrawerContent = ({ navigation }) => {
                     />*/}
                     <View style={styles.profileSection}>
                         <TouchableOpacity onPress={() => navigation.navigate('profile')}>
-                            <View style={{ flexDirection: 'row' }}>
-                                <Image
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                {/*<Image
                                     source={require('../../assets/icons/avatar.png')}
                                     style={styles.profileImage}
-                                />
+                                />*/}
+                                <View style={styles.initialsAvatarSmall}>
+                                    <Text style={styles.initialsTextSmall}>
+                                        {initials}
+                                    </Text>
+                                </View>
                                 <View style={{ marginLeft: 10 }}>
-                                    <Text style={styles.profileName}>José Antonio Villarraga</Text>
-                                    <Text style={styles.profileRole}>Administrador</Text>
+                                    <Text style={styles.profileName}>
+                                        {`${user.firstName} ${user.lastName}`}
+                                    </Text>
+                                    <Text style={styles.profileRole}>
+                                        {user.role}
+                                    </Text>
                                 </View>
                             </View>
                         </TouchableOpacity>
@@ -78,13 +90,13 @@ const CustomDrawerContent = ({ navigation }) => {
                                                     name="chevron-up"
                                                     size={16}
                                                     color={"#4DADB9"}
-                                                /> 
-                                                : 
+                                                />
+                                                :
                                                 <Ionicons
                                                     name="chevron-down"
                                                     size={16}
                                                     color={"#4DADB9"}
-                                                /> 
+                                                />
                                             }
                                         </Text>
                                     </TouchableOpacity>
@@ -291,6 +303,19 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginBottom: 15,
     },
+    initialsAvatarSmall: {
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+        backgroundColor: "#90D400",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    initialsTextSmall: {
+        color: "#FFFFFF",
+        fontSize: 18,
+    },
+
 })
 
 export default DrawerNavigator
