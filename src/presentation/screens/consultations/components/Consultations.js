@@ -4,8 +4,6 @@ import { Button, Text, TextInput } from "react-native-paper";
 import CustomTextInput from "../../../../common/components/CustomTextInput";
 import useConsultationsHook from "../hooks/useConsultationsHook";
 import stylesConsultations from "../styles/stylesConsultations";
-import CarReservationCard from "./CarReservationCard";
-import MonthlyCarPayments from "./MonthlyCarPayments";
 
 const ConsultationsScreen = () => {
     const screenHeight = Dimensions.get('window').height;
@@ -18,6 +16,7 @@ const ConsultationsScreen = () => {
         plateRef,
         dataInfo,
         setPlate,
+        handlePlateChange,
         handleSearch,
     } = useConsultationsHook();
 
@@ -43,13 +42,16 @@ const ConsultationsScreen = () => {
                         <View style={stylesConsultations.contentSubContainer}>
                             <Text style={stylesConsultations.textContent}>Consultar Información por Placa</Text>
                             <View style={stylesConsultations.inputContainer}>
-                                <Animatable.View ref={plateRef}>
+                                <Animatable.View style={{ width: "77%" }} ref={plateRef}>
                                     <CustomTextInput
                                         label="Placa"
+                                        value={plate}
+                                        onChangeText={handlePlateChange}
+                                        autoCapitalize="characters"
                                         mode="outline"
                                         theme={{
                                             colors: {
-                                                outline: "#E5E5E5",
+                                                outline: showErrors && !plate ? "red" : "#E5E5E5",
                                                 primary: "#90D400",
                                             }
                                         }}
@@ -67,35 +69,39 @@ const ConsultationsScreen = () => {
                                     />
                                 </Animatable.View>
 
-                                <Button mode="contained" style={stylesConsultations.button}>
+                                <Button mode="contained" style={stylesConsultations.button} onPress={handleSearch}>
                                     Buscar
                                 </Button>
                             </View>
                             <View style={stylesConsultations.greyLine} />
-                            <View style={stylesConsultations.statusPlateInfo}>
-                                <View>
-                                    <Text style={stylesConsultations.titleContent}>Placa</Text>
-                                    <Text style={stylesConsultations.subtitleContent}>AAA111</Text>
-                                </View>
-                                <View>
-                                    <Text style={stylesConsultations.titleContent}>Tipo de Vehiculo</Text>
-                                    <Text style={stylesConsultations.subtitleContent}>Carro</Text>
-                                </View>
-                                <View>
-                                    <Text style={stylesConsultations.titleContent}>Ingreso</Text>
-                                    <Text style={stylesConsultations.subtitleContent}>dd/mm/aaaa 00:00 am/pm</Text>
-                                </View>
-                                <View>
-                                    <Text style={stylesConsultations.titleContent}>Producto de Ingreso</Text>
-                                    <Text style={stylesConsultations.subtitleContent}>Horas</Text>
-                                </View>
-                            </View>
-                            <Text style={[stylesConsultations.titleContent, { marginTop: 35 }]}>Productos Activos</Text>
+                            {result && (
+                                <>
+                                    <View style={stylesConsultations.statusPlateInfo}>
+                                        <View>
+                                            <Text style={stylesConsultations.titleContent}>Placa</Text>
+                                            <Text style={stylesConsultations.subtitleContent}>{result.plate}</Text>
+                                        </View>
+                                        <View>
+                                            <Text style={stylesConsultations.titleContent}>Tipo de Vehiculo</Text>
+                                            <Text style={stylesConsultations.subtitleContent}>{result.vehicleType}</Text>
+                                        </View>
+                                        <View>
+                                            <Text style={stylesConsultations.titleContent}>Ingreso</Text>
+                                            <Text style={stylesConsultations.subtitleContent}>{result.entryDate}</Text>
+                                        </View>
+                                        <View style={{ marginRight: 15 }}>
+                                            <Text style={stylesConsultations.titleContent}>Producto de Ingreso</Text>
+                                            <Text style={stylesConsultations.subtitleContent}>{result.entryProduct}</Text>
+                                        </View>
+                                    </View>
+                                </>
+                            )}
+                            {/*<Text style={[stylesConsultations.titleContent, { marginTop: 35 }]}>Productos Activos</Text>
                             <View style={stylesConsultations.contentCard}>
                                 <CarReservationCard />
 
                                 <MonthlyCarPayments />
-                            </View>
+                            </View>*/}
                         </View>
                     </View>
                 </View>

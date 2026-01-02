@@ -66,7 +66,6 @@ const stylesConsultations = StyleSheet.create({
         backgroundColor: "#FFFFFF",
         fontSize: 16,
         marginBottom: 5,
-        width: '685%',
     },
     iconInput: {
         width: 18,
