@@ -1,4 +1,10 @@
+import {
+    Montserrat_400Regular,
+    Montserrat_500Medium,
+    Montserrat_700Bold
+} from "@expo-google-fonts/montserrat";
 import { BlurView } from "expo-blur";
+import { useFonts } from "expo-font";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import { ActivityIndicator, Button, Modal, PaperProvider, Portal, ProgressBar, Text } from "react-native-paper";
 import { Provider } from "react-redux";
@@ -66,6 +72,12 @@ const RootLayout = () => {
         downloadProgress,
         timeRemaining
     } = useCheckForUpdates();
+    const [fontsLoaded] = useFonts({
+        Montserrat_400Regular,
+        Montserrat_500Medium,
+        Montserrat_700Bold
+    });
+    if (!fontsLoaded) return null;
     const currentColor = getModalColors(modalData.type);
 
     return (
@@ -222,14 +234,16 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 20,
         marginLeft: 15,
-        fontWeight: 'bold',
+        //fontWeight: 'bold',
+        fontFamily: "Montserrat_500Medium",
         textAlign: 'center',
     },
     message: {
         fontSize: 18,
         //marginVertical: 10,
         color: "#8C8C8C",
-        marginTop: 10
+        marginTop: 10,
+        fontFamily: "Montserrat_400Regular"
     },
     button: {
         borderRadius: 6,
@@ -237,8 +251,9 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start'
     },
     buttonText: {
-        color: '#fff',
-        fontWeight: 'bold',
+        color: '#FFFFFF',
+        //fontWeight: 'bold',
+        fontFamily: "Montserrat_500Medium"
     },
 })
 

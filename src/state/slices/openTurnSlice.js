@@ -1,10 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    expanded: {
-        cars: false,
-        bikes: false,
-        bicycles: false,
+    vehicles: {
+        cars: [
+            { placa: "AAA111" },
+            { placa: "AAA222" },
+            { placa: "AAA333" },
+            { placa: "AAA444" },
+            { placa: "AAA555" },
+            { placa: "AAA666" },
+        ],
+        motos: [],
+        bicycles: [],
     },
     selectedPlates: {},
 };

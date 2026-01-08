@@ -44,7 +44,8 @@ const stylesLogin = StyleSheet.create({
         fontSize: 15,
         color: "#005A6D",
         textAlign: "left",
-        marginLeft: 260,
+        marginLeft: 245,
+        fontFamily: 'Montserrat_500Medium',
     },
     logo: {
         width: 225,
@@ -55,6 +56,7 @@ const stylesLogin = StyleSheet.create({
         color: "#005A6D",
         textAlign: "center",
         marginBlockEnd: 50,
+        fontFamily: 'Montserrat_400Regular',
     },
     input: {
         width: '70%',

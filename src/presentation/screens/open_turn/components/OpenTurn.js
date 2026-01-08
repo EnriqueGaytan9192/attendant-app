@@ -1,12 +1,29 @@
-import { Dimensions, Image, Keyboard, ScrollView, TouchableWithoutFeedback, View } from "react-native";
-import * as Animatable from 'react-native-animatable';
-import { Divider, Text } from "react-native-paper";
+import { Dimensions, Image, Keyboard, ScrollView, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import * as Animatable from "react-native-animatable";
+import { Card, DataTable, Divider, IconButton, Text } from "react-native-paper";
 import CustomTextInput from "../../../../common/components/CustomTextInput";
+import useOpenTurnHook from "../hooks/useOpenTurnHook";
 import stylesOpenTurn from "../styles/stylesOpenTurn";
+import VehicleDropdown from "./VehicleDropdown";
 
 const OpenTurnScreen = () => {
     const screenHeight = Dimensions.get('window').height;
     const screenWidth = Dimensions.get('window').width;
+
+    const {
+        plate,
+        showErrors,
+        plateRef,
+        handlePlateChange,
+
+        openDropdown,
+        toggleDropdown,
+        selectedPlates,
+        togglePlate,
+        autos,
+        motos,
+        bicicletas
+    } = useOpenTurnHook();
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -14,7 +31,7 @@ const OpenTurnScreen = () => {
                 contentContainerStyle={{ flexGrow: 1 }}
                 keyboardShouldPersistTaps="handled"
             >
-                <View style={[stylesOpenTurn.container, { height: screenHeight - 100 }]}>
+                <View style={stylesOpenTurn.container}>
                     <View style={stylesOpenTurn.subContainer}>
                         <View style={stylesOpenTurn.containerTitle}>
                             <Image
@@ -29,32 +46,134 @@ const OpenTurnScreen = () => {
                         <View style={stylesOpenTurn.greenLine} />
                         <View style={{ marginTop: 50 }}>
                             <View style={stylesOpenTurn.vehiclesTotal}>
-                                <Text style={stylesOpenTurn.vehiclesT}>Vehículos</Text>
+                                <Text style={stylesOpenTurn.vehiclesT}>Vehículos en Patios</Text>
                                 <Text style={stylesOpenTurn.vehiclesT}>30</Text>
                             </View>
+                            <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 20 }}>
+                                <VehicleDropdown
+                                    title="Carro"
+                                    icon="directions-car"
+                                    color="#90D400"
+                                    vehicles={autos}
+                                    isOpen={openDropdown === "car"}
+                                    onToggle={() => toggleDropdown("car")}
+                                    selected={selectedPlates.car}
+                                    onTogglePlate={(plate) => togglePlate("car", plate)}
+                                />
+
+                                <VehicleDropdown
+                                    title="Moto"
+                                    icon="two-wheeler"
+                                    color="#90D400"
+                                    vehicles={motos?.vehicles || []}
+                                    isOpen={openDropdown === "moto"}
+                                    onToggle={() => toggleDropdown("moto")}
+                                    selected={selectedPlates.moto}
+                                    onTogglePlate={(plate) => togglePlate("moto", plate)}
+                                />
+
+                                <VehicleDropdown
+                                    title="Bicicleta"
+                                    icon="pedal-bike"
+                                    color="#90D400"
+                                    vehicles={bicicletas?.vehicles || []}
+                                    isOpen={openDropdown === "bike"}
+                                    onToggle={() => toggleDropdown("bike")}
+                                    selected={selectedPlates.bike}
+                                    onTogglePlate={(plate) => togglePlate("bike", plate)}
+                                />
+                            </View>
+
                         </View>
-                        <Divider style={{ backgroundColor: "#E5E5E5" }} />
+                        <Divider style={{ backgroundColor: "#E5E5E5", marginTop: 25 }} />
                         <View style={{ marginTop: 50 }}>
                             <View>
                                 <Text style={stylesOpenTurn.vehiclesT}>Placas No Registradas</Text>
-                                <View>
-                                    <Animatable.View>
-                                        <CustomTextInput
-                                            label="Usuario *"
-                                            mode="outlined"
-                                            theme={{
-                                                colors: {
-                                                    outline: "#E5E5E5",
-                                                    primary: "#09D400"
-                                                }
-                                            }}
-                                            keyboardType="default"
+                                <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-between" }}>
+                                    <View style={{ flexDirection: "row", width: "50%", }}>
+                                        <Animatable.View style={{ width: "70%" }} ref={plateRef}>
+                                            <CustomTextInput
+                                                label="Placa *"
+                                                value={plate}
+                                                onChangeText={handlePlateChange}
+                                                mode="outline"
+                                                theme={{
+                                                    colors: {
+                                                        outline: showErrors && !plate ? "red" : "#E5E5E5",
+                                                        primary: '#90D400',
+                                                    }
+                                                }}
+                                                style={{ backgroundColor: "#FFFFFF", fontSize: 16 }}
+                                                keyboardType="default"
+                                            />
+                                        </Animatable.View>
+                                        <IconButton
+                                            icon='check'
+                                            mode="contained"
+                                            iconColor="#FFFFFF"
+                                            style={{ backgroundColor: "#80C300", borderRadius: 8, marginLeft: 8 }}
+                                            size={25}
                                         />
-                                    </Animatable.View>
+                                    </View>
+                                    <View style={{ width: "50%" }}>
+                                        <Card style={{ elevation: 5, paddingHorizontal: 10, paddingVertical: 10, borderRadius: 10, backgroundColor: "#FFFFFF" }}>
+                                            <DataTable>
+                                                <DataTable.Header style={{ borderTopColor: "#90D400", borderTopWidth: 2, borderBottomColor: "#90D400", borderBottomWidth: 2 }}>
+                                                    <DataTable.Title style={{ justifyContent: "flex-start", flex: 2 }}>
+                                                        <Text style={{ fontWeight: "500", fontSize: 14, color: "#666666" }}>Fecha/Hora</Text>
+                                                    </DataTable.Title>
+                                                    <DataTable.Title style={{ justifyContent: "flex-start", flex: 1 }}>
+                                                        <Text style={{ fontWeight: "500", fontSize: 14, color: "#666666" }}>Placa</Text>
+                                                    </DataTable.Title>
+                                                    <DataTable.Title style={{ justifyContent: "center", flex: 0.5 }}>
+                                                        <Text style={{ fontWeight: "500", fontSize: 14, color: "#005A6D" }}>Acción</Text>
+                                                    </DataTable.Title>
+                                                </DataTable.Header>
+
+                                                <DataTable.Row style={{ borderBottomWidth: 1, borderBlockColor: "#E5E5E5" }}>
+                                                    <DataTable.Cell style={{ flex: 2 }}>
+                                                        <Text style={{ color: "#666666", fontSize: 14 }}>mm/dd/aaaa 00:00 am/pm</Text>
+                                                    </DataTable.Cell>
+                                                    <DataTable.Cell style={{ flex: 0.9 }}>
+                                                        <Text style={{ color: "#666666", fontSize: 14 }}>AAA111</Text>
+                                                    </DataTable.Cell>
+                                                    <DataTable.Cell style={{ flex: 0.5, justifyContent: "center", alignItems: "center" }}>
+                                                        <TouchableOpacity onPress={() => { }}>
+                                                            <Image
+                                                                source={require("../../../../assets/icons/deleteIcon.png")}
+                                                                style={{ width: 17, height: 22 }}
+                                                            />
+                                                        </TouchableOpacity>
+                                                    </DataTable.Cell>
+                                                </DataTable.Row>
+                                            </DataTable>
+                                        </Card>
+                                    </View>
                                 </View>
                             </View>
                         </View>
-                        <Divider style={{ backgroundColor: "#E5E5E5" }} />
+                        <Divider style={{ backgroundColor: "#E5E5E5", marginTop: 25 }} />
+                        <View style={{ marginTop: 50 }}>
+                            <Text style={stylesOpenTurn.vehiclesT}>Observaciones</Text>
+                            <Animatable.View>
+                                <CustomTextInput
+                                    label="Observaciones (opcional)"
+                                    value={''}
+                                    onChangeText={''}
+                                    mode="outline"
+                                    theme={{
+                                        colors: {
+                                            outline: "#E5E5E5",
+                                            primary: '#90D400',
+                                        }
+                                    }}
+                                    multiline
+                                    numberOfLines={5}
+                                    style={{ backgroundColor: "#FFFFFF", fontSize: 16, minHeight: 100 }}
+                                    keyboardType="default"
+                                />
+                            </Animatable.View>
+                        </View>
                     </View>
                 </View>
             </ScrollView>

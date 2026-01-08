@@ -30,6 +30,8 @@ const CustomTextInput = forwardRef(
           editable={!readonly}
           pointerEvents={readonly ? 'none' : 'auto'}
           mode="outlined"
+          dense
+          contentStyle={{ paddingVertical: 0 }}
           outlineColor={readonly ? "#E5E5E5" : theme?.colors?.outline || "#E5E5E5"}
           activeOutlineColor={readonly ? "#E5E5E5" : theme?.colors?.primary || "#90D400"}
           textColor={readonly ? "#7A7A7A" : undefined}
@@ -42,6 +44,9 @@ const CustomTextInput = forwardRef(
             },
           }}
           style={[
+            {
+              margin: 0
+            },
             style,
             readonly && {
               backgroundColor: '#F5F2F2',
