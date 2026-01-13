@@ -14,6 +14,7 @@ const ContactInfoSection = ({ user }) => {
                         label=""
                         value={user.email}
                         readonly
+                        style={{ lineHeight: 20 }}
                     />
                 </Animatable.View>
                 <Animatable.View style={stylesProfileInfo.textInputContact}>
@@ -21,6 +22,7 @@ const ContactInfoSection = ({ user }) => {
                         label=""
                         value={user.phone}
                         readonly
+                        style={{ lineHeight: 20 }}
                     />
                 </Animatable.View>
                 <Animatable.View style={stylesProfileInfo.textInputContact}>
@@ -28,6 +30,7 @@ const ContactInfoSection = ({ user }) => {
                         label=""
                         value={user.city}
                         readonly
+                        style={{ lineHeight: 20 }}
                     />
                 </Animatable.View>
             </View>
@@ -37,6 +40,7 @@ const ContactInfoSection = ({ user }) => {
                         label=""
                         value={user.address}
                         readonly
+                        style={{ lineHeight: 20 }}
                     />
                 </Animatable.View>
             </View>

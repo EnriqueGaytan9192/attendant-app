@@ -27,7 +27,7 @@ const AdvancesSelector = () => {
                 contentContainerStyle={{ flexGrow: 1 }}
                 keyboardShouldPersistTaps="handled"
             >
-                <View style={[stylesAdvancesSelector.container, { height: screenHeight - 25 }]}>
+                <View style={stylesAdvancesSelector.container}>
                     <View style={stylesAdvancesSelector.subContainer}>
                         <View style={stylesAdvancesSelector.containerTitle}>
                             <Image
@@ -42,7 +42,7 @@ const AdvancesSelector = () => {
                         <View style={stylesAdvancesSelector.greenLine} />
                         <View>
                             <Text style={stylesAdvancesSelector.textParking}>Parqueadero Jumbo las Vegas</Text>
-                            <View style={{ marginTop: 50 }}>
+                            <View style={{ marginTop: 40 }}>
                                 <CustomDropdown
                                     style={stylesAdvancesSelector.dropdown}
                                     label="Turno *"
@@ -89,7 +89,7 @@ const AdvancesSelector = () => {
                                                 primary: '#90D400',
                                             }
                                         }}
-                                        style={{ backgroundColor: '#FFFFFF', fontSize: 16 }}
+                                        style={{ backgroundColor: '#FFFFFF', fontSize: 16, lineHeight: 20 }}
                                         left={
                                             <TextInput.Icon
                                                 icon={() => (

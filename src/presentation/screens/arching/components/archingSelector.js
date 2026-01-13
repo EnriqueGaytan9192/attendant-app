@@ -27,7 +27,7 @@ const ArchingSelector = () => {
                 contentContainerStyle={{ flexGrow: 1 }}
                 keyboardShouldPersistTaps="handled"
             >
-                <View style={[stylesArchingSelector.container, { height: screenHeight - 25 }]}>
+                <View style={stylesArchingSelector.container}>
                     <View style={stylesArchingSelector.subContainer}>
                         <View style={stylesArchingSelector.containerTitle}>
                             <Image
@@ -42,7 +42,7 @@ const ArchingSelector = () => {
                         <View style={stylesArchingSelector.greenLine} />
                         <View>
                             <Text style={stylesArchingSelector.textParking}>Parqueadero Jumbo las Vegas</Text>
-                            <View style={{ marginTop: 50 }}>
+                            <View style={{ marginTop: 40 }}>
                                 <CustomDropdown
                                     style={stylesArchingSelector.dropdown}
                                     label="Turno *"
@@ -92,7 +92,7 @@ const ArchingSelector = () => {
                                                 primary: "#90D400",
                                             },
                                         }}
-                                        style={{ backgroundColor: "#FFFFFF", fontSize: 16 }}
+                                        style={{ backgroundColor: "#FFFFFF", fontSize: 16, lineHeight: 20  }}
                                         left={
                                             <TextInput.Icon
                                                 icon={() => (

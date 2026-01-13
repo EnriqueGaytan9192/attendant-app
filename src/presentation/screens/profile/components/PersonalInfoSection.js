@@ -15,6 +15,7 @@ const PersonalInfoSection = ({ user }) => {
                         label=""
                         value={user.firstName}
                         readonly
+                        style={{ lineHeight: 20 }}
                     />
                 </Animatable.View>
                 <Animatable.View style={stylesProfileInfo.textInputPPersonal}>
@@ -22,6 +23,7 @@ const PersonalInfoSection = ({ user }) => {
                         label=""
                         value={user.lastName}
                         readonly
+                        style={{ lineHeight: 20 }}
                     />
                 </Animatable.View>
                 <Animatable.View style={stylesProfileInfo.textInputPPersonal}>
@@ -29,6 +31,7 @@ const PersonalInfoSection = ({ user }) => {
                         label=""
                         value={user.documentType}
                         readonly
+                        style={{ lineHeight: 20 }}
                     />
                 </Animatable.View>
             </View>
@@ -38,6 +41,7 @@ const PersonalInfoSection = ({ user }) => {
                         label=""
                         value={user.noIdentifier}
                         readonly
+                        style={{ lineHeight: 20 }}
                     />
                 </Animatable.View>
                 <Animatable.View style={stylesProfileInfo.textInputPPersonal}>
@@ -45,6 +49,7 @@ const PersonalInfoSection = ({ user }) => {
                         label=""
                         value={user.birthDate}
                         readonly
+                        style={{ lineHeight: 20 }}
                         right={
                             <TextInput.Icon
                                 icon={() => (
@@ -62,6 +67,7 @@ const PersonalInfoSection = ({ user }) => {
                         label=""
                         value={user.gender}
                         readonly
+                        style={{ lineHeight: 20 }}
                     />
                 </Animatable.View>
             </View>

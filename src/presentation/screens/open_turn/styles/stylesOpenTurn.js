@@ -36,11 +36,13 @@ const stylesOpenTurn = StyleSheet.create({
         fontSize: 25,
         color: '#90D400',
         marginBottom: 2.5,
+        fontFamily: "Montserrat_400Regular"
     },
     textSubtitle: {
         fontSize: 16,
         color: '#8C8C8C',
         marginTop: 2.5,
+        fontFamily: "Montserrat_400Regular"
     },
     greenLine: {
         width: "50%",
@@ -53,15 +55,13 @@ const stylesOpenTurn = StyleSheet.create({
     vehiclesTotal: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginBottom: 15,
+        
     },
     vehiclesT: {
       fontSize: 18,
       color: "#005A6D",
-      fontWeight: 'medium'
-    },
-    dividerModal: {
-        marginVertical: -10,
+      //fontWeight: 'medium'
+      fontFamily: "Montserrat_500Medium"
     },
 })
 

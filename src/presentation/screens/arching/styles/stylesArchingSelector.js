@@ -24,8 +24,8 @@ const stylesArchingSelector = StyleSheet.create({
         //borderWidth: 3,
     },
     iconTitle: {
-        height: 45,
-        width: 45,
+        height: 33,
+        width: 33,
         marginTop: 5
     },
     textContainer: {
@@ -33,19 +33,21 @@ const stylesArchingSelector = StyleSheet.create({
         justifyContent: "space-between",
     },
     textTitle: {
-        fontSize: 28,
+        fontSize: 25,
         color: '#90D400',
         marginBottom: 2.5,
+        fontFamily: "Montserrat_400Regular"
     },
     textSubtitle: {
-        fontSize: 18,
+        fontSize: 16,
         color: '#8C8C8C',
         marginTop: 2.5,
+        fontFamily: "Montserrat_400Regular"
     },
     greenLine: {
         width: "50%",
-        height: 4,
-        backgroundColor: "#7ED957",
+        height: 2,
+        backgroundColor: "#90D400",
         borderRadius: 10,
         marginTop: 15,
         //marginBottom: 15,
@@ -54,6 +56,7 @@ const stylesArchingSelector = StyleSheet.create({
         fontSize: 18,
         marginTop: 50,
         color: "#005A6D",
+        fontFamily: "Montserrat_500Medium"
     },
     dropdown: {
         width: "33%",
@@ -69,16 +72,19 @@ const stylesArchingSelector = StyleSheet.create({
     titleMenu: {
         fontSize: 18,
         color: "#666666",
+        fontFamily: "Montserrat_400Regular"
     },
     subtitleMenu: {
         color: "#8C8C8C",
         fontSize: 16,
         marginLeft: 10,
         marginTop: 10,
+        fontFamily: "Montserrat_400Regular"
     },
     iconInput: {
-        width: 28,
-        height: 28,
+        width: 20,
+        height: 20,
+        marginBottom: 5
     },
     button: {
         backgroundColor: '#80C300',

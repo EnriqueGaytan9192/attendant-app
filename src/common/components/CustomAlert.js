@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     closeIcon: {
         width: 20,
         height: 20,
-        marginLeft: 'auto',
+        marginLeft: 10,
     },
     text: {
         fontSize: 16,
@@ -168,11 +168,13 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 16,
-        fontWeight: "bold",
+        //fontWeight: "bold",
         marginBottom: 2,
+        fontFamily: 'Montserrat_500Medium',
     },
     message: {
         fontSize: 14,
+        fontFamily: "Montserrat_400Regular"
     },
 });
 

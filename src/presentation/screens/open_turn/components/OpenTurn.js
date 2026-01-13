@@ -44,12 +44,12 @@ const OpenTurnScreen = () => {
                             </View>
                         </View>
                         <View style={stylesOpenTurn.greenLine} />
-                        <View style={{ marginTop: 50 }}>
+                        <View style={{ marginTop: 35 }}>
                             <View style={stylesOpenTurn.vehiclesTotal}>
                                 <Text style={stylesOpenTurn.vehiclesT}>Vehículos en Patios</Text>
                                 <Text style={stylesOpenTurn.vehiclesT}>30</Text>
                             </View>
-                            <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 20 }}>
+                            <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 15 }}>
                                 <VehicleDropdown
                                     title="Carro"
                                     icon="directions-car"
@@ -83,13 +83,12 @@ const OpenTurnScreen = () => {
                                     onTogglePlate={(plate) => togglePlate("bike", plate)}
                                 />
                             </View>
-
                         </View>
-                        <Divider style={{ backgroundColor: "#E5E5E5", marginTop: 25 }} />
-                        <View style={{ marginTop: 50 }}>
+                        <Divider style={{ backgroundColor: "#E5E5E5", marginTop: 30 }} />
+                        <View style={{ marginTop: 35 }}>
                             <View>
                                 <Text style={stylesOpenTurn.vehiclesT}>Placas No Registradas</Text>
-                                <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-between" }}>
+                                <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-between", marginTop: 15 }}>
                                     <View style={{ flexDirection: "row", width: "50%", }}>
                                         <Animatable.View style={{ width: "70%" }} ref={plateRef}>
                                             <CustomTextInput
@@ -103,7 +102,7 @@ const OpenTurnScreen = () => {
                                                         primary: '#90D400',
                                                     }
                                                 }}
-                                                style={{ backgroundColor: "#FFFFFF", fontSize: 16 }}
+                                                style={{ backgroundColor: "#FFFFFF", fontSize: 16, lineHeight: 20 }}
                                                 keyboardType="default"
                                             />
                                         </Animatable.View>
@@ -120,46 +119,129 @@ const OpenTurnScreen = () => {
                                             <DataTable>
                                                 <DataTable.Header style={{ borderTopColor: "#90D400", borderTopWidth: 2, borderBottomColor: "#90D400", borderBottomWidth: 2 }}>
                                                     <DataTable.Title style={{ justifyContent: "flex-start", flex: 2 }}>
-                                                        <Text style={{ fontWeight: "500", fontSize: 14, color: "#666666" }}>Fecha/Hora</Text>
+                                                        <Text style={{ fontWeight: "500", fontSize: 14, color: "#666666", fontFamily: "Montserrat_500Medium", }}>Fecha/Hora</Text>
                                                     </DataTable.Title>
                                                     <DataTable.Title style={{ justifyContent: "flex-start", flex: 1 }}>
-                                                        <Text style={{ fontWeight: "500", fontSize: 14, color: "#666666" }}>Placa</Text>
+                                                        <Text style={{ fontWeight: "500", fontSize: 14, color: "#666666", fontFamily: "Montserrat_500Medium" }}>Placa</Text>
                                                     </DataTable.Title>
                                                     <DataTable.Title style={{ justifyContent: "center", flex: 0.5 }}>
-                                                        <Text style={{ fontWeight: "500", fontSize: 14, color: "#005A6D" }}>Acción</Text>
+                                                        <Text style={{ fontWeight: "500", fontSize: 14, color: "#005A6D", fontFamily: "Monstserrat_500Medium" }}>Acción</Text>
                                                     </DataTable.Title>
                                                 </DataTable.Header>
 
-                                                <DataTable.Row style={{ borderBottomWidth: 1, borderBlockColor: "#E5E5E5" }}>
-                                                    <DataTable.Cell style={{ flex: 2 }}>
-                                                        <Text style={{ color: "#666666", fontSize: 14 }}>mm/dd/aaaa 00:00 am/pm</Text>
-                                                    </DataTable.Cell>
-                                                    <DataTable.Cell style={{ flex: 0.9 }}>
-                                                        <Text style={{ color: "#666666", fontSize: 14 }}>AAA111</Text>
-                                                    </DataTable.Cell>
-                                                    <DataTable.Cell style={{ flex: 0.5, justifyContent: "center", alignItems: "center" }}>
-                                                        <TouchableOpacity onPress={() => { }}>
-                                                            <Image
-                                                                source={require("../../../../assets/icons/deleteIcon.png")}
-                                                                style={{ width: 17, height: 22 }}
-                                                            />
-                                                        </TouchableOpacity>
-                                                    </DataTable.Cell>
-                                                </DataTable.Row>
+                                                <ScrollView
+                                                    style={{ maxHeight: 150 }}
+                                                    nestedScrollEnabled
+                                                >
+                                                    <DataTable.Row style={{ borderBottomWidth: 1, borderBlockColor: "#E5E5E5" }}>
+                                                        <DataTable.Cell style={{ flex: 2 }}>
+                                                            <Text style={{ color: "#666666", fontSize: 14, fontFamily: "Montserrat_400Regular", lineHeight: 20 }}>mm/dd/aaaa 00:00 am/pm</Text>
+                                                        </DataTable.Cell>
+                                                        <DataTable.Cell style={{ flex: 0.9 }}>
+                                                            <Text style={{ color: "#666666", fontSize: 14, fontFamily: "Montserrat_400Regular", lineHeight: 20 }}>AAA111</Text>
+                                                        </DataTable.Cell>
+                                                        <DataTable.Cell style={{ flex: 0.5, justifyContent: "center", alignItems: "center" }}>
+                                                            <TouchableOpacity onPress={() => { }}>
+                                                                <Image
+                                                                    source={require("../../../../assets/icons/deleteIcon.png")}
+                                                                    style={{ width: 17, height: 22 }}
+                                                                />
+                                                            </TouchableOpacity>
+                                                        </DataTable.Cell>
+                                                    </DataTable.Row>
+                                                    <DataTable.Row style={{ borderBottomWidth: 1, borderBlockColor: "#E5E5E5" }}>
+                                                        <DataTable.Cell style={{ flex: 2 }}>
+                                                            <Text style={{ color: "#666666", fontSize: 14, fontFamily: "Montserrat_400Regular", lineHeight: 20 }}>mm/dd/aaaa 00:00 am/pm</Text>
+                                                        </DataTable.Cell>
+                                                        <DataTable.Cell style={{ flex: 0.9 }}>
+                                                            <Text style={{ color: "#666666", fontSize: 14, fontFamily: "Montserrat_400Regular", lineHeight: 20 }}>AAA111</Text>
+                                                        </DataTable.Cell>
+                                                        <DataTable.Cell style={{ flex: 0.5, justifyContent: "center", alignItems: "center" }}>
+                                                            <TouchableOpacity onPress={() => { }}>
+                                                                <Image
+                                                                    source={require("../../../../assets/icons/deleteIcon.png")}
+                                                                    style={{ width: 17, height: 22 }}
+                                                                />
+                                                            </TouchableOpacity>
+                                                        </DataTable.Cell>
+                                                    </DataTable.Row>
+                                                    <DataTable.Row style={{ borderBottomWidth: 1, borderBlockColor: "#E5E5E5" }}>
+                                                        <DataTable.Cell style={{ flex: 2 }}>
+                                                            <Text style={{ color: "#666666", fontSize: 14, fontFamily: "Montserrat_400Regular", lineHeight: 20 }}>mm/dd/aaaa 00:00 am/pm</Text>
+                                                        </DataTable.Cell>
+                                                        <DataTable.Cell style={{ flex: 0.9 }}>
+                                                            <Text style={{ color: "#666666", fontSize: 14, fontFamily: "Montserrat_400Regular", lineHeight: 20 }}>AAA111</Text>
+                                                        </DataTable.Cell>
+                                                        <DataTable.Cell style={{ flex: 0.5, justifyContent: "center", alignItems: "center" }}>
+                                                            <TouchableOpacity onPress={() => { }}>
+                                                                <Image
+                                                                    source={require("../../../../assets/icons/deleteIcon.png")}
+                                                                    style={{ width: 17, height: 22 }}
+                                                                />
+                                                            </TouchableOpacity>
+                                                        </DataTable.Cell>
+                                                    </DataTable.Row>
+                                                    <DataTable.Row style={{ borderBottomWidth: 1, borderBlockColor: "#E5E5E5" }}>
+                                                        <DataTable.Cell style={{ flex: 2 }}>
+                                                            <Text style={{ color: "#666666", fontSize: 14, fontFamily: "Montserrat_400Regular", lineHeight: 20 }}>mm/dd/aaaa 00:00 am/pm</Text>
+                                                        </DataTable.Cell>
+                                                        <DataTable.Cell style={{ flex: 0.9 }}>
+                                                            <Text style={{ color: "#666666", fontSize: 14, fontFamily: "Montserrat_400Regular", lineHeight: 20 }}>AAA111</Text>
+                                                        </DataTable.Cell>
+                                                        <DataTable.Cell style={{ flex: 0.5, justifyContent: "center", alignItems: "center" }}>
+                                                            <TouchableOpacity onPress={() => { }}>
+                                                                <Image
+                                                                    source={require("../../../../assets/icons/deleteIcon.png")}
+                                                                    style={{ width: 17, height: 22 }}
+                                                                />
+                                                            </TouchableOpacity>
+                                                        </DataTable.Cell>
+                                                    </DataTable.Row>
+                                                    <DataTable.Row style={{ borderBottomWidth: 1, borderBlockColor: "#E5E5E5" }}>
+                                                        <DataTable.Cell style={{ flex: 2 }}>
+                                                            <Text style={{ color: "#666666", fontSize: 14, fontFamily: "Montserrat_400Regular", lineHeight: 20 }}>mm/dd/aaaa 00:00 am/pm</Text>
+                                                        </DataTable.Cell>
+                                                        <DataTable.Cell style={{ flex: 0.9 }}>
+                                                            <Text style={{ color: "#666666", fontSize: 14, fontFamily: "Montserrat_400Regular", lineHeight: 20 }}>AAA111</Text>
+                                                        </DataTable.Cell>
+                                                        <DataTable.Cell style={{ flex: 0.5, justifyContent: "center", alignItems: "center" }}>
+                                                            <TouchableOpacity onPress={() => { }}>
+                                                                <Image
+                                                                    source={require("../../../../assets/icons/deleteIcon.png")}
+                                                                    style={{ width: 17, height: 22 }}
+                                                                />
+                                                            </TouchableOpacity>
+                                                        </DataTable.Cell>
+                                                    </DataTable.Row>
+                                                    <DataTable.Row style={{ borderBottomWidth: 1, borderBlockColor: "#E5E5E5" }}>
+                                                        <DataTable.Cell style={{ flex: 2 }}>
+                                                            <Text style={{ color: "#666666", fontSize: 14, fontFamily: "Montserrat_400Regular", lineHeight: 20 }}>mm/dd/aaaa 00:00 am/pm</Text>
+                                                        </DataTable.Cell>
+                                                        <DataTable.Cell style={{ flex: 0.9 }}>
+                                                            <Text style={{ color: "#666666", fontSize: 14, fontFamily: "Montserrat_400Regular", lineHeight: 20 }}>AAA111</Text>
+                                                        </DataTable.Cell>
+                                                        <DataTable.Cell style={{ flex: 0.5, justifyContent: "center", alignItems: "center" }}>
+                                                            <TouchableOpacity onPress={() => { }}>
+                                                                <Image
+                                                                    source={require("../../../../assets/icons/deleteIcon.png")}
+                                                                    style={{ width: 17, height: 22 }}
+                                                                />
+                                                            </TouchableOpacity>
+                                                        </DataTable.Cell>
+                                                    </DataTable.Row>
+                                                </ScrollView>
                                             </DataTable>
                                         </Card>
                                     </View>
                                 </View>
                             </View>
                         </View>
-                        <Divider style={{ backgroundColor: "#E5E5E5", marginTop: 25 }} />
-                        <View style={{ marginTop: 50 }}>
+                        <Divider style={{ backgroundColor: "#E5E5E5", marginTop: 30 }} />
+                        <View style={{ marginTop: 35 }}>
                             <Text style={stylesOpenTurn.vehiclesT}>Observaciones</Text>
-                            <Animatable.View>
+                            <Animatable.View style={{ marginTop: 15 }}>
                                 <CustomTextInput
                                     label="Observaciones (opcional)"
-                                    value={''}
-                                    onChangeText={''}
                                     mode="outline"
                                     theme={{
                                         colors: {
@@ -169,7 +251,7 @@ const OpenTurnScreen = () => {
                                     }}
                                     multiline
                                     numberOfLines={5}
-                                    style={{ backgroundColor: "#FFFFFF", fontSize: 16, minHeight: 100 }}
+                                    style={{ backgroundColor: "#FFFFFF", fontSize: 16, minHeight: 100, lineHeight: 20 }}
                                     keyboardType="default"
                                 />
                             </Animatable.View>

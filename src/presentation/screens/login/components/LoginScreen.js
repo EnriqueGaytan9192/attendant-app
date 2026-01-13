@@ -71,7 +71,7 @@ const LoginScreen = () => {
                                                 primary: "#90D400",
                                             },
                                         }}
-                                        style={{ backgroundColor: "#FFFFFF", fontSize: 16 }}
+                                        style={{ backgroundColor: "#FFFFFF", fontSize: 16, lineHeight: 20 }}
                                         left={
                                             <TextInput.Icon
                                                 icon={() => (
@@ -105,7 +105,7 @@ const LoginScreen = () => {
                                                 primary: "#90D400",
                                             }
                                         }}
-                                        style={{ backgroundColor: "#FFFFFF", fontSize: 16 }}
+                                        style={{ backgroundColor: "#FFFFFF", fontSize: 16, lineHeight: 20 }}
                                         secureTextEntry={passwordVisible}
                                         left={
                                             <TextInput.Icon
@@ -158,10 +158,11 @@ const LoginScreen = () => {
                                     alignSelf: 'flex-end',
                                     flex: 1,
                                     color: "#000",
-                                    marginRight: 10
+                                    marginRight: 10,
+                                    fontFamily: "Montserrat_400Regular"
                                 }}
                             >
-                                Versión 1.0.12
+                                Versión 1.0.16
                             </Text>
                         </View>
                     </View>

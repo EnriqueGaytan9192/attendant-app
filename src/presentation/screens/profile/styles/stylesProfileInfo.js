@@ -27,16 +27,19 @@ const stylesProfileInfo = StyleSheet.create({
         fontSize: 24,
         color: '#80C300',
         marginTop: 15,
+        fontFamily: "Montserrat_400Regular"
     },
     roleInfo: {
         fontSize: 16,
         color: '#666666',
         marginTop: 10,
+        fontFamily: "Montserrat_500Medium"
     },
     emailInfo: {
         fontSize: 16,
         color: '#666666',
         marginTop: 3,
+        fontFamily: "Montserrat_500Medium"
     },
     greenLine: {
         width: "100%",
@@ -54,6 +57,7 @@ const stylesProfileInfo = StyleSheet.create({
         fontSize: 16,
         color: '#80C300',
         marginBottom: 10,
+       fontFamily: "Montserrat_500Medium" 
     },
     contentPersonalInput: {
         flexDirection: 'row',
@@ -77,14 +81,15 @@ const stylesProfileInfo = StyleSheet.create({
         marginBottom: 15,
     },
     iconInput: {
-        width: 20,
-        height: 22,
+        width: 17,
+        height: 18,
+        marginBottom: 5
     },
     initialsAvatar: {
         width: 90,
         height: 90,
         borderRadius: 45,
-        backgroundColor: "#90D400", // verde
+        backgroundColor: "#90D400",
         justifyContent: "center",
         alignItems: "center",
         marginBottom: 12
@@ -92,6 +97,8 @@ const stylesProfileInfo = StyleSheet.create({
     initialsText: {
         color: "#FFFFFF",
         fontSize: 32,
+        marginTop: 5,
+        fontFamily: "Montserrat_400Regular"
     },
 
 })

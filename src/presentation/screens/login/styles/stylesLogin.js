@@ -65,8 +65,9 @@ const stylesLogin = StyleSheet.create({
         fontSize: 16,
     },
     iconInput: {
-        width: 28,
-        height: 28,
+        width: 25,
+        height: 25,
+        marginBottom: 5
     },
     button: {
         backgroundColor: '#80C300',
@@ -85,6 +86,7 @@ const stylesLogin = StyleSheet.create({
         marginTop: 15,
         fontSize: 15,
         color: "#005A6D",
+        fontFamily: 'Montserrat_400Regular',
     },
     footer: {
         //paddingHorizontal: 80,

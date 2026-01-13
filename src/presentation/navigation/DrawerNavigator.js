@@ -227,9 +227,10 @@ const styles = StyleSheet.create({
     },
     profileName: {
         fontSize: 16,
-        fontWeight: "bold",
+        //fontWeight: "bold",
         color: "#90D400",
         marginTop: 5,
+        fontFamily: "Montserrat_500Medium"
     },
     profileRole: {
         backgroundColor: "#666666",
@@ -240,7 +241,8 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginTop: 5,
         width: 125,
-        textAlign: 'center'
+        textAlign: 'center',
+        fontFamily: "Montserrat_400Regular"
     },
     menuItem: {
         flexDirection: "row",
@@ -257,10 +259,14 @@ const styles = StyleSheet.create({
         flex: 1,
         fontSize: 16,
         color: "#333",
+        fontFamily: "Montserrat_500Medium",
+        lineHeight: 20,
     },
     subMenuText: {
         fontSize: 14,
         color: "#777",
+        fontFamily: "Montserrat_400Regular",
+        lineHeight: 20,
     },
     icon: {
         width: 28,

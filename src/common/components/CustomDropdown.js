@@ -31,7 +31,7 @@ const CustomDropdown = ({
         valueField="value"
         value={value}
         containerStyle={styles.dropdownContainer}
-        itemTextStyle={{ fontSize: 16, color: "#666666" }}
+        itemTextStyle={{ fontSize: 16, color: "#666666", fontFamily: "Montserrat_400Regular" }}
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
         onChange={(item) => {
@@ -76,9 +76,10 @@ export default CustomDropdown;
 const styles = StyleSheet.create({
   label: {
     fontSize: 14,
-    color: "#6D6D6D",
+    color: "#666666",
     marginBottom: 4,
     marginLeft: 5,
+    fontFamily: "Montserrat_400Regular"
   },
   dropdown: {
     height: 60,
@@ -90,10 +91,14 @@ const styles = StyleSheet.create({
   placeholderText: {
     color: "#666666",
     fontSize: 16,
+    fontFamily: "Montserrat_400Regular",
+    lineHeight: 20
   },
   selectedTextStyle: {
     fontSize: 16,
-    color: "#000",
+    color: "#666666",
+    fontFamily: "Montserrat_400Regular",
+    lineHeight: 20
   },
   dropdownContainer: {
     borderRadius: 8,

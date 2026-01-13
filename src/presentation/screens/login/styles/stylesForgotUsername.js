@@ -27,6 +27,7 @@ const styleForgotUsername = StyleSheet.create({
         marginLeft: 15,
         //borderColor: '#d80000ff',
         //borderWidth: 2,
+        fontFamily: "Montserrat_400Regular"
     },
     divider: {
         color: "#E5E5E5"
@@ -36,15 +37,18 @@ const styleForgotUsername = StyleSheet.create({
         color: '#00000099',
         marginTop: 40,
         marginBlockEnd: 20,
+        fontFamily: "Montserrat_400Regular"
     },
     input: {
         width: '100%',
         backgroundColor: "#FFFFFF",
         fontSize: 16,
+        lineHeight: 20
     },
     iconInput: {
-        width: 28,
-        height: 28,
+        width: 25,
+        height: 25,
+        marginBottom: 5
     },
     buttonContent: {
         //borderColor: '#d80000ff',
