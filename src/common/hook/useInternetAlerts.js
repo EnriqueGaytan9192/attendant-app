@@ -6,41 +6,79 @@ import { showAlert } from "../../common/components/AlertManager";
 const useInternetAlerts = () => {
 
     const appState = useRef(AppState.currentState);
-    const intervalRef = useRef(null);
 
-    const prevConnected = useRef(true);
-    const prevInternetReachable = useRef(true);
+    const noConnectionInterval = useRef(null);
+    const noInternetInterval = useRef(null);
+
+    const lastStatus = useRef("ok");
+
+    const hasRealInternet = async () => {
+        try {
+            const res = await fetch("https://clients3.google.com/generate_204", {
+                method: "GET",
+                cache: "no-store",
+            });
+            return res.status === 204;
+        } catch {
+            return false;
+        }
+    };
+
+    const clearAllIntervals = () => {
+        if (noConnectionInterval.current) {
+            clearInterval(noConnectionInterval.current);
+            noConnectionInterval.current = null;
+        }
+        if (noInternetInterval.current) {
+            clearInterval(noInternetInterval.current);
+            noInternetInterval.current = null;
+        }
+    };
 
     const runCheck = async () => {
         try {
             const state = await Network.getNetworkStateAsync();
-            const { isConnected, isInternetReachable, type } = state;
 
-            // Sin conexión física
-            if (!isConnected) {
-                showAlert("error", "Sin conexión. Activa WiFi o datos móviles.");
-                prevConnected.current = false;
+            if (!state.isConnected) {
+                if (lastStatus.current !== "no-connection") {
+                    clearAllIntervals();
+
+                    showAlert("error", "Sin conexión. Activa WiFi o datos móviles.");
+
+                    noConnectionInterval.current = setInterval(() => {
+                        showAlert("error", "Sin conexión. Activa WiFi o datos móviles.");
+                    }, 30000);
+
+                    lastStatus.current = "no-connection";
+                }
                 return;
             }
 
-            // Conectado pero sin Internet real
-            if (isConnected && !isInternetReachable) {
-                showAlert("warning", "Red conectada pero sin acceso a internet.");
-                prevInternetReachable.current = false;
+            const internetOk = await hasRealInternet();
+
+            if (!internetOk) {
+                if (lastStatus.current !== "no-internet") {
+                    clearAllIntervals();
+
+                    showAlert("warning", "Red conectada pero sin acceso a internet.");
+
+                    noInternetInterval.current = setInterval(() => {
+                        showAlert("warning", "Red conectada pero sin acceso a internet.");
+                    }, 30000);
+
+                    lastStatus.current = "no-internet";
+                }
                 return;
             }
 
-            // Reconexión detectada
-            if (!prevConnected.current || !prevInternetReachable.current) {
+            if (lastStatus.current !== "ok") {
+                clearAllIntervals();
                 showAlert("success", "Conexión restablecida.");
+                lastStatus.current = "ok";
             }
 
-            prevConnected.current = true;
-            prevInternetReachable.current = true;
-
-        } catch (error) {
-            console.log("Error al verificar red:", error);
-            showAlert("error", "Error verificando la conexión.");
+        } catch (err) {
+            console.log("Error verificando red:", err);
         }
     };
 
@@ -56,15 +94,14 @@ const useInternetAlerts = () => {
         });
 
         runCheck();
-
-        intervalRef.current = setInterval(runCheck, 5000);
+        const mainInterval = setInterval(runCheck, 5000);
 
         return () => {
-            clearInterval(intervalRef.current);
+            clearInterval(mainInterval);
+            clearAllIntervals();
             subscription.remove();
         };
     }, []);
-
 };
 
 export default useInternetAlerts;

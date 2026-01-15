@@ -1,24 +1,30 @@
 import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { showAlert } from "../../../../common/components/AlertManager";
+import { nextStep } from "../../../../state/slices/openTurnSlice";
 
 const useOpenTurnHook = () => {
+    const vehicles = useSelector(state => state.openTurn.vehicles);
+    const autos = vehicles.cars;
+    const motos = vehicles.motos;
+    const bicicletas = vehicles.bicycles;
     const dispatch = useDispatch();
     const [plate, setPlate] = useState("");
     const [showErrors, setShowErrors] = useState(false);
     const [openDropdown, setOpenDropdown] = useState(null);
-    const plateRef = useRef(null);
-
     const [selectedPlates, setSelectedPlates] = useState({
         car: [],
         moto: [],
         bike: [],
     });
-    const vehicles = useSelector(state => state.openTurn.vehicles);
-
-    const autos = vehicles.cars;
-    const motos = vehicles.motos;
-    const bicicletas = vehicles.bicycles;
+    const plateRef = useRef(null);
+    const plateRegex = {
+        car: /^[A-Z]{3}[0-9]{3}$/,
+        motorcycle: /^[A-Z]{3}[0-9]{2}$/,
+        vintageMotorcycle: /^[A-Z]{3}[0-9]{2}[A-Z]$/,
+        diplomatic: /^[A-Z]{2}[0-9]{4}$/,
+        foreign: /^[A-Z][0-9]{2}[A-Z]{2}[0-9][A-Z]$/,
+    };
 
     const toggleDropdown = (type) => {
         setOpenDropdown(prev => (prev === type ? null : type));
@@ -36,12 +42,33 @@ const useOpenTurnHook = () => {
         });
     };
 
-    const plateRegex = {
-        car: /^[A-Z]{3}[0-9]{3}$/, // 6
-        motorcycle: /^[A-Z]{3}[0-9]{2}$/, // 5
-        vintageMotorcycle: /^[A-Z]{3}[0-9]{2}[A-Z]$/, // 6
-        diplomatic: /^[A-Z]{2}[0-9]{4}$/, // 6
-        foreign: /^[A-Z][0-9]{2}[A-Z]{2}[0-9][A-Z]$/, // 7
+    const toggleSelectAll = (type, vehicles) => {
+        setSelectedPlates(prev => {
+            const allPlates = vehicles.map(v => v.placa);
+            const allSelected = prev[type].length === allPlates.length;
+
+            return {
+                ...prev,
+                [type]: allSelected ? [] : allPlates,
+            };
+        });
+    };
+
+    const isAllSelected = (type, vehicles) => vehicles.length > 0 && selectedPlates[type].length === vehicles.length;
+
+    const handlePlateChange = (text) => {
+        let value = text;
+
+        if (/\s/.test(value)) {
+            showAlert("warning", "No se permite ingresar espacios.");
+            value = value.replace(/\s/g, "");
+        };
+        if (/[^a-zA-Z0-9]/.test(value)) {
+            showAlert("warning", "Solo se permiten letras y números.");
+            value = value.replace(/[^a-zA-Z0-9]/g, "");
+        };
+
+        setPlate(value);
     };
 
     const validatePlate = (plate) => {
@@ -92,34 +119,25 @@ const useOpenTurnHook = () => {
         };
     };
 
-    const handlePlateChange = (text) => {
-        let value = text;
-
-        if (/\s/.test(value)) {
-            showAlert("warning", "No se permite ingresar espacios.");
-            value = value.replace(/\s/g, "");
-        };
-        if (/[^a-zA-Z0-9]/.test(value)) {
-            showAlert("warning", "Solo se permiten letras y números.");
-            value = value.replace(/[^a-zA-Z0-9]/g, "");
-        };
-
-        setPlate(value);
-    }
+    const handleNextStep = async () => {
+        dispatch(nextStep());
+    };
 
     return {
-        plate,
-        showErrors,
-        plateRef,
-        handlePlateChange,
-
-        openDropdown,
-        toggleDropdown,
-        selectedPlates,
-        togglePlate,
         autos,
         motos,
         bicicletas,
+        plate,
+        showErrors,
+        openDropdown,
+        selectedPlates,
+        plateRef,
+        toggleDropdown,
+        togglePlate,
+        toggleSelectAll,
+        isAllSelected,        
+        handlePlateChange,
+        handleNextStep
     };
 }
 

@@ -17,8 +17,8 @@ const AlertManager = () => {
             setAlerts((prev) => {
                 const updated = [alert, ...prev];
 
-                if (updated.length > 5) {
-                    return updated.slice(0, 5);
+                if (updated.length > 3) {
+                    return updated.slice(0, 3);
                 }
                 
                 return updated;

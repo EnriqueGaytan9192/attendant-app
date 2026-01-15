@@ -2,9 +2,7 @@ import { Dimensions, Image, Keyboard, ScrollView, TouchableOpacity, TouchableWit
 import * as Animatable from 'react-native-animatable';
 import { Button, Divider, Text, TextInput } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { showAlert } from "../../../../common/components/AlertManager";
 import CustomTextInput from "../../../../common/components/CustomTextInput";
-import useInternetAlerts from "../../../../common/hook/useInternetAlerts";
 import useLoginHook from "../hooks/useLoginHook";
 import stylesLogin from "../styles/stylesLogin";
 
@@ -15,17 +13,17 @@ const LoginScreen = () => {
         form,
         deviceId,
         passwordVisible,
-        setPasswordVisible,
-        passwordModal,
-        userModal,
+        showErrors,
         emailRef,
         passwordRef,
+        setPasswordVisible,
+        handledUsernameChange,
+        handlePasswordChange,
+        passwordModal,
+        userModal,
         handleLogin,
-        handleDataForm,
-        showErrors,
         fakeLogin
     } = useLoginHook();
-    useInternetAlerts();
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -55,15 +53,7 @@ const LoginScreen = () => {
                                     <CustomTextInput
                                         label="Nombre de Usuario *"
                                         value={form.email}
-                                        onChangeText={(text) => {
-                                            const hasSpaces = /\s/.test(text);
-                                            const noSpaces = text.replace(/\s/g, '');
-                                            handleDataForm('email', noSpaces);
-
-                                            if (hasSpaces) {
-                                                showAlert("warning", "El nombre de usuario no puede contener espacios.");
-                                            }
-                                        }}
+                                        onChangeText={handledUsernameChange}
                                         mode="outlined"
                                         theme={{
                                             colors: {
@@ -89,15 +79,7 @@ const LoginScreen = () => {
                                     <CustomTextInput
                                         label="Contraseña *"
                                         value={form.password}
-                                        onChangeText={(text) => {
-                                            const hasSpaces = /\s/.test(text);
-                                            const noSpaces = text.replace(/\s/g, '');
-                                            handleDataForm('password', noSpaces);
-
-                                            if (hasSpaces) {
-                                                showAlert("warning", "La contraseña no puede contener espacios.");
-                                            }
-                                        }}
+                                        onChangeText={handlePasswordChange}
                                         mode="outlined"
                                         theme={{
                                             colors: {
@@ -162,7 +144,7 @@ const LoginScreen = () => {
                                     fontFamily: "Montserrat_400Regular"
                                 }}
                             >
-                                Versión 1.0.16
+                                Versión 1.0.24
                             </Text>
                         </View>
                     </View>

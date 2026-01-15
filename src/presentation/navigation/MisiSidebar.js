@@ -3,18 +3,19 @@ import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import { Tooltip } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import routes from "../../presentation/navigation/routes";
-import { resetAuth as resetAuthAuth } from "../../state/slices/authSlice";
+import { resetAuth } from "../../state/slices/authSlice";
+import { resetOpenTurn } from "../../state/slices/openTurnSlice";
 
 const MiniSidebar = ({ navigation, isDrawerOpen }) => {
 
     const dispatch = useDispatch();
     const handleLogOut = () => {
-        dispatch(resetAuthAuth());
+        dispatch(resetAuth());
+        dispatch(resetOpenTurn());
     };
 
     return (
         <View style={[styles.sidebar, { paddingTop: 10 }]}>
-
             <TouchableOpacity
                 onPress={() => navigation.toggleDrawer()}
                 style={styles.menuButton}
@@ -88,7 +89,7 @@ const styles = StyleSheet.create({
     },
     greenLine: {
         width: 40,
-        height: 4,
+        height: 2,
         backgroundColor: "#7ED957",
         borderRadius: 10,
         marginBottom: 15,

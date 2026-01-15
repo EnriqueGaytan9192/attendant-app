@@ -1,30 +1,21 @@
-import { useEffect } from "react";
 import { Image, Keyboard, ScrollView, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { Button, Divider, Text, TextInput } from "react-native-paper";
-import { showAlert } from "../../../../common/components/AlertManager";
 import CustomTextInput from "../../../../common/components/CustomTextInput";
 import useForgotPasswordHook from "../hooks/useForgotPasswordHook";
 import styleForgotPassword from "../styles/stylesForgotPassword";
 
 const ForgotPasswordModal = () => {
     const {
+        form,
+        showErrorsOneModal,
         usernameModalRef,
         emailModalRef,
-        form,
-        onChangeText,
-        showErrorsOneModal,
-        handleSend,
+        handledUserChange,
+        handledEmailChange,
         onCloseOneModal,
+        handleSend,
     } = useForgotPasswordHook();
-
-    useEffect(() => {
-        const timeOut = setTimeout(() => {
-            usernameModalRef?.current?.focus();
-        }, 300);
-
-        return () => clearTimeout(timeOut);
-    }, []);
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -59,17 +50,7 @@ const ForgotPasswordModal = () => {
                                 ref={usernameModalRef}
                                 label="Usuario *"
                                 value={form.usernameOneModal}
-                                onChangeText={(text) => {
-
-                                    const hasSpaces = /\s/.test(text);
-                                    const noSpaces = text.replace(/\s/g, '');
-
-                                    onChangeText('usernameOneModal', noSpaces);
-
-                                    if (hasSpaces) {
-                                        showAlert("warning", "El nombre de usuario no puede contener espacios.");
-                                    }
-                                }}
+                                onChangeText={handledUserChange}
                                 mode="outlined"
                                 theme={{
                                     colors: {
@@ -96,16 +77,7 @@ const ForgotPasswordModal = () => {
                                 ref={emailModalRef}
                                 label="Correo Electrónico *"
                                 value={form.emailOneModal}
-                                onChangeText={(text) => {
-                                    const hasSpaces = /\s/.test(text);
-                                    const noSpaces = text.replace(/\s/g, '');
-
-                                    onChangeText('emailOneModal', noSpaces)
-
-                                    if (hasSpaces) {
-                                        showAlert("warning", "El correo electrónico no puede contener espacios.");
-                                    }
-                                }}
+                                onChangeText={handledEmailChange}
                                 mode="outlined"
                                 theme={{
                                     colors: {

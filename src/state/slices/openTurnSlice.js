@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+    //Primer pantalla
     vehicles: {
         cars: [
             { placa: "AAA111" },
@@ -15,8 +16,14 @@ const initialState = {
     },
     selectedPlates: {},
 
+    //Segunda pantalla
+
+    //TercerPantalla
+
     stepOne: true,
-    stepTwo: true,
+    stepTwo: false,
+    stepThree: false,
+    stepFour: false,
 };
 
 const openTurnSlice = createSlice({
@@ -26,13 +33,25 @@ const openTurnSlice = createSlice({
         nextStep(state) {
             if (state.stepOne) {
                 state.stepOne = false;
-                state.stepTwo = true
+                state.stepTwo = true;
+            } else if (state.stepTwo) {
+                state.stepTwo = false;
+                state.stepThree = true;
+            } else if (state.stepThree) {
+                state.stepThree = false;
+                state.stepFour = true;
             }
         },
         previousStep(state) {
-            if (state.stepOne) {
+            if (state.stepFour) {
+                state.stepFour = false;
+                state.stepThree = true;
+            } else if (state.stepThree) {
+                state.stepThree = false;
+                state.stepTwo = true;
+            } else if (state.stepTwo) {
                 state.stepTwo = false;
-                state.stepOne = false;
+                state.stepOne = true;
             }
         },
         resetOpenTurn: () => initialState,
@@ -42,6 +61,7 @@ const openTurnSlice = createSlice({
 export const {
     nextStep,
     previousStep,
+    resetOpenTurn
 } = openTurnSlice.actions;
 
 export default openTurnSlice.reducer;

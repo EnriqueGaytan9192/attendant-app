@@ -1,18 +1,18 @@
 import { StyleSheet } from "react-native";
 
-const stylesCloseTurn = StyleSheet.create({
+const stylesSummaryTurn = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'white',
-        //borderColor: '#d80000ff',
+        backgroundColor: "white",
+        //borderColor: "#d80000ff",
         //borderWidth: 5,
     },
     subContainer: {
         flex: 1,
-        marginLeft: 65,
+        marginLeft: 45,
         marginRight: 45,
-        marginVertical: 20,
-        //borderColor: '#00d800ff',
+        marginVertical: 30,
+        //borderColor: "#00d800ff",
         //borderWidth: 5,
     },
     containerTitle: {
@@ -62,29 +62,34 @@ const stylesCloseTurn = StyleSheet.create({
         fontSize: 18,
         color: "#666666",
         fontFamily: "Montserrat_400Regular",
-        lineHeight: 20,
+        lineHeight: 20
     },
     info: {
         fontSize: 18,
         marginLeft: 15,
-        marginTop: 10,
+        marginTop: 10, 
         color: "#666666",
         fontFamily: "Montserrat_400Regular",
-        lineHeight: 20
+        lineHeight: 20,
     },
     infoTwo: {
         fontSize: 18,
         marginLeft: 15,
-        marginTop: 10,
+        marginTop: 10, 
         color: "#8C8C8C",
         fontFamily: "Montserrat_400Regular",
-        lineHeight: 20
+        lineHeight: 20,
     },
     divider: {
         width: "100%",
         backgroundColor: "#E5E5E5",
         marginTop: 15,
+    },
+    containerButtons: {
+        flexDirection: "row",
+        justifyContent: "flex-end",
+        marginTop: "auto",
     }
 })
 
-export default stylesCloseTurn;
+export default stylesSummaryTurn;

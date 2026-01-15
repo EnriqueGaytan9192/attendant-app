@@ -1,5 +1,5 @@
 import AlertManager from "../../common/components/AlertManager";
-import { OpenTurnScreen } from "../../presentation/screens/open_turn";
+import { OpenTurnScreen, SummaryTurn } from "../../presentation/screens/open_turn";
 import { useAppSelector } from "../../state/hooks";
 
 const OpenTurn = () => {
@@ -10,6 +10,10 @@ const OpenTurn = () => {
         <>
             {stepOne &&
                 <OpenTurnScreen />
+            }
+
+            {stepTwo &&
+                <SummaryTurn />
             }
             
             <AlertManager />

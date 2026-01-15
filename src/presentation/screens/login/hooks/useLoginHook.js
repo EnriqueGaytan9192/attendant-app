@@ -8,19 +8,14 @@ import { useAppSelector } from "../../../../state/hooks";
 import { login, setDataForm, showForgotPasswordModal, showForgotUsernameModal } from "../../../../state/slices/authSlice";
 
 const useLoginHook = () => {
+    const form = useAppSelector((state) => state.auth.form);
     const dispatch = useDispatch();
     const router = useRouter();
-    const form = useAppSelector((state) => state.auth.form);
     const [deviceId, setDeviceId] = useState("Cargando...");
     const [passwordVisible, setPasswordVisible] = useState(true);
     const [showErrors, setShowErrors] = useState(false);
     const emailRef = useRef(null);
     const passwordRef = useRef(null);
-
-    const fakeLogin = () => {
-        console.log("Logged fake in successfully!");
-        dispatch(login());
-    };
 
     useEffect(() => {
         const getDeviceId = async () => {
@@ -40,6 +35,30 @@ const useLoginHook = () => {
         getDeviceId();
     }, []);
 
+    const handleDataForm = (name, value) => {
+        dispatch(setDataForm({ name, value }));
+    };
+
+    const handledUsernameChange = (text) => {
+        const hasSpaces = /\s/.test(text);
+        const noSpaces = text.replace(/\s/g, '');
+        handleDataForm("email", noSpaces);
+
+        if (hasSpaces) {
+            showAlert("warning", "El nombre de usuario no puede contener espacios.");
+        }
+    };
+
+    const handlePasswordChange = (text) => {
+        const hasSpaces = /\s/.test(text);
+        const noSpaces = text.replace(/\s/g, '');
+        handleDataForm('password', noSpaces);
+
+        if (hasSpaces) {
+            showAlert("warning", "La contraseña no puede contener espacios.");
+        }
+    };
+
     const passwordModal = () => {
         Keyboard.dismiss();
         setTimeout(() => {
@@ -52,10 +71,6 @@ const useLoginHook = () => {
         setTimeout(() => {
             dispatch(showForgotUsernameModal(true));
         }, 100);
-    };
-
-    const handleDataForm = (name, value) => {
-        dispatch(setDataForm({ name, value }));
     };
 
     const handleLogin = () => {
@@ -74,19 +89,25 @@ const useLoginHook = () => {
         // Aquí continuarías con tu lógica de login
     };
 
+    const fakeLogin = () => {
+        console.log("Logged fake in successfully!");
+        dispatch(login());
+    };
+
     return {
         form,
         deviceId,
         passwordVisible,
-        setPasswordVisible,
-        passwordModal,
-        userModal,
+        showErrors,
         emailRef,
         passwordRef,
+        setPasswordVisible,
+        handledUsernameChange,
+        handlePasswordChange,
+        passwordModal,
+        userModal,
         handleLogin,
-        handleDataForm,
-        showErrors,
-        fakeLogin
+        fakeLogin,
     };
 };
 

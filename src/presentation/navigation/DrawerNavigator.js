@@ -5,7 +5,8 @@ import { Image, ScrollView, StyleSheet, TouchableOpacity, View } from "react-nat
 import { Text } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import MainLayout from "../../common/components/MainLayout";
-import { resetAuth as resetAuthAuth } from "../../state/slices/authSlice";
+import { resetAuth } from "../../state/slices/authSlice";
+import { resetOpenTurn } from "../../state/slices/openTurnSlice";
 import useProfileInfoHook from "../screens/profile/hooks/useProfileInfoHook";
 import routes from "./routes";
 
@@ -30,7 +31,8 @@ const CustomDrawerContent = ({ navigation }) => {
 
     const dispatch = useDispatch();
     const handleLogOut = () => {
-        dispatch(resetAuthAuth());
+        dispatch(resetAuth());
+        dispatch(resetOpenTurn());
     };
 
     const { user, initials } = useProfileInfoHook();

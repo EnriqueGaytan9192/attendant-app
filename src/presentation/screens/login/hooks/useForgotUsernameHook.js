@@ -1,18 +1,36 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { showAlert } from "../../../../common/components/AlertManager";
 import { useAppSelector } from "../../../../state/hooks";
 import { changeValueFormRecovery, showForgotUsernameModal } from "../../../../state/slices/authSlice";
 
 const useForgotUsernameHook = () => {
-    const dispatch = useDispatch();
     const formTwo = useAppSelector((state) => state.auth.formTwo);
-    const emailTwoModalRef = useRef(null);
+    const dispatch = useDispatch();
     const [showErrorsTwoModal, setShowErrorsTwoModal] = useState(false);
+    const emailTwoModalRef = useRef(null);
+
+    useEffect(() => {
+        const timeOut = setTimeout(() => {
+            emailTwoModalRef?.current?.focus();
+        }, 300);
+
+        return () => clearTimeout(timeOut);
+    }, []);
 
     const onChangeText = (formName, text) => {
         dispatch(changeValueFormRecovery({ name: formName, value: text }));
-    }
+    };
+
+    const handledEmailTwoChange = (text) => {
+        const hasSpaces = /\s/.test(text);
+        const noSpaces = text.replace(/\s/g, '');
+        onChangeText('emailTwoModal', noSpaces);
+
+        if (hasSpaces) {
+            showAlert("warning", "El correo electrónico no puede contener espacios.");
+        };
+    };
 
     const onCloseTwoModal = () => {
         dispatch(showForgotUsernameModal(false));
@@ -35,12 +53,12 @@ const useForgotUsernameHook = () => {
     };
 
     return {
-        emailTwoModalRef,
         formTwo,
-        handleSend,
-        onChangeText,
         showErrorsTwoModal,
-        onCloseTwoModal
+        emailTwoModalRef,
+        handledEmailTwoChange,
+        onCloseTwoModal,
+        handleSend,
     };
 };
 

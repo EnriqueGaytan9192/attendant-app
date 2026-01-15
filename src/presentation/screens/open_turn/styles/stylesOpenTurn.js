@@ -4,8 +4,8 @@ const stylesOpenTurn = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'white',
-        borderColor: '#d80000ff',
-        borderWidth: 5,
+        //borderColor: '#d80000ff',
+        //borderWidth: 5,
     },
     subContainer: {
         flex: 1,
@@ -47,7 +47,7 @@ const stylesOpenTurn = StyleSheet.create({
     greenLine: {
         width: "50%",
         height: 2,
-        backgroundColor: "#7ED957",
+        backgroundColor: "#90D400",
         borderRadius: 10,
         marginTop: 15,
         //marginBottom: 15,

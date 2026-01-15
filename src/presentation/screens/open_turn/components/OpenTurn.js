@@ -1,6 +1,6 @@
 import { Dimensions, Image, Keyboard, ScrollView, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import * as Animatable from "react-native-animatable";
-import { Card, DataTable, Divider, IconButton, Text } from "react-native-paper";
+import { Button, Card, DataTable, Divider, IconButton, Text } from "react-native-paper";
 import CustomTextInput from "../../../../common/components/CustomTextInput";
 import useOpenTurnHook from "../hooks/useOpenTurnHook";
 import stylesOpenTurn from "../styles/stylesOpenTurn";
@@ -11,18 +11,20 @@ const OpenTurnScreen = () => {
     const screenWidth = Dimensions.get('window').width;
 
     const {
-        plate,
-        showErrors,
-        plateRef,
-        handlePlateChange,
-
-        openDropdown,
-        toggleDropdown,
-        selectedPlates,
-        togglePlate,
         autos,
         motos,
-        bicicletas
+        bicicletas,
+        plate,
+        showErrors,
+        openDropdown,
+        selectedPlates,      
+        plateRef,
+        toggleDropdown,
+        togglePlate,
+        toggleSelectAll,
+        isAllSelected,
+        handlePlateChange,
+        handleNextStep,
     } = useOpenTurnHook();
 
     return (
@@ -59,6 +61,8 @@ const OpenTurnScreen = () => {
                                     onToggle={() => toggleDropdown("car")}
                                     selected={selectedPlates.car}
                                     onTogglePlate={(plate) => togglePlate("car", plate)}
+                                    onToggleAll={() => toggleSelectAll("car", autos)}
+                                    allSelected={isAllSelected("car", autos)}
                                 />
 
                                 <VehicleDropdown
@@ -255,6 +259,15 @@ const OpenTurnScreen = () => {
                                     keyboardType="default"
                                 />
                             </Animatable.View>
+                        </View>
+                        <View style={{ marginTop: 40 }}>
+                            <Button
+                                mode="contained"
+                                onPress={handleNextStep}
+                                style={{ backgroundColor: "#80C300", alignSelf: "flex-end", paddingHorizontal: 30, borderRadius: 10 }}
+                            >
+                                Continuar
+                            </Button>
                         </View>
                     </View>
                 </View>

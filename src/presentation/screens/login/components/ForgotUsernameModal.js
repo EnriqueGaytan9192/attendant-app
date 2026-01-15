@@ -1,30 +1,20 @@
-import { useEffect } from "react";
 import { Image, Keyboard, ScrollView, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import * as Animatable from 'react-native-animatable';
 import { Button, Divider, Text, TextInput } from "react-native-paper";
-import { showAlert } from "../../../../common/components/AlertManager";
 import CustomTextInput from "../../../../common/components/CustomTextInput";
 import useForgotUsernameHook from "../hooks/useForgotUsernameHook";
 import styleForgotUsername from "../styles/stylesForgotUsername";
 
 const ForgotUsernameModal = () => {
     const {
-        emailTwoModalRef,
         formTwo,
-        handleSend,
-        onChangeText,
         showErrorsTwoModal,
-        onCloseTwoModal
+        emailTwoModalRef,
+        handledEmailTwoChange,
+        onCloseTwoModal,
+        handleSend,
     } = useForgotUsernameHook();
-
-    useEffect(() => {
-        const timeOut = setTimeout(() => {
-            emailTwoModalRef?.current?.focus();
-        }, 300);
-        
-        return () => clearTimeout(timeOut);
-    }, []);
-
+    
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <ScrollView
@@ -58,16 +48,7 @@ const ForgotUsernameModal = () => {
                                 ref={emailTwoModalRef}
                                 label="Correo Electrónico *"
                                 value={formTwo.emailTwoModal}
-                                onChangeText={(text) => {
-                                    const hasSpaces = /\s/.test(text);
-                                    const noSpaces = text.replace(/\s/g, '');
-
-                                    onChangeText('emailTwoModal', noSpaces);
-
-                                    if (hasSpaces) {
-                                        showAlert("warning", "El correo electrónico no puede contener espacios.");
-                                    }
-                                }}
+                                onChangeText={handledEmailTwoChange}
                                 mode="outlined"
                                 theme={{
                                     colors: {
