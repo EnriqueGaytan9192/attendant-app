@@ -9,16 +9,16 @@ import stylesArchingSelector from "../styles/stylesArchingSelector";
 const ArchingSelector = () => {
     const screenHeight = Dimensions.get('window').height;
     const screenWidth = Dimensions.get('window').width;
+    
     const {
         docType,
-        turnos,
         arqueoValue,
         isFocused,
+        turnos,
         setDocType,
-        setArqueoValue,
+        formatCurrency,
         setIsFocused,
-        formatThousands,
-        formatCurrency
+        handleArchingChange,
     } = useArchingSelectorHook();
 
     return (
@@ -78,11 +78,7 @@ const ArchingSelector = () => {
                                                 ? arqueoValue
                                                 : formatCurrency(arqueoValue)
                                         }
-                                        onChangeText={(text) => {
-                                            const cleaned = text.replace(/\D/g, '');
-                                            const formatted = formatThousands(cleaned);
-                                            setArqueoValue(formatted);
-                                        }}
+                                        onChangeText={handleArchingChange}
                                         onFocus={() => setIsFocused(true)}
                                         onBlur={() => setIsFocused(false)}
                                         mode="outlined"

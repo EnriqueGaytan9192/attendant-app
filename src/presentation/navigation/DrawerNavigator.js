@@ -6,6 +6,7 @@ import { Text } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import MainLayout from "../../common/components/MainLayout";
 import { resetAuth } from "../../state/slices/authSlice";
+import { resetCloseTurn } from "../../state/slices/closeTurnSlice";
 import { resetOpenTurn } from "../../state/slices/openTurnSlice";
 import useProfileInfoHook from "../screens/profile/hooks/useProfileInfoHook";
 import routes from "./routes";
@@ -33,6 +34,7 @@ const CustomDrawerContent = ({ navigation }) => {
     const handleLogOut = () => {
         dispatch(resetAuth());
         dispatch(resetOpenTurn());
+        dispatch(resetCloseTurn());
     };
 
     const { user, initials } = useProfileInfoHook();

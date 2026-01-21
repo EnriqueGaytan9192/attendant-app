@@ -1,10 +1,17 @@
 import { Dimensions, Image, Keyboard, ScrollView, TouchableWithoutFeedback, View } from "react-native";
-import { Divider, Text } from "react-native-paper";
+import * as Animatable from "react-native-animatable";
+import { Button, Divider, Text, TextInput } from "react-native-paper";
+import CustomTextInput from "../../../../common/components/CustomTextInput";
+import useCloseTurnHook from "../hooks/useCloseTurnHook";
 import stylesCloseTurn from "../styles/stylesCloseTurn";
 
 const CloseTurnScreen = () => {
     const screenHeight = Dimensions.get('window').height;
     const screenWidth = Dimensions.get('window').width;
+
+    const {
+        handledNext,
+    } = useCloseTurnHook();
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -43,7 +50,43 @@ const CloseTurnScreen = () => {
                             <Text style={stylesCloseTurn.infoTwo}>$200.000</Text>
                         </View>
                         <Divider style={stylesCloseTurn.divider} />
+                        <View style={{ marginTop: 25, marginBottom: 15 }}>
+                            <Animatable.View>
+                                <CustomTextInput
+                                    label="Valor a reportar *"
+                                    mode="outlined"
+                                    theme={{
+                                        colors: {
+                                            outline: "#E5E5E5",
+                                            primary: '#90D400',
+                                        }
+                                    }}
+                                    style={{ backgroundColor: '#FFFFFF', fontSize: 16, lineHeight: 20 }}
+                                    left={
+                                        <TextInput.Icon
+                                            icon={() => (
+                                                <Image
+                                                    source={require("../../../../assets/icons/moneyIcon.png")}
+                                                    style={{ width: 20, height: 20, marginBottom: 5 }}
+                                                />
+                                            )}
+                                        />
+                                    }
+                                    keyboardType="numeric"
+                                />
+                            </Animatable.View>
+                        </View>
                         <Divider style={stylesCloseTurn.divider} />
+                        <View style={{ justifyContent: "flex-end", marginTop: "auto" }}>
+                            <Button
+                                mode="contained"
+                                style={{ backgroundColor: "#80C300", alignSelf: "flex-end", borderRadius: 10, marginLeft: 20 }}
+                                contentStyle={{ paddingHorizontal: 30 }}
+                                onPress={handledNext}
+                            >
+                                Continuar
+                            </Button>
+                        </View>
                     </View>
                 </View>
             </ScrollView>

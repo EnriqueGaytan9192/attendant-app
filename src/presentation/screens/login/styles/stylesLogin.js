@@ -46,6 +46,7 @@ const stylesLogin = StyleSheet.create({
         textAlign: "left",
         marginLeft: 245,
         fontFamily: 'Montserrat_500Medium',
+        lineHeight: 20
     },
     logo: {
         width: 225,
@@ -57,6 +58,7 @@ const stylesLogin = StyleSheet.create({
         textAlign: "center",
         marginBlockEnd: 50,
         fontFamily: 'Montserrat_400Regular',
+        lineHeight: 25
     },
     input: {
         width: '70%',
@@ -87,6 +89,7 @@ const stylesLogin = StyleSheet.create({
         fontSize: 15,
         color: "#005A6D",
         fontFamily: 'Montserrat_400Regular',
+        lineHeight: 20
     },
     footer: {
         //paddingHorizontal: 80,

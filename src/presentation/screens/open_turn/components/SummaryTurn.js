@@ -1,5 +1,7 @@
 import { Dimensions, Image, Keyboard, ScrollView, TouchableWithoutFeedback, View } from "react-native";
-import { Button, Divider, Switch, Text, TextInput } from "react-native-paper";
+import * as Animatable from "react-native-animatable";
+import { Button, Divider, Switch, Text } from "react-native-paper";
+import CustomTextInput from "../../../../common/components/CustomTextInput";
 import useSummaryTurnHook from "../hooks/useSummaryTurnHook";
 import stylesSummaryTurn from "../styles/stylesSummaryTurn";
 
@@ -46,22 +48,27 @@ const SummaryTurn = () => {
                         </View>
                         <Divider style={stylesSummaryTurn.divider} />
                         <View style={{ marginTop: 25, marginLeft: 20 }}>
-                            <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingRight: 20 }}>
+                            <View style={{ flexDirection: "row" }}>
                                 <View>
                                     <Text style={stylesSummaryTurn.subTitle}>Base de caja</Text>
                                     <Text style={stylesSummaryTurn.infoTwo}>$200.000</Text>
                                 </View>
-                                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                <View style={{ flexDirection: "row", alignItems: "center", marginLeft: "10%" }}>
                                     <Switch
                                         value={baseCompleta}
                                         onValueChange={toggleBase}
-                                        color="#80C300"
+                                        color="#90D400"
+                                        trackColor={{
+                                            true: "#90D400",
+                                            false: "#005A6D"
+                                        }}
                                     />
                                     <Text
                                         style={{
                                             marginLeft: 8,
-                                            fontFamily: "Montserrat_500Medium",
-                                            color: baseCompleta ? "#80C300" : "#8C8C8C",
+                                            fontFamily: "Montserrat_400Regular",
+                                            lineHeight: 20,
+                                            color: baseCompleta ? "#666666" : "#666666",
                                         }}
                                     >
                                         {baseCompleta ? "Completa" : "Incompleta"}
@@ -69,17 +76,20 @@ const SummaryTurn = () => {
                                 </View>
 
                                 {!baseCompleta && (
-                                    <TextInput
-                                        mode="outlined"
-                                        placeholder="Base de Caja"
-                                        style={{
-                                            marginTop: 12,
-                                            backgroundColor: "#FFFFFF",
-                                            height: 45,
-                                        }}
-                                        outlineColor="#E5E5E5"
-                                        activeOutlineColor="#80C300"
-                                    />
+                                    <Animatable.View style={{ width: "18%", marginLeft: 20 }}>
+                                        <CustomTextInput
+                                            label="Base de Caja *"
+                                            mode="outlined"
+                                            theme={{
+                                                colors: {
+                                                    outlined: "#E5E5E5",
+                                                    primary: "#90D400",
+                                                }
+                                            }}
+                                            style={{ backgroundColor: "#FFFFFF", fontSize: 16, lineHeight: 20 }}
+                                            keyboardType="numeric"
+                                        />
+                                    </Animatable.View>
                                 )}
                             </View>
                         </View>
@@ -93,13 +103,20 @@ const SummaryTurn = () => {
                             <Button
                                 mode="contained"
                                 onPress={handlePrevious}
-                                style={{ backgroundColor: "#8C8C8C", alignSelf: "flex-end", paddingHorizontal: 30, borderRadius: 10, marginRight: 20 }}
+                                style={{ backgroundColor: "#8C8C8C", alignSelf: "flex-end", borderRadius: 10, marginRight: 20 }}
+                                contentStyle={{
+                                    paddingHorizontal: 30,
+                                }}
                             >
                                 Cancelar
                             </Button>
                             <Button
                                 mode="contained"
-                                style={{ backgroundColor: "#80C300", alignSelf: "flex-end", paddingHorizontal: 30, borderRadius: 10, marginLeft: 20 }}
+                                onPress={() => {}}
+                                style={{ backgroundColor: "#80C300", alignSelf: "flex-end", borderRadius: 10, marginLeft: 20 }}
+                                contentStyle={{
+                                    paddingHorizontal: 30
+                                }}
                             >
                                 Continuar
                             </Button>

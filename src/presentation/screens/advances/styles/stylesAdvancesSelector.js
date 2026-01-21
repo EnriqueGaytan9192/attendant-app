@@ -36,13 +36,13 @@ const stylesAdvancesSelector = StyleSheet.create({
         fontSize: 25,
         color: '#90D400',
         marginBottom: 2.5,
-        fontFamily: "Montserrat_400Regular"
+        fontFamily: "Montserrat_400Regular",
     },
     textSubtitle: {
         fontSize: 16,
         color: '#8C8C8C',
         marginTop: 2.5,
-        fontFamily: "Montserrat_400Regular"
+        fontFamily: "Montserrat_400Regular",
     },
     greenLine: {
         width: "50%",
@@ -56,7 +56,8 @@ const stylesAdvancesSelector = StyleSheet.create({
         fontSize: 18,
         marginTop: 50,
         color: "#005A6D",
-        fontFamily: "Montserrat_500Medium"
+        fontFamily: "Montserrat_500Medium",
+        lineHeight: 20
     },
     dropdown: {
         width: "33%",
@@ -72,14 +73,16 @@ const stylesAdvancesSelector = StyleSheet.create({
     titleMenu: {
         fontSize: 18,
         color: "#666666",
-        fontFamily: "Montserrat_400Regular"
+        fontFamily: "Montserrat_400Regular",
+        lineHeight: 20
     },
     subtitleMenu: {
         color: "#8C8C8C",
         fontSize: 16,
         marginLeft: 10,
         marginTop: 10,
-        fontFamily: "Montserrat_400Regular"
+        fontFamily: "Montserrat_400Regular",
+        lineHeight: 20
     },
     iconInput: {
         width: 20,

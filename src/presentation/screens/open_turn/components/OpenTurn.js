@@ -264,7 +264,8 @@ const OpenTurnScreen = () => {
                             <Button
                                 mode="contained"
                                 onPress={handleNextStep}
-                                style={{ backgroundColor: "#80C300", alignSelf: "flex-end", paddingHorizontal: 30, borderRadius: 10 }}
+                                style={{ backgroundColor: "#80C300", alignSelf: "flex-end", borderRadius: 10 }}
+                                contentStyle={{ paddingHorizontal: 30 }}
                             >
                                 Continuar
                             </Button>

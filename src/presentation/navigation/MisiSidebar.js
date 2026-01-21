@@ -4,6 +4,7 @@ import { Tooltip } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import routes from "../../presentation/navigation/routes";
 import { resetAuth } from "../../state/slices/authSlice";
+import { resetCloseTurn } from "../../state/slices/closeTurnSlice";
 import { resetOpenTurn } from "../../state/slices/openTurnSlice";
 
 const MiniSidebar = ({ navigation, isDrawerOpen }) => {
@@ -12,6 +13,7 @@ const MiniSidebar = ({ navigation, isDrawerOpen }) => {
     const handleLogOut = () => {
         dispatch(resetAuth());
         dispatch(resetOpenTurn());
+        dispatch(resetCloseTurn());
     };
 
     return (

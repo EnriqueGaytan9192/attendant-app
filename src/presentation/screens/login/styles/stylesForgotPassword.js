@@ -28,7 +28,8 @@ const styleForgotPassword = StyleSheet.create({
         //color: '#272727',
         //borderColor: '#d80000ff',
         //borderWidth: 2,
-        fontFamily: "Montserrat_400Regular"
+        fontFamily: "Montserrat_400Regular",
+        lineHeight: 20
     },
     divider: {
         color: "#E5E5E5",
@@ -40,7 +41,8 @@ const styleForgotPassword = StyleSheet.create({
         color: '#00000099',
         marginTop: 40,
         marginBlockEnd: 20,
-        fontFamily: "Montserrat_400Regular"
+        fontFamily: "Montserrat_400Regular",
+        lineHeight: 20
     },
     input: {
         width: '100%',

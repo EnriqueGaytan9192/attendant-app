@@ -112,6 +112,7 @@ const ForgotPasswordModal = () => {
                         <Button
                             mode="contained"
                             style={styleForgotPassword.saveModal}
+                            contentStyle={{ paddingHorizontal: 3 }}
                             onPress={handleSend}
                         >
                             Guardar

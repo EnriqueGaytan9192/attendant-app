@@ -33,16 +33,21 @@ const useAdvancesSelectorHook = () => {
         });
     };
 
+    const handleAdvancesChange = (text) => {
+        const cleaned = text.replace(/\D/g, '');
+        const formatted = formatThousands(cleaned);
+        setAvanceValue(formatted);
+    };
+
     return {
         docType,
         turnos,
         avanceValue,
         isFocused,
         setDocType,
-        setAvanceValue,
         setIsFocused,
-        formatThousands,
-        formatCurrency
+        formatCurrency,
+        handleAdvancesChange,
     }
 }
 

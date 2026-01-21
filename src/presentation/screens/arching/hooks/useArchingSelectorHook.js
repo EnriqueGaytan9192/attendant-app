@@ -14,12 +14,6 @@ const useArchingSelectorHook = () => {
         { label: "Turno 6 - 04:00 pm - 06:00 pm", value: "6" },
     ];
 
-    const formatThousands = (value) => {
-        if (!value) return "$ 0.00";
-        const numericValue = value.replace(/\D/g, "");
-        return new Intl.NumberFormat("es-CO").format(Number(numericValue));
-    };
-
     const formatCurrency = (value) => {
         if (!value) return "$ 0.00";
 
@@ -33,16 +27,27 @@ const useArchingSelectorHook = () => {
         });
     };
 
+    const formatThousands = (value) => {
+        if (!value) return "$ 0.00";
+        const numericValue = value.replace(/\D/g, "");
+        return new Intl.NumberFormat("es-CO").format(Number(numericValue));
+    };
+
+    const handleArchingChange = (text) => {
+        const cleaned = text.replace(/\D/g, "");
+        const formatted = formatThousands(cleaned);
+        setArqueoValue(formatted);
+    };
+
     return {
         docType,
-        turnos,
         arqueoValue,
         isFocused,
+        turnos,
         setDocType,
-        setArqueoValue,
+        formatCurrency,
         setIsFocused,
-        formatThousands,
-        formatCurrency
+        handleArchingChange,
     }
 }
 

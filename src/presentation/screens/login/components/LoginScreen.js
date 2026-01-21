@@ -141,7 +141,8 @@ const LoginScreen = () => {
                                     flex: 1,
                                     color: "#000",
                                     marginRight: 10,
-                                    fontFamily: "Montserrat_400Regular"
+                                    fontFamily: "Montserrat_400Regular",
+                                    lineHeight: 20
                                 }}
                             >
                                 Versión 1.0.24

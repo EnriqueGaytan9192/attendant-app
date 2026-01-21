@@ -83,6 +83,7 @@ const ForgotUsernameModal = () => {
                         <Button
                             mode="contained"
                             style={styleForgotUsername.saveModal}
+                            contentStyle={{ paddingHorizontal: 10 }}
                             onPress={handleSend}
                         >
                             Enviar

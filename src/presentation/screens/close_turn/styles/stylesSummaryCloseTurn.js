@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-const stylesArchingSelector = StyleSheet.create({
+const stylesSummaryCloseTurn = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'white',
@@ -19,13 +19,13 @@ const stylesArchingSelector = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         gap: 20,
-        marginLeft: 30,
         //borderColor: '#0000d8ff',
         //borderWidth: 3,
+        marginLeft: 30,
     },
     iconTitle: {
-        height: 33,
-        width: 33,
+        height: 37,
+        width: 28,
         marginTop: 5
     },
     textContainer: {
@@ -52,48 +52,45 @@ const stylesArchingSelector = StyleSheet.create({
         marginTop: 15,
         //marginBottom: 15,
     },
-    textParking: {
+    title: {
         fontSize: 18,
-        marginTop: 50,
         color: "#005A6D",
         fontFamily: "Montserrat_500Medium",
         lineHeight: 20
     },
-    dropdown: {
-        width: "33%",
-    },
-    greyLine: {
-        width: "100%",
-        height: 2,
-        backgroundColor: "#E5E5E5",
-        borderRadius: 10,
-        marginTop: 15,
-        //marginBottom: 15,
-    },
-    titleMenu: {
+    subTitle: {
         fontSize: 18,
+        color: "#666666",
+        fontFamily: "Montserrat_400Regular",
+        lineHeight: 20,
+    },
+    info: {
+        fontSize: 18,
+        marginLeft: 15,
+        marginTop: 10,
         color: "#666666",
         fontFamily: "Montserrat_400Regular",
         lineHeight: 20
     },
-    subtitleMenu: {
-        color: "#8C8C8C",
-        fontSize: 16,
-        marginLeft: 10,
+    infoTwo: {
+        fontSize: 18,
+        marginLeft: 15,
         marginTop: 10,
+        color: "#8C8C8C",
         fontFamily: "Montserrat_400Regular",
         lineHeight: 20
     },
-    iconInput: {
-        width: 20,
-        height: 20,
-        marginBottom: 5
+    infoThree: {
+        fontSize: 18,
+        color: "#8C8C8C",
+        fontFamily: "Montserrat_400Regular",
+        lineHeight: 20
     },
-    button: {
-        backgroundColor: '#80C300',
-        width: "15%",
-        borderRadius: 6,
-    },
+    divider: {
+        width: "100%",
+        backgroundColor: "#E5E5E5",
+        marginTop: 15,
+    }
 })
 
-export default stylesArchingSelector;
+export default stylesSummaryCloseTurn;

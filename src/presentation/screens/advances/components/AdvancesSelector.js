@@ -9,16 +9,16 @@ import stylesAdvancesSelector from "../styles/stylesAdvancesSelector";
 const AdvancesSelector = () => {
     const screenHeight = Dimensions.get('window').height;
     const screensWidth = Dimensions.get('window').width;
+    
     const {
         docType,
-        turnos,
         avanceValue,
         isFocused,
+        turnos,
         setDocType,
-        setAvanceValue,
         setIsFocused,
-        formatThousands,
-        formatCurrency
+        formatCurrency,
+        handleAdvancesChange,
     } = useAdvancesSelectorHook();
 
     return (
@@ -75,11 +75,7 @@ const AdvancesSelector = () => {
                                                 ? avanceValue
                                                 : formatCurrency(avanceValue)   
                                         }
-                                        onChangeText={(text) => {
-                                            const cleaned = text.replace(/\D/g, '');
-                                            const formatted = formatThousands(cleaned);
-                                            setAvanceValue(formatted);
-                                        }}
+                                        onChangeText={handleAdvancesChange}
                                         onFocus={() => setIsFocused(true)}
                                         onBlur={() => setIsFocused(false)}
                                         mode="outlined"
