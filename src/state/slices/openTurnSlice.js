@@ -18,7 +18,32 @@ const initialState = {
 
     //Segunda pantalla
 
-    //TercerPantalla
+    //Tercer pantalla
+    dispositivos: [
+        { name: "Tablets", cantidad: '', estado: "Buen Estado", observaciones: "" },
+        { name: "Impresora", cantidad: '', estado: "Buen Estado", observaciones: "" },
+        { name: "Datáfonos", cantidad: '', estado: "Buen Estado", observaciones: "" },
+        { name: "Radios", cantidad: '', estado: "Buen Estado", observaciones: "" },
+        { name: "Hubs", cantidad: '', estado: "Buen Estado", observaciones: "" },
+    ],
+    seguridad: [
+        { name: "Aviso tarifas", cantidad: '', estado: "Buen Estado", observaciones: "" },
+        { name: "Av. responsabilidad", cantidad: '', estado: "Buen Estado", observaciones: "" },
+        { name: "Aviso horarios", cantidad: '', estado: "Buen Estado", observaciones: "" },
+        { name: "Botiquín", cantidad: '', estado: "Buen Estado", observaciones: "" },
+        { name: "Extintores", cantidad: '', estado: "Buen Estado", observaciones: "" },
+        { name: "Llaveros", cantidad: '', estado: "Buen Estado", observaciones: "" },
+    ],
+    infraestructura: [
+        { name: "Lamparas", cantidad: '', estado: "Buen Estado", observaciones: "" },
+        { name: "Bombillos", cantidad: '', estado: "Buen Estado", observaciones: "" },
+        { name: "Piso", cantidad: '', estado: "Buen Estado", observaciones: "" },
+        { name: "Techo", cantidad: '', estado: "Buen Estado", observaciones: "" },
+        { name: "Topellantas", cantidad: '', estado: "Buen Estado", observaciones: "" },
+        { name: "Demarcación", cantidad: '', estado: "Buen Estado", observaciones: "" },
+        { name: "Desagues", cantidad: '', estado: "Buen Estado", observaciones: "" },
+        { name: "Baños", cantidad: '', estado: "Buen Estado", observaciones: "" },
+    ],
 
     stepOne: true,
     stepTwo: false,
@@ -30,6 +55,22 @@ const openTurnSlice = createSlice({
     name: "openTurn",
     initialState,
     reducers: {
+        //Primer pantalla
+        //Segunda pantalla
+        //Tercer pantalla
+        updateCantidad: (state, action) => {
+            const { category, index, value } = action.payload;
+            state[category][index].cantidad = value;
+        },
+        updateEstado: (state, action) => {
+            const { category, index, value } = action.payload;
+            state[category][index].estado = value;
+        },
+        updateObservation: (state, action) => {
+            const { category, index, value } = action.payload;
+            state[category][index].observaciones = value;
+        },
+
         nextStep(state) {
             if (state.stepOne) {
                 state.stepOne = false;
@@ -59,6 +100,13 @@ const openTurnSlice = createSlice({
 });
 
 export const {
+    //Primer pantalla
+    //Segunda pantalla
+    //Tercer pantalla
+    updateCantidad,
+    updateEstado,
+    updateObservation,
+    
     nextStep,
     previousStep,
     resetOpenTurn

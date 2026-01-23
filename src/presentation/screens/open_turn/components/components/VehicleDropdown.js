@@ -17,19 +17,19 @@ const VehicleDropdown = ({
     const hasVehicles = vehicles.length > 0;
 
     return (
-        <View style={{ width: "32%" }}>
+        <View style={{ width: "30%" }}>
             <TouchableOpacity activeOpacity={0.8} onPress={onToggle}>
-                <Card style={{ paddingVertical: 16, paddingHorizontal: 20, borderRadius: 10, elevation: 3, backgroundColor: "#FFFFFF" }}>
+                <Card style={{ paddingVertical: 14, paddingHorizontal: 25, borderRadius: 10, elevation: 3, backgroundColor: "#FFFFFF" }}>
                     <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
                         <View style={{ flexDirection: "row", alignItems: "center" }}>
                             <MaterialIcons name={icon} size={30} color={color} />
-                            <Text style={{ fontSize: 16, marginLeft: 15, color, fontFamily: "Montserrat_500Medium", lineHeight: 20, marginTop: 3 }}>
+                            <Text style={{ fontSize: 17, marginLeft: 15, color, fontFamily: "Montserrat_500Medium", lineHeight: 20, marginTop: 3 }}>
                                 {title}
                             </Text>
                         </View>
 
                         <View style={{ flexDirection: "row", alignItems: "center" }}>
-                            <Text style={{ color: "#666666", fontSize: 16, marginRight: 10, fontFamily: "Montserrat_400Regular", lineHeight: 20 }}>
+                            <Text style={{ color: "#666666", fontSize: 13, marginRight: 10, fontFamily: "Montserrat_400Regular", lineHeight: 20 }}>
                                 {vehicles.length}
                             </Text>
                             <MaterialIcons
@@ -63,7 +63,7 @@ const VehicleDropdown = ({
                             >
                                 <Text
                                     style={{
-                                        fontSize: 14,
+                                        fontSize: 15,
                                         marginBottom: 5,
                                         fontFamily: "Montserrat_500Medium",
                                         color,
@@ -99,7 +99,7 @@ const VehicleDropdown = ({
                                     <Text
                                         style={{
                                             marginLeft: 8,
-                                            fontSize: 16,
+                                            fontSize: 13,
                                             color: "#666666",
                                             fontFamily: "Montserrat_400Regular",
                                             lineHeight: 20
@@ -120,7 +120,7 @@ const VehicleDropdown = ({
                         >
                             <Text
                                 style={{
-                                    fontSize: 16,
+                                    fontSize: 15,
                                     color: "#666666",
                                     fontFamily: "Montserrat_400Regular",
                                     lineHeight: 20

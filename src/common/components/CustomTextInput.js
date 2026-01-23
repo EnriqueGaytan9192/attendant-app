@@ -4,7 +4,7 @@ import * as Animatable from 'react-native-animatable';
 import { TextInput } from 'react-native-paper';
 
 const CustomTextInput = forwardRef(
-  ({ label, readonly = false, asteriskColor = '#68AF00', style, theme, ...props }, ref) => {
+  ({ label, readonly = false, asteriskColor = '#68AF00', style, theme, mode = "outlined", ...props }, ref) => {
     const animRef = useRef(null);
     const textInputRef = useRef(null);
     const parts = label.split('*');
@@ -27,13 +27,25 @@ const CustomTextInput = forwardRef(
         <TextInput
           ref={textInputRef}
           {...props}
+          mode={mode}
+          dense
           editable={!readonly}
           pointerEvents={readonly ? 'none' : 'auto'}
-          mode="outlined"
-          dense
-          contentStyle={{ paddingVertical: 0 }}
-          outlineColor={readonly ? "#E5E5E5" : theme?.colors?.outline || "#E5E5E5"}
-          activeOutlineColor={readonly ? "#E5E5E5" : theme?.colors?.primary || "#90D400"}
+          contentStyle={mode === 'flat' ? { paddingVertical: 0 } : undefined}
+          outlineColor={
+            mode === 'outlined'
+              ? readonly
+                ? '#E5E5E5'
+                : theme?.colors?.outline || '#E5E5E5'
+              : undefined
+          }
+          activeOutlineColor={
+            mode === 'outlined'
+              ? readonly
+                ? '#E5E5E5'
+                : theme?.colors?.primary || '#90D400'
+              : undefined
+          }
           textColor={readonly ? "#7A7A7A" : undefined}
           theme={{
             ...theme,

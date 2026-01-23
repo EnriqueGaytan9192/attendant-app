@@ -13,6 +13,7 @@ const SummaryTurn = () => {
         baseCompleta,
         toggleBase,
         handlePrevious,
+        handleNextStep,
     } = useSummaryTurnHook();
 
     return (
@@ -34,26 +35,26 @@ const SummaryTurn = () => {
                             </View>
                         </View>
                         <View style={stylesSummaryTurn.greenLine} />
-                        <View style={{ marginTop: 35 }}>
+                        <View style={stylesSummaryTurn.subContents}>
                             <Text style={stylesSummaryTurn.title}>Resumen Apertura de Turno</Text>
                         </View>
-                        <View style={{ marginTop: 35, marginLeft: 20 }}>
+                        <View style={stylesSummaryTurn.subContentsTwo}>
                             <Text style={stylesSummaryTurn.subTitle}>Turno</Text>
                             <Text style={stylesSummaryTurn.info}>Turno 1 - 06:00 am - 08:00 am</Text>
                         </View>
                         <Divider style={stylesSummaryTurn.divider} />
-                        <View style={{ marginTop: 25, marginLeft: 20 }}>
+                        <View style={stylesSummaryTurn.subContentsThree}>
                             <Text style={stylesSummaryTurn.subTitle}>Operario</Text>
                             <Text style={stylesSummaryTurn.infoTwo}>Nayibe Casas - 1020345678</Text>
                         </View>
                         <Divider style={stylesSummaryTurn.divider} />
-                        <View style={{ marginTop: 25, marginLeft: 20 }}>
+                        <View style={stylesSummaryTurn.subContentsThree}>
                             <View style={{ flexDirection: "row" }}>
                                 <View>
                                     <Text style={stylesSummaryTurn.subTitle}>Base de caja</Text>
                                     <Text style={stylesSummaryTurn.infoTwo}>$200.000</Text>
                                 </View>
-                                <View style={{ flexDirection: "row", alignItems: "center", marginLeft: "10%" }}>
+                                <View style={stylesSummaryTurn.contentSwitch}>
                                     <Switch
                                         value={baseCompleta}
                                         onValueChange={toggleBase}
@@ -65,6 +66,7 @@ const SummaryTurn = () => {
                                     />
                                     <Text
                                         style={{
+                                            fontSize: 13,
                                             marginLeft: 8,
                                             fontFamily: "Montserrat_400Regular",
                                             lineHeight: 20,
@@ -112,7 +114,7 @@ const SummaryTurn = () => {
                             </Button>
                             <Button
                                 mode="contained"
-                                onPress={() => {}}
+                                onPress={handleNextStep}
                                 style={{ backgroundColor: "#80C300", alignSelf: "flex-end", borderRadius: 10, marginLeft: 20 }}
                                 contentStyle={{
                                     paddingHorizontal: 30

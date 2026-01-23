@@ -4,7 +4,7 @@ import { Button, Card, DataTable, Divider, IconButton, Text } from "react-native
 import CustomTextInput from "../../../../common/components/CustomTextInput";
 import useOpenTurnHook from "../hooks/useOpenTurnHook";
 import stylesOpenTurn from "../styles/stylesOpenTurn";
-import VehicleDropdown from "./VehicleDropdown";
+import VehicleDropdown from "./components/VehicleDropdown";
 
 const OpenTurnScreen = () => {
     const screenHeight = Dimensions.get('window').height;
@@ -48,10 +48,10 @@ const OpenTurnScreen = () => {
                         <View style={stylesOpenTurn.greenLine} />
                         <View style={{ marginTop: 35 }}>
                             <View style={stylesOpenTurn.vehiclesTotal}>
-                                <Text style={stylesOpenTurn.vehiclesT}>Vehículos en Patios</Text>
-                                <Text style={stylesOpenTurn.vehiclesT}>30</Text>
+                                <Text style={stylesOpenTurn.vehiclesTitleT}>Vehículos en Patios</Text>
+                                <Text style={stylesOpenTurn.vehiclesCountT}>30</Text>
                             </View>
-                            <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 15 }}>
+                            <View style={stylesOpenTurn.contentDropdown}>
                                 <VehicleDropdown
                                     title="Carro"
                                     icon="directions-car"
@@ -88,25 +88,25 @@ const OpenTurnScreen = () => {
                                 />
                             </View>
                         </View>
-                        <Divider style={{ backgroundColor: "#E5E5E5", marginTop: 30 }} />
-                        <View style={{ marginTop: 35 }}>
+                        <Divider style={stylesOpenTurn.divider} />
+                        <View style={stylesOpenTurn.subContents}>
                             <View>
-                                <Text style={stylesOpenTurn.vehiclesT}>Placas No Registradas</Text>
-                                <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-between", marginTop: 15 }}>
-                                    <View style={{ flexDirection: "row", width: "50%", }}>
+                                <Text style={stylesOpenTurn.vehiclesTitleT}>Placas No Registradas</Text>
+                                <View style={stylesOpenTurn.subcontentPlatesUnregistered}>
+                                    <View style={stylesOpenTurn.contentInputPlate}>
                                         <Animatable.View style={{ width: "70%" }} ref={plateRef}>
                                             <CustomTextInput
                                                 label="Placa *"
                                                 value={plate}
                                                 onChangeText={handlePlateChange}
-                                                mode="outline"
+                                                mode="outlined"
                                                 theme={{
                                                     colors: {
                                                         outline: showErrors && !plate ? "red" : "#E5E5E5",
                                                         primary: '#90D400',
                                                     }
                                                 }}
-                                                style={{ backgroundColor: "#FFFFFF", fontSize: 16, lineHeight: 20 }}
+                                                style={stylesOpenTurn.inputPlate}
                                                 keyboardType="default"
                                             />
                                         </Animatable.View>
@@ -114,22 +114,22 @@ const OpenTurnScreen = () => {
                                             icon='check'
                                             mode="contained"
                                             iconColor="#FFFFFF"
-                                            style={{ backgroundColor: "#80C300", borderRadius: 8, marginLeft: 8 }}
+                                            style={stylesOpenTurn.iconCheck}
                                             size={25}
                                         />
                                     </View>
-                                    <View style={{ width: "50%" }}>
-                                        <Card style={{ elevation: 5, paddingHorizontal: 10, paddingVertical: 10, borderRadius: 10, backgroundColor: "#FFFFFF" }}>
+                                    <View style={stylesOpenTurn.contentDataTable}>
+                                        <Card style={stylesOpenTurn.card}>
                                             <DataTable>
-                                                <DataTable.Header style={{ borderTopColor: "#90D400", borderTopWidth: 2, borderBottomColor: "#90D400", borderBottomWidth: 2 }}>
+                                                <DataTable.Header style={{ borderTopColor: "#90D400", borderTopWidth: 1, borderBottomColor: "#90D400", borderBottomWidth: 1 }}>
                                                     <DataTable.Title style={{ justifyContent: "flex-start", flex: 2 }}>
-                                                        <Text style={{ fontWeight: "500", fontSize: 14, color: "#666666", fontFamily: "Montserrat_500Medium", }}>Fecha/Hora</Text>
+                                                        <Text style={{ fontSize: 13, color: "#666666", fontFamily: "Montserrat_500Medium", }}>Fecha/Hora</Text>
                                                     </DataTable.Title>
                                                     <DataTable.Title style={{ justifyContent: "flex-start", flex: 1 }}>
-                                                        <Text style={{ fontWeight: "500", fontSize: 14, color: "#666666", fontFamily: "Montserrat_500Medium" }}>Placa</Text>
+                                                        <Text style={{ fontSize: 13, color: "#666666", fontFamily: "Montserrat_500Medium" }}>Placa</Text>
                                                     </DataTable.Title>
                                                     <DataTable.Title style={{ justifyContent: "center", flex: 0.5 }}>
-                                                        <Text style={{ fontWeight: "500", fontSize: 14, color: "#005A6D", fontFamily: "Monstserrat_500Medium" }}>Acción</Text>
+                                                        <Text style={{ fontSize: 13, color: "#005A6D", fontFamily: "Monstserrat_500Medium" }}>Acción</Text>
                                                     </DataTable.Title>
                                                 </DataTable.Header>
 
@@ -139,90 +139,10 @@ const OpenTurnScreen = () => {
                                                 >
                                                     <DataTable.Row style={{ borderBottomWidth: 1, borderBlockColor: "#E5E5E5" }}>
                                                         <DataTable.Cell style={{ flex: 2 }}>
-                                                            <Text style={{ color: "#666666", fontSize: 14, fontFamily: "Montserrat_400Regular", lineHeight: 20 }}>mm/dd/aaaa 00:00 am/pm</Text>
+                                                            <Text style={{ color: "#666666", fontSize: 13, fontFamily: "Montserrat_400Regular", lineHeight: 20 }}>mm/dd/aaaa 00:00 am/pm</Text>
                                                         </DataTable.Cell>
                                                         <DataTable.Cell style={{ flex: 0.9 }}>
-                                                            <Text style={{ color: "#666666", fontSize: 14, fontFamily: "Montserrat_400Regular", lineHeight: 20 }}>AAA111</Text>
-                                                        </DataTable.Cell>
-                                                        <DataTable.Cell style={{ flex: 0.5, justifyContent: "center", alignItems: "center" }}>
-                                                            <TouchableOpacity onPress={() => { }}>
-                                                                <Image
-                                                                    source={require("../../../../assets/icons/deleteIcon.png")}
-                                                                    style={{ width: 17, height: 22 }}
-                                                                />
-                                                            </TouchableOpacity>
-                                                        </DataTable.Cell>
-                                                    </DataTable.Row>
-                                                    <DataTable.Row style={{ borderBottomWidth: 1, borderBlockColor: "#E5E5E5" }}>
-                                                        <DataTable.Cell style={{ flex: 2 }}>
-                                                            <Text style={{ color: "#666666", fontSize: 14, fontFamily: "Montserrat_400Regular", lineHeight: 20 }}>mm/dd/aaaa 00:00 am/pm</Text>
-                                                        </DataTable.Cell>
-                                                        <DataTable.Cell style={{ flex: 0.9 }}>
-                                                            <Text style={{ color: "#666666", fontSize: 14, fontFamily: "Montserrat_400Regular", lineHeight: 20 }}>AAA111</Text>
-                                                        </DataTable.Cell>
-                                                        <DataTable.Cell style={{ flex: 0.5, justifyContent: "center", alignItems: "center" }}>
-                                                            <TouchableOpacity onPress={() => { }}>
-                                                                <Image
-                                                                    source={require("../../../../assets/icons/deleteIcon.png")}
-                                                                    style={{ width: 17, height: 22 }}
-                                                                />
-                                                            </TouchableOpacity>
-                                                        </DataTable.Cell>
-                                                    </DataTable.Row>
-                                                    <DataTable.Row style={{ borderBottomWidth: 1, borderBlockColor: "#E5E5E5" }}>
-                                                        <DataTable.Cell style={{ flex: 2 }}>
-                                                            <Text style={{ color: "#666666", fontSize: 14, fontFamily: "Montserrat_400Regular", lineHeight: 20 }}>mm/dd/aaaa 00:00 am/pm</Text>
-                                                        </DataTable.Cell>
-                                                        <DataTable.Cell style={{ flex: 0.9 }}>
-                                                            <Text style={{ color: "#666666", fontSize: 14, fontFamily: "Montserrat_400Regular", lineHeight: 20 }}>AAA111</Text>
-                                                        </DataTable.Cell>
-                                                        <DataTable.Cell style={{ flex: 0.5, justifyContent: "center", alignItems: "center" }}>
-                                                            <TouchableOpacity onPress={() => { }}>
-                                                                <Image
-                                                                    source={require("../../../../assets/icons/deleteIcon.png")}
-                                                                    style={{ width: 17, height: 22 }}
-                                                                />
-                                                            </TouchableOpacity>
-                                                        </DataTable.Cell>
-                                                    </DataTable.Row>
-                                                    <DataTable.Row style={{ borderBottomWidth: 1, borderBlockColor: "#E5E5E5" }}>
-                                                        <DataTable.Cell style={{ flex: 2 }}>
-                                                            <Text style={{ color: "#666666", fontSize: 14, fontFamily: "Montserrat_400Regular", lineHeight: 20 }}>mm/dd/aaaa 00:00 am/pm</Text>
-                                                        </DataTable.Cell>
-                                                        <DataTable.Cell style={{ flex: 0.9 }}>
-                                                            <Text style={{ color: "#666666", fontSize: 14, fontFamily: "Montserrat_400Regular", lineHeight: 20 }}>AAA111</Text>
-                                                        </DataTable.Cell>
-                                                        <DataTable.Cell style={{ flex: 0.5, justifyContent: "center", alignItems: "center" }}>
-                                                            <TouchableOpacity onPress={() => { }}>
-                                                                <Image
-                                                                    source={require("../../../../assets/icons/deleteIcon.png")}
-                                                                    style={{ width: 17, height: 22 }}
-                                                                />
-                                                            </TouchableOpacity>
-                                                        </DataTable.Cell>
-                                                    </DataTable.Row>
-                                                    <DataTable.Row style={{ borderBottomWidth: 1, borderBlockColor: "#E5E5E5" }}>
-                                                        <DataTable.Cell style={{ flex: 2 }}>
-                                                            <Text style={{ color: "#666666", fontSize: 14, fontFamily: "Montserrat_400Regular", lineHeight: 20 }}>mm/dd/aaaa 00:00 am/pm</Text>
-                                                        </DataTable.Cell>
-                                                        <DataTable.Cell style={{ flex: 0.9 }}>
-                                                            <Text style={{ color: "#666666", fontSize: 14, fontFamily: "Montserrat_400Regular", lineHeight: 20 }}>AAA111</Text>
-                                                        </DataTable.Cell>
-                                                        <DataTable.Cell style={{ flex: 0.5, justifyContent: "center", alignItems: "center" }}>
-                                                            <TouchableOpacity onPress={() => { }}>
-                                                                <Image
-                                                                    source={require("../../../../assets/icons/deleteIcon.png")}
-                                                                    style={{ width: 17, height: 22 }}
-                                                                />
-                                                            </TouchableOpacity>
-                                                        </DataTable.Cell>
-                                                    </DataTable.Row>
-                                                    <DataTable.Row style={{ borderBottomWidth: 1, borderBlockColor: "#E5E5E5" }}>
-                                                        <DataTable.Cell style={{ flex: 2 }}>
-                                                            <Text style={{ color: "#666666", fontSize: 14, fontFamily: "Montserrat_400Regular", lineHeight: 20 }}>mm/dd/aaaa 00:00 am/pm</Text>
-                                                        </DataTable.Cell>
-                                                        <DataTable.Cell style={{ flex: 0.9 }}>
-                                                            <Text style={{ color: "#666666", fontSize: 14, fontFamily: "Montserrat_400Regular", lineHeight: 20 }}>AAA111</Text>
+                                                            <Text style={{ color: "#666666", fontSize: 13, fontFamily: "Montserrat_400Regular", lineHeight: 20 }}>AAA111</Text>
                                                         </DataTable.Cell>
                                                         <DataTable.Cell style={{ flex: 0.5, justifyContent: "center", alignItems: "center" }}>
                                                             <TouchableOpacity onPress={() => { }}>
@@ -240,13 +160,13 @@ const OpenTurnScreen = () => {
                                 </View>
                             </View>
                         </View>
-                        <Divider style={{ backgroundColor: "#E5E5E5", marginTop: 30 }} />
-                        <View style={{ marginTop: 35 }}>
-                            <Text style={stylesOpenTurn.vehiclesT}>Observaciones</Text>
+                        <Divider style={stylesOpenTurn.divider} />
+                        <View style={stylesOpenTurn.subContents}>
+                            <Text style={stylesOpenTurn.vehiclesTitleT}>Observaciones</Text>
                             <Animatable.View style={{ marginTop: 15 }}>
                                 <CustomTextInput
                                     label="Observaciones (opcional)"
-                                    mode="outline"
+                                    mode="outlined"
                                     theme={{
                                         colors: {
                                             outline: "#E5E5E5",
@@ -255,7 +175,7 @@ const OpenTurnScreen = () => {
                                     }}
                                     multiline
                                     numberOfLines={5}
-                                    style={{ backgroundColor: "#FFFFFF", fontSize: 16, minHeight: 100, lineHeight: 20 }}
+                                    style={stylesOpenTurn.inputObservation}
                                     keyboardType="default"
                                 />
                             </Animatable.View>
@@ -264,7 +184,7 @@ const OpenTurnScreen = () => {
                             <Button
                                 mode="contained"
                                 onPress={handleNextStep}
-                                style={{ backgroundColor: "#80C300", alignSelf: "flex-end", borderRadius: 10 }}
+                                style={stylesOpenTurn.continueButton}
                                 contentStyle={{ paddingHorizontal: 30 }}
                             >
                                 Continuar

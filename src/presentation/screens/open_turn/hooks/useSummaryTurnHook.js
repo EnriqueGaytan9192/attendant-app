@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { previousStep } from "../../../../state/slices/openTurnSlice";
+import { nextStep, previousStep } from "../../../../state/slices/openTurnSlice";
 
 const useSummaryTurnHook = () => {
     const dispatch = useDispatch();
@@ -8,17 +8,22 @@ const useSummaryTurnHook = () => {
 
     const toggleBase = () => {
         setBaseCompleta(prev => !prev);
-    }
+    };
 
     const handlePrevious = () => {
         dispatch(previousStep());
     };
-    
+
+    const handleNextStep = async () => {
+        dispatch(nextStep());
+    };
+
     return {
         baseCompleta,
         toggleBase,
         handlePrevious,
-    }
-}
+        handleNextStep,
+    };
+};
 
 export default useSummaryTurnHook;

@@ -39,7 +39,7 @@ const stylesOpenTurn = StyleSheet.create({
         fontFamily: "Montserrat_400Regular"
     },
     textSubtitle: {
-        fontSize: 16,
+        fontSize: 17,
         color: '#8C8C8C',
         marginTop: 2.5,
         fontFamily: "Montserrat_400Regular"
@@ -55,14 +55,78 @@ const stylesOpenTurn = StyleSheet.create({
     vehiclesTotal: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        
+        alignItems: 'center'
     },
-    vehiclesT: {
-      fontSize: 18,
+    vehiclesTitleT: {
+      fontSize: 17,
       color: "#005A6D",
       //fontWeight: 'medium'
       fontFamily: "Montserrat_500Medium"
     },
+    vehiclesCountT: {
+      fontSize: 21,
+      color: "#005A6D",
+      //fontWeight: 'medium'
+      fontFamily: "Montserrat_400Regular"
+    },
+    contentDropdown: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        marginTop: 15
+    },
+    divider: {
+        backgroundColor: "#E5E5E5",
+        marginTop: 30
+    },
+    subContents: {
+        marginTop: 35
+    },
+    subcontentPlatesUnregistered: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        marginTop: 15
+    },
+    contentInputPlate: {
+        flexDirection: "row",
+        width: "50%",
+    },
+    inputPlate: {
+        backgroundColor: "#FFFFFF",
+        fontSize: 16, 
+        lineHeight: 20
+    },
+    iconCheck: {
+        backgroundColor: "#80C300",
+        borderRadius: 8,
+        marginLeft: 8
+    },
+    contentDataTable: {
+        width: "50%"
+    },
+    card: {
+        elevation: 5,
+        paddingHorizontal: 10,
+        paddingVertical: 10,
+        borderRadius: 10,
+        backgroundColor: "#FFFFFF"
+    },
+    headerDataTable: {
+        borderTopColor: "#90D400",
+        borderTopWidth: 1,
+        borderBottomColor: "#90D400",
+        borderBottomWidth: 1,
+    },
+    inputObservation: {
+        backgroundColor: "#FFFFFF",
+        fontSize: 16, 
+        minHeight: 100,
+        lineHeight: 20
+    },
+    continueButton: {
+        backgroundColor: "#80C300",
+        alignSelf: "flex-end",
+        borderRadius: 10
+    }
 })
 
 export default stylesOpenTurn;
