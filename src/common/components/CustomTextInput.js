@@ -8,6 +8,7 @@ const CustomTextInput = forwardRef(
     const animRef = useRef(null);
     const textInputRef = useRef(null);
     const parts = label.split('*');
+    const errorColor = theme?.colors?.outline === '#FF6E64';
 
     useImperativeHandle(ref, () => ({
       shake: (duration = 600) => {
@@ -43,7 +44,9 @@ const CustomTextInput = forwardRef(
             mode === 'outlined'
               ? readonly
                 ? '#E5E5E5'
-                : theme?.colors?.primary || '#90D400'
+                : errorColor
+                  ? '#FF6E64'
+                  : theme?.colors?.primary || '#90D400'
               : undefined
           }
           textColor={readonly ? "#7A7A7A" : undefined}

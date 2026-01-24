@@ -9,7 +9,9 @@ const ForgotUsernameModal = () => {
     const {
         formTwo,
         showErrorsTwoModal,
+        isEmailInvalid,
         emailTwoModalRef,
+        loading,
         handledEmailTwoChange,
         onCloseTwoModal,
         handleSend,
@@ -49,11 +51,12 @@ const ForgotUsernameModal = () => {
                                 label="Correo Electrónico *"
                                 value={formTwo.emailTwoModal}
                                 onChangeText={handledEmailTwoChange}
+                                autoCapitalize="none"
                                 mode="outlined"
                                 theme={{
                                     colors: {
-                                        outline: showErrorsTwoModal && !formTwo.emailTwoModal ? 'red' : "#E5E5E5",
-                                        primary: "#09D400"
+                                        outline: (showErrorsTwoModal && !formTwo.emailTwoModal) || isEmailInvalid ? '#FF6E64' : "#E5E5E5",
+                                        primary: "#90D400"
                                     }
                                 }}
                                 style={styleForgotUsername.input}
@@ -85,6 +88,8 @@ const ForgotUsernameModal = () => {
                             style={styleForgotUsername.saveModal}
                             contentStyle={{ paddingHorizontal: 10 }}
                             onPress={handleSend}
+                            loading={loading}
+                            disabled={loading}
                         >
                             Enviar
                         </Button>

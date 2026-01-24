@@ -5,7 +5,12 @@ let addAlertHandler;
 
 export const showAlert = (type, message, duration = 3000) => {
     if (addAlertHandler) {
-        addAlertHandler({ id: Date.now(), type, message, duration });
+        addAlertHandler({
+            id: `${Date.now()}-${Math.random()}`,
+            type,
+            message,
+            duration
+        });
     }
 };
 
@@ -20,7 +25,7 @@ const AlertManager = () => {
                 if (updated.length > 3) {
                     return updated.slice(0, 3);
                 }
-                
+
                 return updated;
             })
 
@@ -43,7 +48,7 @@ const AlertManager = () => {
                     type={alert.type}
                     message={alert.message}
                     duration={alert.duration}
-                    offsetTop={35 + index * 105} 
+                    offsetTop={35 + index * 105}
                     onDismiss={() =>
                         setAlerts((prev) => prev.filter((a) => a.id !== alert.id))
                     }

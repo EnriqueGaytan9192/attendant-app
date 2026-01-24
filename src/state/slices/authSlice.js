@@ -7,6 +7,7 @@ const initialState = {
     form: {
         email: '',
         password: '',
+        passwordVisible: false,
         usernameOneModal: '',
         emailOneModal: '',
     },

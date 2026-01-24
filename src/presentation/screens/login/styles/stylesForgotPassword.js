@@ -61,6 +61,7 @@ const styleForgotPassword = StyleSheet.create({
         flexDirection: "row",
         justifyContent: 'flex-end',
         marginTop: 37,
+        marginBottom: 1
     },
     cancelModal: {
         borderRadius: 6,

@@ -9,8 +9,10 @@ const ForgotPasswordModal = () => {
     const {
         form,
         showErrorsOneModal,
+        isEmailInvalid,
         usernameModalRef,
         emailModalRef,
+        loading,
         handledUserChange,
         handledEmailChange,
         onCloseOneModal,
@@ -54,8 +56,8 @@ const ForgotPasswordModal = () => {
                                 mode="outlined"
                                 theme={{
                                     colors: {
-                                        outline: showErrorsOneModal && !form.usernameOneModal ? 'red' : "#E5E5E5",
-                                        primary: "#09D400"
+                                        outline: showErrorsOneModal && !form.usernameOneModal ? '#FF6E64' : "#E5E5E5",
+                                        primary: "#90D400"
                                     }
                                 }}
                                 style={styleForgotPassword.input}
@@ -72,17 +74,18 @@ const ForgotPasswordModal = () => {
                                 }
                             />
                         </Animatable.View>
-                        <Animatable.View>
+                        <Animatable.View style={{ marginTop: 10 }}>
                             <CustomTextInput
                                 ref={emailModalRef}
                                 label="Correo Electrónico *"
                                 value={form.emailOneModal}
                                 onChangeText={handledEmailChange}
+                                autoCapitalize="none"
                                 mode="outlined"
                                 theme={{
                                     colors: {
-                                        outline: showErrorsOneModal && !form.emailOneModal ? 'red' : "#E5E5E5",
-                                        primary: "#09D400"
+                                        outline: (showErrorsOneModal && !form.emailOneModal) || isEmailInvalid ? '#FF6E64' : "#E5E5E5",
+                                        primary: "#90D400"
                                     }
                                 }}
                                 style={styleForgotPassword.input}
@@ -114,6 +117,8 @@ const ForgotPasswordModal = () => {
                             style={styleForgotPassword.saveModal}
                             contentStyle={{ paddingHorizontal: 3 }}
                             onPress={handleSend}
+                            loading={loading}
+                            disabled={loading}
                         >
                             Guardar
                         </Button>
