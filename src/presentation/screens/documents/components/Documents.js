@@ -13,7 +13,7 @@ const DocumentsScreen = () => {
                 contentContainerStyle={{ flexGrow: 1 }}
                 keyboardShouldPersistTaps="handled"
             >
-                <View style={[stylesDocuments.container]}>
+                <View style={stylesDocuments.container}>
                     <View style={stylesDocuments.subContainer}>
                         <View style={stylesDocuments.containerTitle}>
                             <Image

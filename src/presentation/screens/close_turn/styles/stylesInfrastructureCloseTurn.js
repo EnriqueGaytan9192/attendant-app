@@ -1,18 +1,18 @@
 import { StyleSheet } from "react-native";
 
-const stylesCloseTurn = StyleSheet.create({
+const stylesInfrastructureCloseTurn = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'white',
-        //borderColor: '#d80000ff',
+        backgroundColor: "white",
+        //borderColor: "#d80000ff",
         //borderWidth: 5,
     },
     subContainer: {
         flex: 1,
-        marginLeft: 65,
+        marginLeft: 45,
         marginRight: 45,
-        marginVertical: 20,
-        //borderColor: '#00d800ff',
+        marginVertical: 30,
+        //borderColor: "#00d800ff",
         //borderWidth: 5,
     },
     containerTitle: {
@@ -59,32 +59,12 @@ const stylesCloseTurn = StyleSheet.create({
         lineHeight: 20
     },
     subTitle: {
-        fontSize: 17,
-        color: "#666666",
-        fontFamily: "Montserrat_400Regular",
-        lineHeight: 20,
-    },
-    info: {
-        fontSize: 17,
-        marginLeft: 15,
-        marginTop: 10,
-        color: "#666666",
-        fontFamily: "Montserrat_400Regular",
-        lineHeight: 20
-    },
-    infoTwo: {
-        fontSize: 17,
-        marginLeft: 15,
-        marginTop: 10,
+        fontSize: 13,
+        marginTop: 15,
         color: "#8C8C8C",
         fontFamily: "Montserrat_400Regular",
         lineHeight: 20
     },
-    divider: {
-        width: "100%",
-        backgroundColor: "#E5E5E5",
-        marginTop: 15,
-    }
-})
+});
 
-export default stylesCloseTurn;
+export default stylesInfrastructureCloseTurn;

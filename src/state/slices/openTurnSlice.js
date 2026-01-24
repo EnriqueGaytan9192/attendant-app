@@ -24,7 +24,7 @@ const initialState = {
         { name: "Impresora", cantidad: '', estado: "Buen Estado", observaciones: "" },
         { name: "Datáfonos", cantidad: '', estado: "Buen Estado", observaciones: "" },
         { name: "Radios", cantidad: '', estado: "Buen Estado", observaciones: "" },
-        { name: "Hubs", cantidad: '', estado: "Buen Estado", observaciones: "" },
+        { name: "Hub de pagos", cantidad: '', estado: "Buen Estado", observaciones: "" },
     ],
     seguridad: [
         { name: "Aviso tarifas", cantidad: '', estado: "Buen Estado", observaciones: "" },

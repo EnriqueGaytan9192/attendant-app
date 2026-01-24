@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { previousStep } from "../../../../state/slices/closeTurnSlice";
+import { nextStep, previousStep } from "../../../../state/slices/closeTurnSlice";
 
 const useSummaryCloseTurnHook = () => {
     const dispatch = useDispatch();
@@ -8,8 +8,13 @@ const useSummaryCloseTurnHook = () => {
         dispatch(previousStep());
     };
 
+    const handledNextStep = () => {
+        dispatch(nextStep());
+    };
+
     return {
         handlePrevious,
+        handledNextStep,
     };
 }
 

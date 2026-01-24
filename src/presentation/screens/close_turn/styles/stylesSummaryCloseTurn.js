@@ -39,7 +39,7 @@ const stylesSummaryCloseTurn = StyleSheet.create({
         fontFamily: "Montserrat_400Regular"
     },
     textSubtitle: {
-        fontSize: 16,
+        fontSize: 17,
         color: '#8C8C8C',
         marginTop: 2.5,
         fontFamily: "Montserrat_400Regular"
@@ -53,19 +53,19 @@ const stylesSummaryCloseTurn = StyleSheet.create({
         //marginBottom: 15,
     },
     title: {
-        fontSize: 18,
+        fontSize: 17,
         color: "#005A6D",
         fontFamily: "Montserrat_500Medium",
         lineHeight: 20
     },
     subTitle: {
-        fontSize: 18,
+        fontSize: 17,
         color: "#666666",
         fontFamily: "Montserrat_400Regular",
         lineHeight: 20,
     },
     info: {
-        fontSize: 18,
+        fontSize: 17,
         marginLeft: 15,
         marginTop: 10,
         color: "#666666",
@@ -73,7 +73,7 @@ const stylesSummaryCloseTurn = StyleSheet.create({
         lineHeight: 20
     },
     infoTwo: {
-        fontSize: 18,
+        fontSize: 17,
         marginLeft: 15,
         marginTop: 10,
         color: "#8C8C8C",
@@ -81,9 +81,9 @@ const stylesSummaryCloseTurn = StyleSheet.create({
         lineHeight: 20
     },
     infoThree: {
-        fontSize: 18,
+        fontSize: 17,
         color: "#8C8C8C",
-        fontFamily: "Montserrat_400Regular",
+        fontFamily: "Montserrat_500Medium",
         lineHeight: 20
     },
     divider: {

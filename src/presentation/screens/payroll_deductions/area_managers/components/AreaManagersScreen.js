@@ -35,7 +35,7 @@ const AreaManagersScreen = () => {
                 contentContainerStyle={{ flexGrow: 1 }}
                 keyboardShouldPersistTaps="handled"
             >
-                <View style={[stylesAreaManagersScreen.container, { height: screenHeight - 100 }]}>
+                <View style={stylesAreaManagersScreen.container}>
                     <View style={stylesAreaManagersScreen.subContainer}>
                         <View style={stylesAreaManagersScreen.containerTitle}>
                             <Image
@@ -43,7 +43,7 @@ const AreaManagersScreen = () => {
                                 style={stylesAreaManagersScreen.iconTitle}
                             />
                             <View style={stylesAreaManagersScreen.textContainer}>
-                                <Text style={stylesAreaManagersScreen.textTitle}>Jefes</Text>
+                                <Text style={stylesAreaManagersScreen.textTitle}>PQRS</Text>
                                 <Text style={stylesAreaManagersScreen.textSubtitle}>Radicar PQRS</Text>
                             </View>
                         </View>

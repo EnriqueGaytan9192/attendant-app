@@ -41,7 +41,7 @@ const PqrsScreen = () => {
                 contentContainerStyle={{ flexGrow: 1 }}
                 keyboardShouldPersistTaps="handled"
             >
-                <View style={[stylesPqrsScreen.container, { height: screenHeight - 100 }]}>
+                <View style={stylesPqrsScreen.container}>
                     <View style={stylesPqrsScreen.subContainer}>
                         <View style={stylesPqrsScreen.containerTitle}>
                             <Image
@@ -54,7 +54,7 @@ const PqrsScreen = () => {
                             </View>
                         </View>
                         <View style={stylesPqrsScreen.greenLine} />
-                        <View style={{ flexDirection: 'row', marginBottom: 16, width: "40%", alignSelf: 'flex-end', }}>
+                        <View style={{ flexDirection: 'row', marginBottom: 16, width: "40%", alignSelf: 'flex-end', marginTop: 50 }}>
                             <TouchableOpacity
                                 style={[{ flex: 1, padding: 12, alignItems: 'center', borderBottomColor: "#ddd", borderBottomWidth: 2 }, selectedTab === "pqrs" && { borderBottomColor: "#90D400", backgroundColor: "#90D400", borderTopLeftRadius: 15, borderTopRightRadius: 15 }]}
                                 onPress={() => setSelectedTab("pqrs")}

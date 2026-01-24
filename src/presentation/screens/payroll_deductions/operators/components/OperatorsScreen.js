@@ -35,7 +35,7 @@ const OperatorsScreen = () => {
                 contentContainerStyle={{ flexGrow: 1 }}
                 keyboardShouldPersistTaps="handled"
             >
-                <View style={[stylesOperatorsScreen.container, { height: screenHeight - 100 }]}>
+                <View style={stylesOperatorsScreen.container}>
                     <View style={stylesOperatorsScreen.subContainer}>
                         <View style={stylesOperatorsScreen.containerTitle}>
                             <Image
@@ -43,7 +43,7 @@ const OperatorsScreen = () => {
                                 style={stylesOperatorsScreen.iconTitle}
                             />
                             <View style={stylesOperatorsScreen.textContainer}>
-                                <Text style={stylesOperatorsScreen.textTitle}>Operarios</Text>
+                                <Text style={stylesOperatorsScreen.textTitle}>PQRS</Text>
                                 <Text style={stylesOperatorsScreen.textSubtitle}>Radicar PQRS</Text>
                             </View>
                         </View>
