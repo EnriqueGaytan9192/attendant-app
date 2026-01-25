@@ -24,8 +24,8 @@ const stylesSinisterScreen = StyleSheet.create({
         marginLeft: 30,
     },
     iconTitle: {
-        height: 34,
-        width: 45,
+        height: 30,
+        width: 38,
         marginTop: 5
     },
     textContainer: {
@@ -33,19 +33,21 @@ const stylesSinisterScreen = StyleSheet.create({
         justifyContent: "space-between",
     },
     textTitle: {
-        fontSize: 28,
+        fontSize: 25,
         color: '#90D400',
         marginBottom: 2.5,
+        fontFamily: "Montserrat_400Regular"
     },
     textSubtitle: {
-        fontSize: 18,
+        fontSize: 17,
         color: '#8C8C8C',
         marginTop: 2.5,
+        fontFamily: "Montserrat_400Regular"
     },
     greenLine: {
         width: "50%",
-        height: 4,
-        backgroundColor: "#7ED957",
+        height: 2,
+        backgroundColor: "#90D400",
         borderRadius: 10,
         marginTop: 15,
         //marginBottom: 15,

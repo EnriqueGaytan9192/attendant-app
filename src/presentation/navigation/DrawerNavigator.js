@@ -5,6 +5,7 @@ import { Image, ScrollView, StyleSheet, TouchableOpacity, View } from "react-nat
 import { Text } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import MainLayout from "../../common/components/MainLayout";
+import { useAppSelector } from "../../state/hooks";
 import { resetAuth } from "../../state/slices/authSlice";
 import { resetCloseTurn } from "../../state/slices/closeTurnSlice";
 import { resetOpenTurn } from "../../state/slices/openTurnSlice";
@@ -21,7 +22,9 @@ const RenderMainLayout = ({ route }) => {
 
 const CustomDrawerContent = ({ navigation }) => {
     const [expandedMenus, setExpandedMenus] = useState({});
-    const menus = routes.filter(route => route.key !== 'profile');
+    const { menus } = useAppSelector((state) => state.auth);
+    const profileFilter = menus.filter(menus => menus.key !== "profile")
+    //const menus = routes.filter(route => route.key !== 'profile');
     console.log("Menus", menus)
     const toggleSubMenu = (key) => {
         setExpandedMenus((prevState) => ({
@@ -40,8 +43,11 @@ const CustomDrawerContent = ({ navigation }) => {
     const { user, initials } = useProfileInfoHook();
 
     return (
-        <ScrollView>
-            <View style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>
+            <ScrollView
+                contentContainerStyle={styles.scrollContent}
+                showsVerticalScrollIndicator={false}
+            >
                 <View style={styles.drawerContainer}>
                     {/*<Image
                         source={require('../../assets/icons/logoParking.png')}
@@ -71,8 +77,9 @@ const CustomDrawerContent = ({ navigation }) => {
                         </TouchableOpacity>
                     </View>
                     {/*<View style={styles.greenLine} />*/}
-                    {menus.map((menu) => {
-                        const route = menu;
+                    {profileFilter.map((menu) => {
+                        //const route = menu;
+                        const route = routes.find((r) => r.key === menu.key);
 
                         if (!route) return null;
 
@@ -134,16 +141,16 @@ const CustomDrawerContent = ({ navigation }) => {
                             </TouchableOpacity>
                         )
                     })}
-                    <TouchableOpacity style={styles.menuItem} onPress={handleLogOut}>
-                        <Image
-                            source={require("../../assets/icons/logOut.png")}
-                            style={styles.icon}
-                        />
-                        <Text style={styles.menuText}>Cerrar sesión</Text>
-                    </TouchableOpacity>
                 </View>
-            </View>
-        </ScrollView>
+            </ScrollView>
+            <TouchableOpacity style={[styles.menuItem, styles.logoutDynamic, { marginLeft:15 }]} onPress={handleLogOut}>
+                <Image
+                    source={require("../../assets/icons/logOut.png")}
+                    style={styles.icon}
+                />
+                <Text style={styles.menuText}>Cerrar sesión</Text>
+            </TouchableOpacity>
+        </View>
     )
 }
 
@@ -220,7 +227,7 @@ const styles = StyleSheet.create({
     },
     profileSection: {
         paddingVertical: 15,
-        borderBottomWidth: 2,
+        borderBottomWidth: 1,
         borderBlockColor: "#90D400",
     },
     profileImage: {
@@ -239,7 +246,7 @@ const styles = StyleSheet.create({
     profileRole: {
         backgroundColor: "#666666",
         fontSize: 12,
-        color: "white",
+        color: "#FFFFFF",
         paddingHorizontal: 10,
         paddingVertical: 2,
         borderRadius: 5,
@@ -262,13 +269,13 @@ const styles = StyleSheet.create({
     menuText: {
         flex: 1,
         fontSize: 16,
-        color: "#333",
+        color: "#666666",
         fontFamily: "Montserrat_500Medium",
         lineHeight: 20,
     },
     subMenuText: {
         fontSize: 14,
-        color: "#777",
+        color: "#666666",
         fontFamily: "Montserrat_400Regular",
         lineHeight: 20,
     },
@@ -324,6 +331,15 @@ const styles = StyleSheet.create({
     initialsTextSmall: {
         color: "#FFFFFF",
         fontSize: 18,
+    },
+    scrollContent: {
+        flexGrow: 1,
+        justifyContent: "space-between",
+        paddingBottom: 20,
+    },
+    logoutDynamic: {
+        borderTopWidth: 1,
+        borderTopColor: "#eee",
     },
 
 })

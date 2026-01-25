@@ -1,9 +1,9 @@
-import { CloseTurnScreen, SummaryCloseTurn } from "../../presentation/screens/close_turn";
+import { CloseTurnScreen, InfrastructureCloseTurn, SummaryCloseTurn } from "../../presentation/screens/close_turn";
 import { useAppSelector } from "../../state/hooks";
 
 const CloseTurn = () => {
     const stateGlobal = useAppSelector((state) => state.closeTurn);
-    const { stepOne, stepTwo } = stateGlobal;
+    const { stepOne, stepTwo, stepThree } = stateGlobal;
 
     return (
         <>
@@ -14,6 +14,11 @@ const CloseTurn = () => {
             {stepTwo &&
                 <SummaryCloseTurn />
             }
+
+            {stepThree &&
+                <InfrastructureCloseTurn />
+            }
+
         </>
     )
 }

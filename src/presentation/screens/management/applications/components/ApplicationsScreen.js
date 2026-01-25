@@ -40,7 +40,7 @@ const ApplicationsScreen = () => {
                 contentContainerStyle={{ flexGrow: 1 }}
                 keyboardShouldPersistTaps="handled"
             >
-                <View style={[stylesApplicationsScreen.container, { height: screenHeight - 100 }]}>
+                <View style={stylesApplicationsScreen.container}>
                     <View style={stylesApplicationsScreen.subContainer}>
                         <View style={stylesApplicationsScreen.containerTitle}>
                             <Image

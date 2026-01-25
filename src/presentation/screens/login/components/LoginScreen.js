@@ -11,6 +11,7 @@ const LoginScreen = () => {
     const screenWidth = Dimensions.get("window").width;
     const {
         form,
+        loading,
         deviceId,
         passwordVisible,
         showErrors,
@@ -22,7 +23,6 @@ const LoginScreen = () => {
         passwordModal,
         userModal,
         handleLogin,
-        fakeLogin
     } = useLoginHook();
 
     return (
@@ -57,7 +57,7 @@ const LoginScreen = () => {
                                         mode="outlined"
                                         theme={{
                                             colors: {
-                                                outline: showErrors && !form.email ? 'red' : "#E5E5E5",
+                                                outline: showErrors && !form.email ? '#FF6E64' : "#E5E5E5",
                                                 primary: "#90D400",
                                             },
                                         }}
@@ -83,7 +83,7 @@ const LoginScreen = () => {
                                         mode="outlined"
                                         theme={{
                                             colors: {
-                                                outline: showErrors && !form.password ? 'red' : "#E5E5E5",
+                                                outline: showErrors && !form.password ? '#FF6E64' : "#E5E5E5",
                                                 primary: "#90D400",
                                             }
                                         }}
@@ -113,7 +113,13 @@ const LoginScreen = () => {
                                         keyboardType="default"
                                     />
                                 </Animatable.View>
-                                <Button mode="contained" style={stylesLogin.button} /*onPress={handleLogin}*/ onPress={fakeLogin}>
+                                <Button
+                                    mode="contained"
+                                    style={stylesLogin.button}
+                                    onPress={handleLogin}
+                                    loading={loading}
+                                    disabled={loading}
+                                >
                                     Iniciar Sesión
                                 </Button>
                                 <Divider style={stylesLogin.dividerForm} />

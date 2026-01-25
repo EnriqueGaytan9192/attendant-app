@@ -9,6 +9,7 @@ const SummaryCloseTurn = () => {
 
     const {
         handlePrevious,
+        handledNextStep,
     } = useSummaryCloseTurnHook();
 
     return (
@@ -120,7 +121,7 @@ const SummaryCloseTurn = () => {
                             </Button>
                             <Button
                                 mode="contained"
-                                onPress={() => {}}
+                                onPress={handledNextStep}
                                 style={{ backgroundColor: "#80C300", alignSelf: "flex-end", borderRadius: 10, marginLeft: 20 }}
                                 contentStyle={{
                                     paddingHorizontal: 30

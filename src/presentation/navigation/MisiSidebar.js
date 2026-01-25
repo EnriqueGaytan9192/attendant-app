@@ -3,17 +3,49 @@ import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import { Tooltip } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import routes from "../../presentation/navigation/routes";
+import { useAppSelector } from "../../state/hooks";
 import { resetAuth } from "../../state/slices/authSlice";
 import { resetCloseTurn } from "../../state/slices/closeTurnSlice";
 import { resetOpenTurn } from "../../state/slices/openTurnSlice";
 
 const MiniSidebar = ({ navigation, isDrawerOpen }) => {
+    const { menus } = useAppSelector((state) => state.auth);
 
     const dispatch = useDispatch();
     const handleLogOut = () => {
         dispatch(resetAuth());
         dispatch(resetOpenTurn());
         dispatch(resetCloseTurn());
+    };
+
+    // Mapa rápido por key
+    const menuMap = menus.reduce((acc, menu) => {
+        acc[menu.key] = menu;
+        return acc;
+    }, {});
+
+    // Solo routes permitidos por backend
+    const authorizedRoutes = routes.filter(
+        route => route.key !== "profile" && menuMap[route.key]
+    );
+
+    const navigateRoute = (route) => {
+        const menu = menuMap[route.key];
+
+        // Si tiene children, ir al primero permitido
+        if (route.children?.length && menu.children?.length) {
+            navigation.navigate(menu.children[0].key);
+            return;
+        }
+
+        // Si tiene submodulos (pero no rutas)
+        if (menu.submodulos?.length) {
+            navigation.navigate(route.key);
+            return;
+        }
+
+        // Ruta directa
+        navigation.navigate(route.key);
     };
 
     return (
@@ -31,7 +63,7 @@ const MiniSidebar = ({ navigation, isDrawerOpen }) => {
 
             <View style={styles.greenLine} />
 
-            {routes
+            {/*{routes
                 .filter(route => route.key !== 'profile')
                 .map((route) => (
                     <Tooltip
@@ -60,7 +92,26 @@ const MiniSidebar = ({ navigation, isDrawerOpen }) => {
                             <Image source={route.icon} style={styles.icon} />
                         </TouchableOpacity>
                     </Tooltip>
-                ))}
+                ))}*/}
+
+            {authorizedRoutes.map((route) => (
+                <Tooltip
+                    key={route.key}
+                    title={route.title}
+                    enterTouchDelay={300}
+                    leaveTouchDelay={150}
+                >
+                    <TouchableOpacity
+                        style={styles.iconWrapper}
+                        onPress={() => {
+                            if (isDrawerOpen) navigation.closeDrawer();
+                            setTimeout(() => navigateRoute(route), 120);
+                        }}
+                    >
+                        <Image source={route.icon} style={styles.icon} />
+                    </TouchableOpacity>
+                </Tooltip>
+            ))}
             <View style={styles.logoutContainer}>
                 <TouchableOpacity style={styles.logoutButton} onPress={handleLogOut}>
                     <Image
@@ -91,8 +142,8 @@ const styles = StyleSheet.create({
     },
     greenLine: {
         width: 40,
-        height: 2,
-        backgroundColor: "#7ED957",
+        height: 1,
+        backgroundColor: "#90D400",
         borderRadius: 10,
         marginBottom: 15,
     },

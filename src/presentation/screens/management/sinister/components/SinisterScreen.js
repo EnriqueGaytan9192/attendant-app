@@ -34,7 +34,7 @@ const SinisterScreen = () => {
                 contentContainerStyle={{ flexGrow: 1 }}
                 keyboardShouldPersistTaps="handled"
             >
-                <View style={[stylesSinisterScreen.container, { height: screenHeight - 100 }]}>
+                <View style={stylesSinisterScreen.container}>
                     <View style={stylesSinisterScreen.subContainer}>
                         <View style={stylesSinisterScreen.containerTitle}>
                             <Image

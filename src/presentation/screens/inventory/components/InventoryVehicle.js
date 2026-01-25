@@ -12,7 +12,7 @@ const InventoryVehicle = () => {
                 contentContainerStyle={{ flexGrow: 1 }}
                 keyboardShouldPersistTaps="handled"
             >
-                <View style={[stylesInventoryVehicle.container, { height: screenHeight - 25 }]}>
+                <View style={stylesInventoryVehicle.container}>
                     <View style={stylesInventoryVehicle.subContainer}>
                         <View style={stylesInventoryVehicle.containerTitle}>
                             <Image

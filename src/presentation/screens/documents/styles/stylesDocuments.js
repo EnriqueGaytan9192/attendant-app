@@ -24,28 +24,29 @@ const stylesDocuments = StyleSheet.create({
         marginLeft: 30,
     },
     iconTitle: {
-        height: 53,
-        width: 46,
-        marginTop: 5
+        height: 31,
+        width: 27,
     },
     textContainer: {
         flexDirection: "column",
         justifyContent: "space-between",
     },
     textTitle: {
-        fontSize: 28,
+        fontSize: 25,
         color: '#90D400',
         marginBottom: 2.5,
+        fontFamily: "Montserrat_400Regular"
     },
     textSubtitle: {
-        fontSize: 18,
+        fontSize: 17,
         color: '#8C8C8C',
         marginTop: 2.5,
+        fontFamily: "Montserrat_400Regular"
     },
     greenLine: {
         width: "50%",
-        height: 4,
-        backgroundColor: "#7ED957",
+        height: 2,
+        backgroundColor: "#90D400",
         borderRadius: 10,
         marginTop: 15,
         //marginBottom: 15,
