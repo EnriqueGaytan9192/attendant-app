@@ -1,12 +1,17 @@
 import { useNavigation } from "@react-navigation/native";
 import { Dimensions, Image, Keyboard, ScrollView, TouchableWithoutFeedback, View } from "react-native";
 import { Button, Text } from "react-native-paper";
+import useWelcomeTurnHook from "../hooks/useWelcomeTurnHook";
 import stylesWelcomeTurn from "../styles/stylesWelcomeTurn";
 
 const WelcomeTurn = () => {
     const screenHeight = Dimensions.get("window").height;
     const screenWidth = Dimensions.get("window").width;
     const navigation = useNavigation();
+    const {
+        nombre, 
+        loading
+    } = useWelcomeTurnHook();
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -33,9 +38,9 @@ const WelcomeTurn = () => {
                                 style={{ width: 250, height: 250 }}
                                 resizeMode="center"
                             />
-                            <View style={{ alignItems: "center", marginTop: 20, maxWidth: "38%"  }}>
+                            <View style={{ alignItems: "center", marginTop: 20, maxWidth: "40%"  }}>
                                 <Text style={{ fontSize: 21, color: "#90D400", textAlign: "center", fontFamily: "Montserrat_400Regular" }}>¡Bienvenid@ de nuevo!</Text>
-                                <Text style={{ marginTop: 10, fontSize: 17, color: "#929292", textAlign: "center", fontFamily: "Montserrat_400Regular" }}>Hola Juan, gracias por haber llegado a tiempo, recuerda trabajar con buena energía y disposición</Text>
+                                <Text style={{ marginTop: 10, fontSize: 17, color: "#929292", textAlign: "center", fontFamily: "Montserrat_400Regular" }}>Hola {nombre}, gracias por haber llegado a tiempo, recuerda trabajar con buena energía y disposición</Text>
                             </View>
                             <View>
                                 <Button

@@ -10,6 +10,7 @@ const ProfileInfo = () => {
     const screenWidth = Dimensions.get('window').width;
 
     const {
+        userInfo,
         user,
         initials,
     } = useProfileInfoHook();
@@ -24,8 +25,8 @@ const ProfileInfo = () => {
                     <View style={stylesProfileInfo.containerInfo}>
                         <ProfileHeader
                             initials={initials}
-                            name={`${user.firstName} ${user.lastName}`}
-                            role={user.role}
+                            name={userInfo?.empleado}
+                            role={userInfo?.rol}
                             email={user.email}
                         />
                         <View style={stylesProfileInfo.greenLine} />

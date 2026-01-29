@@ -15,6 +15,7 @@ const InfrastructureTurn = () => {
         dispositivos,
         seguridad,
         infraestructura,
+        loading,
         handleCantidadChange,
         handleEstadoChange,
         handleObservationChange,
@@ -113,6 +114,8 @@ const InfrastructureTurn = () => {
                                 contentStyle={{
                                     paddingHorizontal: 30
                                 }}
+                                loading={loading}
+                                disabled={loading}
                             >
                                 Continuar
                             </Button>

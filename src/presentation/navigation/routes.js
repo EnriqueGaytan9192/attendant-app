@@ -61,13 +61,15 @@ const routes = [
                 component: Pqrs,
             },
             {
-                key: 'sinister',
+                //key: 'sinister',
+                key: 'siniestro',
                 title: 'Siniestro',
                 icon: sinister,
                 component: Sinister,
             },
             {
-                key: 'applications',
+                //key: 'applications',
+                key: 'solicitudes',
                 title: 'Solicitudes',
                 icon: applications,
                 component: Applications,
@@ -100,19 +102,22 @@ const routes = [
         ]
     },
     {
-        key: 'advances',
+        //key: 'advances',
+        key: 'advance',
         title: 'Avances',
         icon: advances,
         component: Advances,
     },
     {
-        key: 'arching',
+        //key: 'arching',
+        key: 'arqueo',
         title: 'Arqueos',
         icon: arching,
         component: Arching,
     },
     {
-        key: 'close-turn',
+        //key: 'close-turn',
+        key: 'cerrar-turno',
         title: 'Cerrar Turno',
         icon: closeTurn,
         component: CloseTurn,
@@ -124,7 +129,8 @@ const routes = [
         component: Consultations,
     },
     {
-        key: 'product-purchases',
+        //key: 'product-purchases',
+        key: 'compras',
         title: 'Compras',
         icon: productPurchases,
         component: ProductPurchases,

@@ -9,7 +9,7 @@ const VehicleDropdown = ({
     vehicles = [],
     isOpen,
     onToggle,
-    selected = [],
+    selectedPlates = {},
     onTogglePlate,
     onToggleAll,
     allSelected,
@@ -92,7 +92,7 @@ const VehicleDropdown = ({
                                     }}
                                 >
                                     <Checkbox
-                                        status={selected.includes(item.placa) ? "checked" : "unchecked"}
+                                        status={selectedPlates[item.placa] ? "checked" : "unchecked"}
                                         color={color}
                                         uncheckedColor="#68AF00"
                                     />

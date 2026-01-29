@@ -10,7 +10,14 @@ const SummaryTurn = () => {
     const screenWidth = Dimensions.get('window').width;
 
     const {
+        turnInfo,
+        empleadoNombre,
+        numeroIdentificacion,
         baseCompleta,
+        baseCaja,
+        boxBase,
+        setBoxBase,
+        totalVehiclesInPatio,
         toggleBase,
         handlePrevious,
         handleNextStep,
@@ -40,19 +47,24 @@ const SummaryTurn = () => {
                         </View>
                         <View style={stylesSummaryTurn.subContentsTwo}>
                             <Text style={stylesSummaryTurn.subTitle}>Turno</Text>
-                            <Text style={stylesSummaryTurn.info}>Turno 1 - 06:00 am - 08:00 am</Text>
+                            <Text style={stylesSummaryTurn.info}>
+                                {turnInfo
+                                    ? `Turno ${turnInfo.turnoId} - ${turnInfo.initial_hour} - ${turnInfo.final_hour}`
+                                    : "Cargando turno..."
+                                }
+                            </Text>
                         </View>
                         <Divider style={stylesSummaryTurn.divider} />
                         <View style={stylesSummaryTurn.subContentsThree}>
                             <Text style={stylesSummaryTurn.subTitle}>Operario</Text>
-                            <Text style={stylesSummaryTurn.infoTwo}>Nayibe Casas - 1020345678</Text>
+                            <Text style={stylesSummaryTurn.infoTwo}>{empleadoNombre} - {numeroIdentificacion}</Text>
                         </View>
                         <Divider style={stylesSummaryTurn.divider} />
                         <View style={stylesSummaryTurn.subContentsThree}>
                             <View style={{ flexDirection: "row" }}>
                                 <View>
                                     <Text style={stylesSummaryTurn.subTitle}>Base de caja</Text>
-                                    <Text style={stylesSummaryTurn.infoTwo}>$200.000</Text>
+                                    <Text style={stylesSummaryTurn.infoTwo}>${baseCaja.toLocaleString()}</Text>
                                 </View>
                                 <View style={stylesSummaryTurn.contentSwitch}>
                                     <Switch
@@ -81,6 +93,8 @@ const SummaryTurn = () => {
                                     <Animatable.View style={{ width: "18%", marginLeft: 20 }}>
                                         <CustomTextInput
                                             label="Base de Caja *"
+                                            value={boxBase}
+                                            onChangeText={text => setBoxBase(text.replace(/[^0-9]/g, ""))}
                                             mode="outlined"
                                             theme={{
                                                 colors: {
@@ -98,7 +112,7 @@ const SummaryTurn = () => {
                         <Divider style={stylesSummaryTurn.divider} />
                         <View style={{ marginTop: 25, marginLeft: 20 }}>
                             <Text style={stylesSummaryTurn.subTitle}>Vehículos en Patio</Text>
-                            <Text style={stylesSummaryTurn.infoTwo}>20</Text>
+                            <Text style={stylesSummaryTurn.infoTwo}>{totalVehiclesInPatio}</Text>
                         </View>
                         <Divider style={stylesSummaryTurn.divider} />
                         <View style={stylesSummaryTurn.containerButtons}>

@@ -11,21 +11,29 @@ const OpenTurnScreen = () => {
     const screenWidth = Dimensions.get('window').width;
 
     const {
-        autos,
-        motos,
-        bicicletas,
+        selectedPlates,
+        manualPlates,
+        observaciones,
+        loading,
+        autosData,
+        motosData,
+        bicicletasData,
+        openDropdown,
         plate,
         showErrors,
-        openDropdown,
-        selectedPlates,      
+        plateError,
         plateRef,
         toggleDropdown,
-        togglePlate,
+        togglePlateSelection,
         toggleSelectAll,
         isAllSelected,
         handlePlateChange,
-        handleNextStep,
+        handleAddPlates,
+        handleRemovePlate,
+        handleObservacionChange,
+        onContinue,
     } = useOpenTurnHook();
+    //useInternetAlerts();
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -49,42 +57,48 @@ const OpenTurnScreen = () => {
                         <View style={{ marginTop: 35 }}>
                             <View style={stylesOpenTurn.vehiclesTotal}>
                                 <Text style={stylesOpenTurn.vehiclesTitleT}>Vehículos en Patios</Text>
-                                <Text style={stylesOpenTurn.vehiclesCountT}>30</Text>
+                                <Text style={stylesOpenTurn.vehiclesCountT}>
+                                    {(autosData ? autosData.total : 0) + (motosData ? motosData.total : 0) + (bicicletasData ? bicicletasData.total : 0)}
+                                </Text>
                             </View>
                             <View style={stylesOpenTurn.contentDropdown}>
                                 <VehicleDropdown
                                     title="Carro"
                                     icon="directions-car"
                                     color="#90D400"
-                                    vehicles={autos}
+                                    vehicles={autosData?.vehicles || []}
                                     isOpen={openDropdown === "car"}
                                     onToggle={() => toggleDropdown("car")}
-                                    selected={selectedPlates.car}
-                                    onTogglePlate={(plate) => togglePlate("car", plate)}
-                                    onToggleAll={() => toggleSelectAll("car", autos)}
-                                    allSelected={isAllSelected("car", autos)}
+                                    selectedPlates={selectedPlates}
+                                    onTogglePlate={togglePlateSelection}
+                                    onToggleAll={() => toggleSelectAll(autosData?.vehicles)}
+                                    allSelected={isAllSelected(autosData?.vehicles)}
                                 />
 
                                 <VehicleDropdown
                                     title="Moto"
                                     icon="two-wheeler"
                                     color="#90D400"
-                                    vehicles={motos?.vehicles || []}
+                                    vehicles={motosData?.vehicles || []}
                                     isOpen={openDropdown === "moto"}
                                     onToggle={() => toggleDropdown("moto")}
-                                    selected={selectedPlates.moto}
-                                    onTogglePlate={(plate) => togglePlate("moto", plate)}
+                                    selectedPlates={selectedPlates}
+                                    onTogglePlate={togglePlateSelection}
+                                    onToggleAll={() => toggleSelectAll(motosData?.vehicles)}
+                                    allSelected={isAllSelected(motosData?.vehicles)}
                                 />
 
                                 <VehicleDropdown
                                     title="Bicicleta"
                                     icon="pedal-bike"
                                     color="#90D400"
-                                    vehicles={bicicletas?.vehicles || []}
+                                    vehicles={bicicletasData?.bikes || []}
                                     isOpen={openDropdown === "bike"}
                                     onToggle={() => toggleDropdown("bike")}
-                                    selected={selectedPlates.bike}
-                                    onTogglePlate={(plate) => togglePlate("bike", plate)}
+                                    selectedPlates={selectedPlates}
+                                    onTogglePlate={togglePlateSelection}
+                                    onToggleAll={() => toggleSelectAll(bicicletasData?.bikes)}
+                                    allSelected={isAllSelected(bicicletasData?.bikes)}
                                 />
                             </View>
                         </View>
@@ -94,15 +108,17 @@ const OpenTurnScreen = () => {
                                 <Text style={stylesOpenTurn.vehiclesTitleT}>Placas No Registradas</Text>
                                 <View style={stylesOpenTurn.subcontentPlatesUnregistered}>
                                     <View style={stylesOpenTurn.contentInputPlate}>
-                                        <Animatable.View style={{ width: "70%" }} ref={plateRef}>
+                                        <Animatable.View style={{ width: "70%" }}>
                                             <CustomTextInput
+                                                ref={plateRef}
                                                 label="Placa *"
                                                 value={plate}
                                                 onChangeText={handlePlateChange}
+                                                autoCapitalize="characters"
                                                 mode="outlined"
                                                 theme={{
                                                     colors: {
-                                                        outline: showErrors && !plate ? "red" : "#E5E5E5",
+                                                        outline: plateError ? "#FF6E64" : "#E5E5E5",
                                                         primary: '#90D400',
                                                     }
                                                 }}
@@ -116,6 +132,9 @@ const OpenTurnScreen = () => {
                                             iconColor="#FFFFFF"
                                             style={stylesOpenTurn.iconCheck}
                                             size={25}
+                                            onPress={handleAddPlates}
+                                            loading={loading}
+                                            disabled={loading}
                                         />
                                     </View>
                                     <View style={stylesOpenTurn.contentDataTable}>
@@ -134,25 +153,29 @@ const OpenTurnScreen = () => {
                                                 </DataTable.Header>
 
                                                 <ScrollView
-                                                    style={{ maxHeight: 150 }}
+                                                    style={{ maxHeight: 195 }}
                                                     nestedScrollEnabled
                                                 >
-                                                    <DataTable.Row style={{ borderBottomWidth: 1, borderBlockColor: "#E5E5E5" }}>
-                                                        <DataTable.Cell style={{ flex: 2 }}>
-                                                            <Text style={{ color: "#666666", fontSize: 13, fontFamily: "Montserrat_400Regular", lineHeight: 20 }}>mm/dd/aaaa 00:00 am/pm</Text>
-                                                        </DataTable.Cell>
-                                                        <DataTable.Cell style={{ flex: 0.9 }}>
-                                                            <Text style={{ color: "#666666", fontSize: 13, fontFamily: "Montserrat_400Regular", lineHeight: 20 }}>AAA111</Text>
-                                                        </DataTable.Cell>
-                                                        <DataTable.Cell style={{ flex: 0.5, justifyContent: "center", alignItems: "center" }}>
-                                                            <TouchableOpacity onPress={() => { }}>
-                                                                <Image
-                                                                    source={require("../../../../assets/icons/deleteIcon.png")}
-                                                                    style={{ width: 17, height: 22 }}
-                                                                />
-                                                            </TouchableOpacity>
-                                                        </DataTable.Cell>
-                                                    </DataTable.Row>
+                                                    {manualPlates.map((item) => (
+                                                        <DataTable.Row style={{ borderBottomWidth: 1, borderBlockColor: "#E5E5E5" }} key={item.plate}>
+                                                            <DataTable.Cell style={{ flex: 2 }}>
+                                                                <Text style={{ color: "#666666", fontSize: 13, fontFamily: "Montserrat_400Regular", lineHeight: 20 }}>{item.entry_date} {item.entry_hour}</Text>
+                                                            </DataTable.Cell>
+                                                            <DataTable.Cell style={{ flex: 0.9 }}>
+                                                                <Text style={{ color: "#666666", fontSize: 13, fontFamily: "Montserrat_400Regular", lineHeight: 20 }}>{item.plate}</Text>
+                                                            </DataTable.Cell>
+                                                            <DataTable.Cell style={{ flex: 0.5, justifyContent: "center", alignItems: "center" }}>
+                                                                <TouchableOpacity
+                                                                    onPress={() => handleRemovePlate(item.plate)}
+                                                                >
+                                                                    <Image
+                                                                        source={require("../../../../assets/icons/deleteIcon.png")}
+                                                                        style={{ width: 17, height: 22 }}
+                                                                    />
+                                                                </TouchableOpacity>
+                                                            </DataTable.Cell>
+                                                        </DataTable.Row>
+                                                    ))}
                                                 </ScrollView>
                                             </DataTable>
                                         </Card>
@@ -166,6 +189,8 @@ const OpenTurnScreen = () => {
                             <Animatable.View style={{ marginTop: 15 }}>
                                 <CustomTextInput
                                     label="Observaciones (opcional)"
+                                    value={observaciones}
+                                    onChangeText={handleObservacionChange}
                                     mode="outlined"
                                     theme={{
                                         colors: {
@@ -183,7 +208,7 @@ const OpenTurnScreen = () => {
                         <View style={{ marginTop: 40 }}>
                             <Button
                                 mode="contained"
-                                onPress={handleNextStep}
+                                onPress={onContinue}
                                 style={stylesOpenTurn.continueButton}
                                 contentStyle={{ paddingHorizontal: 30 }}
                             >

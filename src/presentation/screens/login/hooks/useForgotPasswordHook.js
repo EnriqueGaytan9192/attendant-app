@@ -29,11 +29,18 @@ const useForgotPasswordHook = () => {
 
     const handledUserChange = (text) => {
         const hasSpaces = /\s/.test(text);
-        const noSpaces = text.replace(/\s/g, '');
-        onChangeText('usernameOneModal', noSpaces);
+        const hasEmojis = /[\p{Extended_Pictographic}]/u.test(text);
+
+        const noSpacesNoEmojis = text
+            .replace(/\s/g, '')
+            .replace(/[\p{Extended_Pictographic}]/gu, '');
+
+        onChangeText('usernameOneModal', noSpacesNoEmojis);
 
         if (hasSpaces) {
             showAlert("warning", "El nombre de usuario no puede contener espacios.");
+        } else if (hasEmojis) {
+            showAlert("warning", "El nombre de usuario no puede contener emojis.");
         };
     };
 
@@ -41,14 +48,19 @@ const useForgotPasswordHook = () => {
 
     const handledEmailChange = (text) => {
         const hasSpaces = /\s/.test(text);
-        const noSpaces = text.replace(/\s/g, '');
-        onChangeText('emailOneModal', noSpaces);
+        const hasEmojis = /[\p{Extended_Pictographic}]/u.test(text);
+
+        const noSpacesNoEmojis = text
+            .replace(/\s/g, '')
+            .replace(/[\p{Extended_Pictographic}]/gu, '');
+        
+        onChangeText('emailOneModal', noSpacesNoEmojis);
 
         if (hasSpaces) {
             showAlert("warning", "El correo electrónico no puede contener espacios.");
-        };
-
-        if (isEmailInvalid && isValidEmail(noSpaces)) {
+        } else if (hasEmojis) {
+            showAlert("warning", "El correo electrónico no puede contener emojis.");
+        } else if (isEmailInvalid && isValidEmail(noSpaces)) {
             setIsEmailInvalid(false);
         };
     };

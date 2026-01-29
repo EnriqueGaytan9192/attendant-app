@@ -7,6 +7,7 @@ import { showAlert } from "../../../../common/components/AlertManager";
 import { useLazyFetch } from "../../../../common/hook/useFetch";
 import { useAppSelector } from "../../../../state/hooks";
 import { loadMenus, login, setDataForm, setToken, showForgotPasswordModal, showForgotUsernameModal } from "../../../../state/slices/authSlice";
+import { setStepFour } from "../../../../state/slices/openTurnSlice";
 
 const useLoginHook = () => {
     const dispatch = useDispatch();
@@ -43,22 +44,36 @@ const useLoginHook = () => {
 
     const handledUsernameChange = (text) => {
         const hasSpaces = /\s/.test(text);
-        const noSpaces = text.replace(/\s/g, '');
-        handleDataForm("email", noSpaces);
+        const hasEmojis = /[\p{Extended_Pictographic}]/u.test(text);
+
+        const noSpacesNoEmojis = text
+            .replace(/\s/g, '')
+            .replace(/[\p{Extended_Pictographic}]/gu, '');
+
+        handleDataForm("email", noSpacesNoEmojis);
 
         if (hasSpaces) {
             showAlert("warning", "El nombre de usuario no puede contener espacios.");
-        }
+        } else if (hasEmojis) {
+            showAlert("warning", "El nombre de usuario no puede contener emojis.");
+        };
     };
 
     const handlePasswordChange = (text) => {
         const hasSpaces = /\s/.test(text);
-        const noSpaces = text.replace(/\s/g, '');
-        handleDataForm('password', noSpaces);
+        const hasEmojis = /[\p{Extended_Pictographic}]/u.test(text);
+
+        const noSpacesNoEmojis = text
+            .replace(/\s/g, '')
+            .replace(/[\p{Extended_Pictographic}]/gu, "");
+
+        handleDataForm('password', noSpacesNoEmojis);
 
         if (hasSpaces) {
             showAlert("warning", "La contraseña no puede contener espacios.");
-        }
+        } else if (hasEmojis) {
+            showAlert("warning", "La contraseña no puede contener emojis.");
+        };
     };
 
     const passwordModal = () => {
@@ -177,10 +192,38 @@ const useLoginHook = () => {
 
         console.log("Menus por role: ", JSON.stringify(roleData?.permission?.subitems, null, 2));
         const menus = roleData?.permission?.subitems.slice();
-        
+
         dispatch(loadMenus(menus));
         dispatch(setToken(toke));
-        
+
+        /* =============
+            Api turn
+        ============= */
+        const { data: turnData, errorFetch: turnErrorFetch } =
+            await getDataFetch(
+                "/api/turn",
+                "POST",
+                {
+                    rq: {
+                        id: loginData.numeroIdentificacion,
+                        parqueaderoId: terminalData?.parqueaderoId
+                    },
+                    tokenTmp: toke,
+                },
+            );
+
+        if (turnErrorFetch) {
+            showAlert("error", "Error consultando el turno.");
+            return;
+        }
+
+        if (turnData?.error) {
+            showAlert("error", turnData?.msg || "Usuario no tiene turno asignado.");
+            return;
+        }
+
+        console.log("Respuesta api Turn:", turnData);
+
         dispatch(login({
             numeroIdentificacion: loginData?.numeroIdentificacion,
             parqueaderoId: terminalData?.parqueaderoId,
@@ -226,7 +269,14 @@ const useLoginHook = () => {
             return;
         }
 
-        console.log("Respuesta api Migration:", migrationData);
+        if (loginData.existTurnOpen === 1) {
+            dispatch(setStepFour());
+        }
+        /*if (loginData.existTurnClose === 2 || data.existTurnClose === 0) {
+            dispatch(setStepSeven());
+        }*/
+        return true;
+
     };
 
     return {

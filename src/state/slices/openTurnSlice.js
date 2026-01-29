@@ -15,8 +15,18 @@ const initialState = {
         bicycles: [],
     },
     selectedPlates: {},
+    manualPlates: [],
+    enganchados: {
+        platesVehicles: [],
+        platesMotos: [],
+        platesBikes: [],
+    },
+    observaciones: "",
+    vehicleInPatioCount: 0,
 
     //Segunda pantalla
+    baseCaja: 0,
+    isComplete: true,
 
     //Tercer pantalla
     dispositivos: [
@@ -44,6 +54,8 @@ const initialState = {
         { name: "Desagues", cantidad: '', estado: "Buen Estado", observaciones: "" },
         { name: "Baños", cantidad: '', estado: "Buen Estado", observaciones: "" },
     ],
+    loadingInfrastructure: false,
+    errorInfrastructure: null,
 
     stepOne: true,
     stepTwo: false,
@@ -56,7 +68,58 @@ const openTurnSlice = createSlice({
     initialState,
     reducers: {
         //Primer pantalla
+        togglePlate(state, action) {
+            const plate = action.payload;
+            state.selectedPlates[plate] = !state.selectedPlates[plate];
+        },
+        selectAll(state, action) {
+            const plates = action.payload;
+            plates.forEach(p => {
+                state.selectedPlates[p] = true;
+            });
+        },
+        deselectAll(state, action) {
+            const plates = action.payload;
+            plates.forEach(p => {
+                state.selectedPlates[p] = false;
+            });
+        },
+        addManualPlate(state, action) {
+            const { plate, type_vehicle, entry_date, entry_hour } = action.payload;
+            const exists = state.manualPlates.some(p => p.plate === plate);
+
+            if (!exists) {
+                state.manualPlates.push({
+                    plate,
+                    type_vehicle,
+                    entry_date,
+                    entry_hour,
+                });
+            };
+        },
+        removeManualPlate(state, action) {
+            state.manualPlates = state.manualPlates.filter(
+                p => p.plate !== action.payload
+            );
+        },
+        setEnganchados(state, action) {
+            state.enganchados = action.payload;
+        },
+        setObservaciones(state, action) {
+            state.observaciones = action.payload;
+        },
+        setVehicleInPatioCount(state, action) {
+            state.vehicleInPatioCount = action.payload;
+        },
+
         //Segunda pantalla
+        setBaseCaja(state, action) {
+            state.baseCaja = action.payload;
+        },
+        setIsComplete(state, action) {
+            state.isComplete = action.payload;
+        },
+
         //Tercer pantalla
         updateCantidad: (state, action) => {
             const { category, index, value } = action.payload;
@@ -70,7 +133,29 @@ const openTurnSlice = createSlice({
             const { category, index, value } = action.payload;
             state[category][index].observaciones = value;
         },
+        addInfrastructure(state, action) {
+            const resultado = agruparInfraestructura(action.payload);
+            state.dispositivos = resultado.dispositivos;
+            state.seguridad = resultado.seguridad;
+            state.infraestructura = resultado.infraestructura;
+        },
 
+        setLoadingInfrastructure(state, action) {
+            state.loadingInfrastructure = action.payload;
+        },
+
+        setErrorInfrastructure(state, action) {
+            state.errorInfrastructure = action.payload;
+        },
+
+
+        setStepFour(state) {
+            // Forzamos que solo stepFour sea true
+            state.stepOne = false;
+            state.stepTwo = false;
+            state.stepThree = false;
+            state.stepFour = true;
+        },
         nextStep(state) {
             if (state.stepOne) {
                 state.stepOne = false;
@@ -95,18 +180,79 @@ const openTurnSlice = createSlice({
                 state.stepOne = true;
             }
         },
-        resetOpenTurn: () => initialState,
-    }
+        resetOpenTurn: () => ({
+            ...initialState,
+            loadingInfrastructure: false,
+            errorInfrastructure: null,
+        }),
+    },
 });
+
+const agruparInfraestructura = (infrastructure) => {
+    const categorias = {
+        dispositivos: ["Tablets", "Impresora", "Datáfonos", "Radios", "Hub de pagos"],
+        seguridad: [
+            "Aviso Tarifas", "Av. Responsabilidad", "Aviso Horarios",
+            "Botiquín", "Extintores", "Llaveros"
+        ],
+        infraestructura: [
+            "Lámparas", "Bombillos", "Piso", "Techo",
+            "Topellantas", "Demarcación", "Desagües", "Baños"
+        ]
+    };
+
+    const resultado = {
+        dispositivos: [],
+        seguridad: [],
+        infraestructura: []
+    };
+
+    const encontrados = new Set();
+
+    infrastructure.forEach(item => {
+        const nombre = item.nombreItems?.trim();
+        if (!nombre || encontrados.has(nombre)) return;
+
+        encontrados.add(nombre);
+
+        const data = {
+            id: item.id ?? 0,
+            name: nombre,
+            cantidad: item.cantidad ?? "",
+            estado: item.estadoApertura ?? "Buen Estado",
+            observaciones: item.observacionesApertura ?? ""
+        };
+
+        if (categorias.dispositivos.includes(nombre)) resultado.dispositivos.push(data);
+        else if (categorias.seguridad.includes(nombre)) resultado.seguridad.push(data);
+        else if (categorias.infraestructura.includes(nombre)) resultado.infraestructura.push(data);
+    });
+
+    return resultado;
+};
+
 
 export const {
     //Primer pantalla
+    togglePlate,
+    selectAll,
+    deselectAll,
+    addManualPlate,
+    removeManualPlate,
+    setEnganchados,
+    setObservaciones,
+    setVehicleInPatioCount,
+
     //Segunda pantalla
+    setBaseCaja,
+    setIsComplete,
+
     //Tercer pantalla
     updateCantidad,
     updateEstado,
     updateObservation,
-    
+
+    setStepFour,
     nextStep,
     previousStep,
     resetOpenTurn

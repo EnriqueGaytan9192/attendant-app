@@ -40,7 +40,7 @@ const CustomDrawerContent = ({ navigation }) => {
         dispatch(resetCloseTurn());
     };
 
-    const { user, initials } = useProfileInfoHook();
+    const { userInfo, loadingUser, user, initials } = useProfileInfoHook();
 
     return (
         <View style={{ flex: 1 }}>
@@ -65,12 +65,20 @@ const CustomDrawerContent = ({ navigation }) => {
                                         {initials}
                                     </Text>
                                 </View>
-                                <View style={{ marginLeft: 10 }}>
+                                {/*<View style={{ marginLeft: 10 }}>
                                     <Text style={styles.profileName}>
                                         {`${user.firstName} ${user.lastName}`}
                                     </Text>
                                     <Text style={styles.profileRole}>
                                         {user.role}
+                                    </Text>
+                                </View>*/}
+                                <View style={{ marginLeft: 10 }}>
+                                    <Text style={styles.profileName}>
+                                        {loadingUser ? "Cargando..." : userInfo?.empleado}
+                                    </Text>
+                                    <Text style={styles.profileRole}>
+                                        {loadingUser ? "" : userInfo?.rol}
                                     </Text>
                                 </View>
                             </View>
@@ -143,7 +151,7 @@ const CustomDrawerContent = ({ navigation }) => {
                     })}
                 </View>
             </ScrollView>
-            <TouchableOpacity style={[styles.menuItem, styles.logoutDynamic, { marginLeft:15 }]} onPress={handleLogOut}>
+            <TouchableOpacity style={[styles.menuItem, styles.logoutDynamic, { marginLeft: 15 }]} onPress={handleLogOut}>
                 <Image
                     source={require("../../assets/icons/logOut.png")}
                     style={styles.icon}
@@ -237,7 +245,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     },
     profileName: {
-        fontSize: 16,
+        fontSize: 17,
         //fontWeight: "bold",
         color: "#90D400",
         marginTop: 5,
@@ -245,9 +253,9 @@ const styles = StyleSheet.create({
     },
     profileRole: {
         backgroundColor: "#666666",
-        fontSize: 12,
+        fontSize: 12.5,
         color: "#FFFFFF",
-        paddingHorizontal: 10,
+        paddingHorizontal: "auto",
         paddingVertical: 2,
         borderRadius: 5,
         marginTop: 5,
@@ -268,16 +276,16 @@ const styles = StyleSheet.create({
     },
     menuText: {
         flex: 1,
-        fontSize: 16,
+        fontSize: 17,
         color: "#666666",
         fontFamily: "Montserrat_500Medium",
         lineHeight: 20,
     },
     subMenuText: {
-        fontSize: 14,
+        fontSize: 13,
         color: "#666666",
         fontFamily: "Montserrat_400Regular",
-        lineHeight: 20,
+        lineHeight: 20
     },
     icon: {
         width: 28,
@@ -340,6 +348,7 @@ const styles = StyleSheet.create({
     logoutDynamic: {
         borderTopWidth: 1,
         borderTopColor: "#eee",
+        marginBottom: 10,
     },
 
 })

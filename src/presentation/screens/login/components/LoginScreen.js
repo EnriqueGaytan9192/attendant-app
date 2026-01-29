@@ -3,6 +3,7 @@ import * as Animatable from 'react-native-animatable';
 import { Button, Divider, Text, TextInput } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomTextInput from "../../../../common/components/CustomTextInput";
+import useInternetAlerts from "../../../../common/hook/useInternetAlerts";
 import useLoginHook from "../hooks/useLoginHook";
 import stylesLogin from "../styles/stylesLogin";
 
@@ -24,6 +25,7 @@ const LoginScreen = () => {
         userModal,
         handleLogin,
     } = useLoginHook();
+    useInternetAlerts();
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -151,7 +153,7 @@ const LoginScreen = () => {
                                     lineHeight: 20
                                 }}
                             >
-                                Versión 1.1.0
+                                Versión 1.1.2
                             </Text>
                         </View>
                     </View>

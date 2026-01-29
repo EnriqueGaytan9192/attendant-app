@@ -30,14 +30,19 @@ const useForgotUsernameHook = () => {
 
     const handledEmailTwoChange = (text) => {
         const hasSpaces = /\s/.test(text);
-        const noSpaces = text.replace(/\s/g, '');
-        onChangeText('emailTwoModal', noSpaces);
+        const hasEmojis = /[\p{Extended_Pictographic}]/u.test(text);
+
+        const noSpacesNoEmojis = text
+            .replace(/\s/g, '')
+            .replace(/[\p{Extended_Pictographic}]/gu, '');
+        
+        onChangeText('emailTwoModal', noSpacesNoEmojis);
 
         if (hasSpaces) {
             showAlert("warning", "El correo electrónico no puede contener espacios.");
-        };
-
-        if (isEmailInvalid && isValidEmail(noSpaces)) {
+        } else if (hasEmojis) {
+            showAlert("warning", "El correo electrónico no puede contener emojis.");
+        } else if (isEmailInvalid && isValidEmail(noSpaces)) {
             setIsEmailInvalid(false);
         };
     };

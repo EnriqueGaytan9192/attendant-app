@@ -28,7 +28,6 @@ const stylesProfileInfo = StyleSheet.create({
         color: '#80C300',
         marginTop: 15,
         fontFamily: "Montserrat_400Regular",
-        lineHeight: 20
     },
     roleInfo: {
         fontSize: 16,

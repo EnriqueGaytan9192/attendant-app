@@ -16,6 +16,7 @@ export const showAlert = (type, message, duration = 3000) => {
 
 const AlertManager = () => {
     const [alerts, setAlerts] = useState([]);
+    const [alertHeights, setAlertHeights] = useState({});
 
     useEffect(() => {
         addAlertHandler = (alert) => {
@@ -39,21 +40,39 @@ const AlertManager = () => {
         };
     }, []);
 
+    const getOffsetTop = (index) => {
+        let offset = 35;
+
+        for (let i = 0; i < index; i++) {
+            offset += (alertHeights[alerts[i]?.id] || 105) + 10;
+        }
+
+        return offset;
+    };
+
+
     return (
         <>
             {alerts.map((alert, index) => (
                 <CustomAlert
                     key={alert.id}
-                    visible={true}
+                    visible
                     type={alert.type}
                     message={alert.message}
                     duration={alert.duration}
-                    offsetTop={35 + index * 105}
+                    offsetTop={getOffsetTop(index)}
+                    onHeight={(height) =>
+                        setAlertHeights((prev) => ({
+                            ...prev,
+                            [alert.id]: height,
+                        }))
+                    }
                     onDismiss={() =>
                         setAlerts((prev) => prev.filter((a) => a.id !== alert.id))
                     }
                 />
             ))}
+
         </>
     );
 };

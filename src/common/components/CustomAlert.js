@@ -40,6 +40,16 @@ const getAlertColors = (type) => {
                 icon: require('../../assets/icons/exclemation-circle.png'),
                 closeIcon: require('../../assets/icons/closeError.png'),
             };
+        case 'info':
+            return {
+                title: 'Información',
+                background: '#ebfcffff',
+                border: '#008A9B',
+                titleText: '#008A9B',
+                text: '#8C8C8C',
+                icon: require('../../assets/icons/info-circle.png'),
+                closeIcon: require('../../assets/icons/closeInfo.png'),
+            };
         default:
             return {
                 title: 'Información',
@@ -60,6 +70,7 @@ const CustomAlert = ({
     message = "Error",
     duration = 3000,
     offsetTop = 35,
+    onHeight,
 }) => {
     const colors = getAlertColors(type);
     const translateX = useSharedValue(300);
@@ -99,13 +110,17 @@ const CustomAlert = ({
 
     return (
         <Animated.View
+            onLayout={(e) => {
+                const height = e.nativeEvent.layout.height;
+                onHeight?.(height);
+            }}
             style={[
                 styles.container,
                 animatedStyle,
                 {
                     borderColor: colors.border,
                     backgroundColor: colors.background,
-                    top: offsetTop || 35,
+                    top: offsetTop,
                 },
             ]}
         >
@@ -121,7 +136,7 @@ const CustomAlert = ({
                 </Text>
             </View>
 
-            <TouchableOpacity onPress={onDismiss}>
+            <TouchableOpacity onPress={onDismiss} style={{ alignSelf: 'flex-start' }}>
                 <Image source={colors.closeIcon} style={styles.closeIcon} />
             </TouchableOpacity>
         </Animated.View>
@@ -139,7 +154,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         borderWidth: 2,
         flexDirection: 'row',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         zIndex: 9999,
         elevation: 10,
         shadowColor: "#000",
@@ -151,7 +166,7 @@ const styles = StyleSheet.create({
         width: 24,
         height: 24,
         marginRight: 10,
-        marginBottom: 35,
+        marginTop: 2
     },
     closeIcon: {
         width: 20,
@@ -171,6 +186,7 @@ const styles = StyleSheet.create({
         //fontWeight: "bold",
         marginBottom: 2,
         fontFamily: 'Montserrat_500Medium',
+        marginTop: 3
     },
     message: {
         fontSize: 14,
