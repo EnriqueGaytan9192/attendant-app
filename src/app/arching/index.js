@@ -1,9 +1,12 @@
-import { ArchingSelector } from "../../presentation/screens/arching";
+import ArchingSelector from "../../presentation/screens/arching/components/ShiftSelector";
 
 const Arching = () => {
+
     return (
-        < ArchingSelector />
-    )
+        <>
+            <ArchingSelector />
+        </>
+   );
 }
 
 export default Arching;

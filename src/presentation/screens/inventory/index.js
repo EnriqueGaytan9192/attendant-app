@@ -1,3 +1,3 @@
-import InventoryVehicle from "./components/InventoryVehicle";
+import ListVehicles from "./components/ListVehicle";
 
-export { InventoryVehicle };
+export {ListVehicles};

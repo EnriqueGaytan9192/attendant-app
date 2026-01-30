@@ -8,9 +8,19 @@ const SummaryCloseTurn = () => {
     const screenWidth = Dimensions.get('window').width;
 
     const {
+        numeroIdentificacion,
+        turnDet,
+        turnDetail,
+        terminal,
+        terminalId,
+        reportedValue,
+        amountsDeta,
+        formatCurrency,
         handlePrevious,
         handledNextStep,
+        loading,
     } = useSummaryCloseTurnHook();
+
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -38,33 +48,47 @@ const SummaryCloseTurn = () => {
                             <View style={{ width: "45%" }}>
                                 <View>
                                     <Text style={stylesSummaryCloseTurn.subTitle}>Turno</Text>
-                                    <Text style={stylesSummaryCloseTurn.info}>Turno 1 - 06:00 am - 08:00 am</Text>
+                                    <Text style={stylesSummaryCloseTurn.info}>
+                                        <Text style={stylesSummaryCloseTurn.info}>
+                                            {loading
+                                                ? "Cargando..."
+                                                : turnDet
+                                                    ? `Turno ${turnDet.id} - ${turnDetail?.horaInicial ?? "--"} - ${turnDetail?.horaFinal ?? "--"}`
+                                                    : "No se encontró turno"}
+                                        </Text>
+                                    </Text>
                                 </View>
                                 <Divider style={stylesSummaryCloseTurn.divider} />
                                 <View style={{ marginTop: 25 }}>
                                     <Text style={stylesSummaryCloseTurn.subTitle}>Operario</Text>
-                                    <Text style={stylesSummaryCloseTurn.infoTwo}>Nayibe Casas - 1020345678</Text>
+                                    <Text style={stylesSummaryCloseTurn.infoTwo}>{turnDet?.name} - {numeroIdentificacion}</Text>
                                 </View>
                                 <Divider style={stylesSummaryCloseTurn.divider} />
                                 <View style={{ marginTop: 25 }}>
                                     <Text style={stylesSummaryCloseTurn.subTitle}>Terminal</Text>
-                                    <Text style={stylesSummaryCloseTurn.infoTwo}>Terminal 1</Text>
+                                    <Text style={stylesSummaryCloseTurn.infoTwo}>Terminal {terminalId}</Text>
                                 </View>
                                 <Divider style={stylesSummaryCloseTurn.divider} />
                                 <View style={{ marginTop: 25 }}>
                                     <Text style={stylesSummaryCloseTurn.subTitle}>Base de caja</Text>
-                                    <Text style={stylesSummaryCloseTurn.infoTwo}>$200.000</Text>
+                                    <Text style={stylesSummaryCloseTurn.infoTwo}>
+                                        {formatCurrency(turnDet?.box_base)}
+                                    </Text>
+
                                 </View>
                                 <Divider style={stylesSummaryCloseTurn.divider} />
                                 <View style={{ marginTop: 25 }}>
                                     <Text style={stylesSummaryCloseTurn.subTitle}>Vehículos en Patio</Text>
-                                    <Text style={stylesSummaryCloseTurn.infoTwo}>20</Text>
+                                    <Text style={stylesSummaryCloseTurn.infoTwo}>
+                                        {turnDet?.count_vehicles ?? 0}
+                                    </Text>
+
                                 </View>
                                 <Divider style={stylesSummaryCloseTurn.divider} />
-                                <View style={{ marginTop: 25 }}>
+                                {/*<View style={{ marginTop: 25 }}>
                                     <Text style={stylesSummaryCloseTurn.subTitle}>Comprobantes de Pago</Text>
                                     <Text style={stylesSummaryCloseTurn.infoTwo}>20 de la 123 a la 456</Text>
-                                </View>
+                                </View>*/}
                             </View>
                             <View style={{ width: "45%" }}>
                                 <Card
@@ -77,29 +101,38 @@ const SummaryCloseTurn = () => {
                                     }}
                                 >
                                     <Card.Content>
-                                        <View style={{ marginBottom: 60 }}>
-                                            <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 60 }}>
+                                        <View style={{ marginBottom: 25 }}>
+                                            <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 25 }}>
                                                 <Text style={stylesSummaryCloseTurn.title}>Producido reportado</Text>
-                                                <Text style={stylesSummaryCloseTurn.infoThree}>$200.000</Text>
+                                                <Text style={stylesSummaryCloseTurn.infoThree}>
+                                                    {formatCurrency(reportedValue)}
+                                                </Text>
                                             </View>
                                             <Divider style={stylesSummaryCloseTurn.divider} />
-                                            <View style={{ marginTop: 50, marginBottom: 30 }}>
-                                                <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 50 }}>
+                                            <View style={{ marginTop: 25, marginBottom: 15 }}>
+                                                <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 30 }}>
                                                     <Text style={stylesSummaryCloseTurn.title}>Producido Attendant</Text>
-                                                    <Text style={stylesSummaryCloseTurn.infoThree}>$200.000</Text>
+                                                    <Text style={stylesSummaryCloseTurn.infoThree}>
+                                                        {formatCurrency(amountsDeta?.total)}
+                                                    </Text>
+
                                                 </View>
                                                 <View style={{ marginLeft: 20 }}>
                                                     <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 30 }}>
                                                         <Text style={stylesSummaryCloseTurn.title}>Efectivo</Text>
-                                                        <Text style={stylesSummaryCloseTurn.infoThree}>$200.000</Text>
+                                                        <Text style={stylesSummaryCloseTurn.infoThree}>{formatCurrency(amountsDeta?.efectivo)}</Text>
                                                     </View>
                                                     <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 30 }}>
                                                         <Text style={stylesSummaryCloseTurn.title}>Datáfono</Text>
-                                                        <Text style={stylesSummaryCloseTurn.infoThree}>$200.000</Text>
+                                                        <Text style={stylesSummaryCloseTurn.infoThree}>{formatCurrency(amountsDeta?.datafono)}</Text>
+                                                    </View>
+                                                    <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 30 }}>
+                                                        <Text style={stylesSummaryCloseTurn.title}>Hub de Pagos</Text>
+                                                        <Text style={stylesSummaryCloseTurn.infoThree}>{formatCurrency(amountsDeta?.hubPagos)}</Text>
                                                     </View>
                                                     <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 30 }}>
                                                         <Text style={stylesSummaryCloseTurn.title}>Avances</Text>
-                                                        <Text style={stylesSummaryCloseTurn.infoThree}>$200.000</Text>
+                                                        <Text style={stylesSummaryCloseTurn.infoThree}>{formatCurrency(amountsDeta?.avances)}</Text>
                                                     </View>
                                                 </View>
                                             </View>
@@ -110,7 +143,7 @@ const SummaryCloseTurn = () => {
                             </View>
                         </View>
                         <View style={{ flexDirection: "row", justifyContent: "flex-end", marginTop: "auto", marginTop: 50 }}>
-                            <Button
+                            {/*<Button
                                 mode="contained"
                                 onPress={handlePrevious}
                                 style={{ backgroundColor: "#8C8C8C", alignSelf: "flex-end", borderRadius: 10, marginRight: 20 }}
@@ -118,7 +151,7 @@ const SummaryCloseTurn = () => {
 
                             >
                                 Cancelar
-                            </Button>
+                            </Button>*/}
                             <Button
                                 mode="contained"
                                 onPress={handledNextStep}

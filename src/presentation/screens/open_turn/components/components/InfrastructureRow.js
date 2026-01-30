@@ -22,7 +22,7 @@ const InfrastructureRow = ({
                     dense
                     placeholder="0"
                     keyboardType="numeric"
-                    value={item.cantidad}
+                    value={item.cantidad?.toString() ?? ""}
                     onChangeText={(text) =>
                         onCantidadChange(category, index, text)
                     }

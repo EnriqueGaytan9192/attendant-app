@@ -7,6 +7,7 @@ import { showAlert } from "../../../../common/components/AlertManager";
 import { useLazyFetch } from "../../../../common/hook/useFetch";
 import { useAppSelector } from "../../../../state/hooks";
 import { loadMenus, login, setDataForm, setToken, showForgotPasswordModal, showForgotUsernameModal } from "../../../../state/slices/authSlice";
+import { setStepSeven } from "../../../../state/slices/closeTurnSlice";
 import { setStepFour } from "../../../../state/slices/openTurnSlice";
 
 const useLoginHook = () => {
@@ -272,9 +273,9 @@ const useLoginHook = () => {
         if (loginData.existTurnOpen === 1) {
             dispatch(setStepFour());
         }
-        /*if (loginData.existTurnClose === 2 || data.existTurnClose === 0) {
+        if (loginData.existTurnClose === 2 || loginData.existTurnClose === 0) {
             dispatch(setStepSeven());
-        }*/
+        }
         return true;
 
     };

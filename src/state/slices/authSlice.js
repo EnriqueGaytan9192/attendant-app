@@ -28,9 +28,9 @@ const initialState = {
 }
 
 const authSlice = createSlice({
-    name:'auth',
+    name: 'auth',
     initialState,
-    reducers:{
+    reducers: {
         login(state, { payload }) {
             state.isAuthenticated = true;
             state.numeroIdentificacion = payload.numeroIdentificacion;
@@ -85,7 +85,7 @@ const authSlice = createSlice({
     },
 });
 
-export const { 
+export const {
     login,
     logout,
     setToken,

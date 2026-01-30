@@ -251,6 +251,7 @@ export const {
     updateCantidad,
     updateEstado,
     updateObservation,
+    addInfrastructure,
 
     setStepFour,
     nextStep,
