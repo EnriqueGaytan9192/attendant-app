@@ -4,24 +4,22 @@
     "appVersionSource": "remote"
   },
   "build": {
+    "workingDirectory": "attendant-app",
     "development": {
       "developmentClient": true,
       "distribution": "internal",
       "channel": "development",
-      "node": "18.18.0",
-      "workingDirectory": "attendant-app"
+      "node": "18.18.0"
     },
     "preview": {
       "distribution": "internal",
       "channel": "preview",
-      "node": "18.18.0",
-      "workingDirectory": "attendant-app"
+      "node": "18.18.0"
     },
     "production": {
       "autoIncrement": true,
       "channel": "production",
-      "node": "18.18.0",
-      "workingDirectory": "attendant-app"
+      "node": "18.18.0"
     }
   },
   "submit": {
