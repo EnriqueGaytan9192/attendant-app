@@ -4,7 +4,10 @@
     "appVersionSource": "remote"
   },
   "build": {
-    "workingDirectory": "attendant-app",
+    "workingDirectory": {
+      "android": "attendant-app",
+      "ios": "attendant-app"
+    },
     "development": {
       "developmentClient": true,
       "distribution": "internal",
