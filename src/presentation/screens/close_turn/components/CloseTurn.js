@@ -10,6 +10,15 @@ const CloseTurnScreen = () => {
     const screenWidth = Dimensions.get('window').width;
 
     const {
+        numeroIdentificacion,
+        turnDet,
+        turnDetail,
+        loading,
+        closeValue,
+        isFocused,
+        formatCurrency,
+        handleChangeValue,
+        setIsFocused,
         handledNext,
     } = useCloseTurnHook();
 
@@ -37,17 +46,26 @@ const CloseTurnScreen = () => {
                         </View>
                         <View style={{ marginTop: 35, marginLeft: 20 }}>
                             <Text style={stylesCloseTurn.subTitle}>Turno</Text>
-                            <Text style={stylesCloseTurn.info}>Turno 1 - 06:00 am - 08:00 am</Text>
+                            <Text style={stylesCloseTurn.info}>
+                                {loading
+                                    ? "Cargando turno..."
+                                    : turnDet
+                                        ? `Turno ${turnDet.id} - ${turnDetail?.horaInicial ?? "--"} - ${turnDetail?.horaFinal ?? "--"}`
+                                        : "No se encontró turno"}
+                            </Text>
                         </View>
                         <Divider style={stylesCloseTurn.divider} />
                         <View style={{ marginTop: 25, marginLeft: 20 }}>
                             <Text style={stylesCloseTurn.subTitle}>Operario</Text>
-                            <Text style={stylesCloseTurn.infoTwo}>Nayibe Casas - 1020345678</Text>
+                            <Text style={stylesCloseTurn.infoTwo}>{turnDet?.name} - {numeroIdentificacion}</Text>
                         </View>
                         <Divider style={stylesCloseTurn.divider} />
                         <View style={{ marginTop: 25, marginLeft: 20 }}>
                             <Text style={stylesCloseTurn.subTitle}>Base de caja</Text>
-                            <Text style={stylesCloseTurn.infoTwo}>$200.000</Text>
+                            <Text style={stylesCloseTurn.infoTwo}>{turnDet
+                                ? formatCurrency(turnDet.box_base)
+                                : "$ 0.00"}
+                            </Text>
                         </View>
                         <Divider style={stylesCloseTurn.divider} />
                         <View style={{ marginTop: 25, marginBottom: 15 }}>
@@ -55,6 +73,16 @@ const CloseTurnScreen = () => {
                                 <CustomTextInput
                                     label="Valor a reportar *"
                                     mode="outlined"
+                                    value={
+                                        isFocused
+                                            ? closeValue
+                                            : closeValue
+                                                ? formatCurrency(closeValue)
+                                                : ""
+                                    }
+                                    onChangeText={handleChangeValue}
+                                    onFocus={() => setIsFocused(true)}
+                                    onBlur={() => setIsFocused(false)}
                                     theme={{
                                         colors: {
                                             outline: "#E5E5E5",

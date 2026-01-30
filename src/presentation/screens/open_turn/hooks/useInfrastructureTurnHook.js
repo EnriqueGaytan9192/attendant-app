@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { showAlert } from "../../../../common/components/AlertManager";
 import { useLazyFetch } from "../../../../common/hook/useFetch";
 import {
+    addInfrastructure,
     nextStep,
     previousStep,
     updateCantidad,
     updateEstado,
-    updateObservation
+    updateObservation,
 } from "../../../../state/slices/openTurnSlice";
 
 const useInfrastructureTurnHook = () => {
@@ -22,26 +23,55 @@ const useInfrastructureTurnHook = () => {
         enganchados,
         baseCaja,
         isComplete,
+        selectedPlates,
+        manualPlates
     } = useSelector((state) => state.openTurn);
 
-    const { numeroIdentificacion, terminalId, parqueaderoId } = useSelector(
-        (state) => state.auth
-    );
+    const { numeroIdentificacion, terminalId, parqueaderoId } =
+        useSelector((state) => state.auth);
 
     const [loading, setLoading] = useState(false);
+    const [turnoId, setTurnoId] = useState(null);
 
-    const { getDataFetch: createTurnFetch } = useLazyFetch();
-    const { getDataFetch: saveShiftOpen } = useLazyFetch();
-    const { getDataFetch: saveInfrastructure } = useLazyFetch();
-    const { getDataFetch: saveEnganchados } = useLazyFetch();
+    const { getDataFetch: lazyFetch } = useLazyFetch();
+
+    /* ================= PRELOAD TURNO + INFRA ================= */
+
+    useEffect(() => {
+        if (!numeroIdentificacion) return;
+
+        (async () => {
+            try {
+                const turnRes = await lazyFetch("/api/turn", "POST", {
+                    rq: { id: numeroIdentificacion, parqueaderoId },
+                });
+
+                const id = turnRes?.data?.turn?.turnoId;
+                if (!id) return;
+
+                setTurnoId(id);
+
+                const resumeRes = await lazyFetch(
+                    `/api/parkingTurnResume?id=${numeroIdentificacion}&turn_id=${id}&parqueaderoId=${parqueaderoId}&terminalId=${terminalId}`,
+                    "GET"
+                );
+
+                if (resumeRes?.data?.turn?.infrastructure?.length) {
+                    dispatch(addInfrastructure(resumeRes.data.turn.infrastructure));
+                }
+            } catch (err) {
+                console.error("Error cargando infraestructura:", err);
+            }
+        })();
+    }, [numeroIdentificacion]);
 
     /* ================= VALIDACIÓN ================= */
 
     const validateFields = () => {
-        const check = (arr) =>
+        const valid = (arr) =>
             arr.every(item => item.cantidad !== "" && item.estado !== "");
 
-        if (!check(dispositivos) || !check(seguridad) || !check(infraestructura)) {
+        if (!valid(dispositivos) || !valid(seguridad) || !valid(infraestructura)) {
             showAlert(
                 "warning",
                 "Debes completar cantidad y estado en todos los elementos."
@@ -54,8 +84,9 @@ const useInfrastructureTurnHook = () => {
     /* ================= TRANSFORM ================= */
 
     const transformInfrastructure = () => {
-        const mapItems = (arr) =>
+        const map = (arr) =>
             arr.map(item => ({
+                id: item.id ?? 0,
                 name: item.name,
                 quantity: item.cantidad,
                 status: item.estado,
@@ -63,74 +94,70 @@ const useInfrastructureTurnHook = () => {
             }));
 
         return [
-            ...mapItems(dispositivos),
-            ...mapItems(seguridad),
-            ...mapItems(infraestructura),
+            ...map(dispositivos),
+            ...map(seguridad),
+            ...map(infraestructura),
         ];
     };
 
-    /* ================= API ================= */
+    const transformPlates = () => {
+        const selected = Object.keys(selectedPlates)
+            .filter(p => selectedPlates[p])
+            .map(plate => ({
+                plate,
+                entry_date: new Date().toISOString(),
+            }));
 
-    const createTurn = async () => {
-        const { data, errorFetch } = await createTurnFetch(
-            "/api/turn",
-            "POST",
-            { rq: { id: numeroIdentificacion, parqueaderoId } }
-        );
+        const manual = manualPlates.map(p => ({
+            plate: p.plate,
+            entry_date: `${p.entry_date} ${p.entry_hour}`,
+        }));
 
-        if (errorFetch || !data?.turn?.turnoId) {
-            showAlert("error", "No se pudo crear el turno.");
-            return null;
-        }
-
-        return data.turn.turnoId;
+        return [...selected, ...manual];
     };
 
-    const saveOpenTurn = async (turnoId) => {
+
+    /* ================= API ================= */
+
+    const saveOpenTurn = async () => {
         const rq = {
             id: numeroIdentificacion,
             terminalId,
             box_base: isComplete ? 0 : Number(baseCaja),
-            plates,
+            plates: transformPlates(),
             observation: observaciones,
         };
 
-        const { errorFetch } = await saveShiftOpen(
-            "/api/shiftOpen",
-            "POST",
-            { rq }
-        );
+        const { errorFetch } = await lazyFetch("/api/shiftOpen", "POST", { rq });
 
         if (errorFetch) {
-            showAlert("error", "Error al guardar la apertura del turno.");
+            showAlert("error", "Error al guardar apertura de turno.");
             return false;
         }
-
         return true;
     };
 
-    const saveInfra = async (turnoId) => {
+    const saveInfrastructure = async () => {
         const rq = {
             turnoId,
             parqueaderoId,
             data: transformInfrastructure(),
         };
 
-        const { errorFetch } = await saveInfrastructure(
+        const { errorFetch } = await lazyFetch(
             "/api/infrastuctureInventory",
             "POST",
             { rq }
         );
 
         if (errorFetch) {
-            showAlert("error", "Error al guardar la infraestructura.");
+            showAlert("error", "Error al guardar infraestructura.");
             return false;
         }
-
         return true;
     };
 
-    const saveEnganchadosData = async (turnoId) => {
+    const saveEnganchados = async () => {
         const payload = {
             platesVehicles: enganchados.platesVehicles.map(v => ({
                 ...v,
@@ -149,7 +176,7 @@ const useInfrastructureTurnHook = () => {
             })),
         };
 
-        const { errorFetch } = await saveEnganchados(
+        const { errorFetch } = await lazyFetch(
             "/api/vehiculos/enganchados",
             "PUT",
             { rq: payload }
@@ -159,7 +186,6 @@ const useInfrastructureTurnHook = () => {
             showAlert("error", "Error al guardar vehículos enganchados.");
             return false;
         }
-
         return true;
     };
 
@@ -170,22 +196,16 @@ const useInfrastructureTurnHook = () => {
         if (!validateFields()) return;
 
         setLoading(true);
-
         try {
-            const turnoId = await createTurn();
-            if (!turnoId) return;
-
-            if (!(await saveOpenTurn(turnoId))) return;
-            if (!(await saveInfra(turnoId))) return;
-            if (!(await saveEnganchadosData(turnoId))) return;
+            if (!(await saveOpenTurn())) return;
+            if (!(await saveInfrastructure())) return;
+            if (!(await saveEnganchados())) return;
 
             dispatch(nextStep());
         } finally {
             setLoading(false);
         }
     };
-
-    const handlePrevious = () => dispatch(previousStep());
 
     return {
         dispositivos,
@@ -198,7 +218,7 @@ const useInfrastructureTurnHook = () => {
             dispatch(updateEstado({ category: c, index: i, value: v })),
         handleObservationChange: (c, i, v) =>
             dispatch(updateObservation({ category: c, index: i, value: v })),
-        handlePrevious,
+        handlePrevious: () => dispatch(previousStep()),
         handleNextStep,
     };
 };

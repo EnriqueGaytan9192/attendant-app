@@ -1,6 +1,6 @@
 import { Dimensions, Image, Keyboard, ScrollView, TouchableWithoutFeedback, View } from "react-native";
 import * as Animatable from "react-native-animatable";
-import { Text } from "react-native-paper";
+import { Button, Switch, Text } from "react-native-paper";
 import CustomTextInput from "../../../../common/components/CustomTextInput";
 import useInfrastructureCloseTurnHook from "../hooks/useInfrastructureCloseTurnHook";
 import stylesInfrastructureCloseTurn from "../styles/stylesInfrastructureCloseTurn";
@@ -12,14 +12,33 @@ const InfrastructureCloseTurn = () => {
     const screenWidth = Dimensions.get("window").width;
 
     const {
+        // Infraestructura
         dispositivos,
         seguridad,
         infraestructura,
+
+        // Observaciones
+        observationClose,
+
+        // Boletería
+        isComplete,
+        numTicket,
+        iniTicket,
+        finTicket,
+
+        // Handlers
         handleCantidadChange,
         handleEstadoChange,
         handleObservationChange,
+        handleObservationCloseChange,
+
+        handleIsCompleteChange,
+        handleNumTicketChange,
+        handleIniTicketChange,
+        handleFinTicketChange,
+
         handlePrevious,
-        handleNextStep,
+        handleSubmitCloseTurn,
     } = useInfrastructureCloseTurnHook();
 
     return (
@@ -76,11 +95,13 @@ const InfrastructureCloseTurn = () => {
                                 />
                             </InfrastructureAccordion>
                         </View>
-                        <View style={{ marginTop: 35, marginBottom: 50 }}>
+                        <View style={{ marginTop: 35 }}>
                             <Text style={stylesInfrastructureCloseTurn.title}>Observaciones</Text>
                             <Animatable.View style={{ marginTop: 15 }}>
                                 <CustomTextInput
                                     label="Observaciones (opcional)"
+                                    value={observationClose}
+                                    onChangeText={handleObservationCloseChange}
                                     mode="outlined"
                                     theme={{
                                         colors: {
@@ -94,6 +115,105 @@ const InfrastructureCloseTurn = () => {
                                     keyboardType="default"
                                 />
                             </Animatable.View>
+                        </View>
+                        <View style={{ marginTop: 35 }}>
+                            <Text style={stylesInfrastructureCloseTurn.title}>Boletería Mnaual</Text>
+                            <View style={{ alignItems: "flex-start", flexDirection: "row", alignItems: "center" }}>
+                                <Switch
+                                    value={isComplete}
+                                    onValueChange={handleIsCompleteChange}
+                                    color="#90D400"
+                                    trackColor={{
+                                        true: "#90D400",
+                                        false: "#90D400"
+                                    }}
+                                />
+                                <Text
+                                    style={{
+                                        fontSize: 13,
+                                        marginLeft: 8,
+                                        fontFamily: "Montserrat_400Regular",
+                                        lineHeight: 20,
+                                        //color: baseCompleta ? "#666666" : "#666666",
+                                        color: "#666666",
+                                    }}
+                                >
+                                    {isComplete ? "No" : "Si"}
+                                </Text>
+                            </View>
+                            {!isComplete && (
+                                <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+                                    <Animatable.View style={{ width: "30%" }}>
+                                        <CustomTextInput
+                                            label="Cantidad de Boletas *"
+                                            value={numTicket}
+                                            onChangeText={handleNumTicketChange}
+                                            mode="outlined"
+                                            theme={{
+                                                colors: {
+                                                    outline: "#E5E5E5",
+                                                    primary: "#90D400"
+                                                }
+                                            }}
+                                            style={{ backgroundColor: "#FFFFFF", fontSize: 16, lineHeight: 20 }}
+                                            keyboardType="numeric"
+                                        />
+                                    </Animatable.View>
+                                    <Animatable.View style={{ width: "30%" }}>
+                                        <CustomTextInput
+                                            label="# de Boleta Inicial *"
+                                            value={iniTicket}
+                                            onChangeText={handleIniTicketChange}
+                                            mode="outlined"
+                                            theme={{
+                                                colors: {
+                                                    outline: "#E5E5E5",
+                                                    primary: "#90D400"
+                                                }
+                                            }}
+                                            style={{ backgroundColor: "#FFFFFF", fontSize: 16, lineHeight: 20 }}
+                                            keyboardType="numeric"
+                                        />
+                                    </Animatable.View>
+                                    <Animatable.View style={{ width: "30%" }}>
+                                        <CustomTextInput
+                                            label="# de Boleta Final *"
+                                            value={finTicket}
+                                            onChangeText={handleFinTicketChange}
+                                            mode="outlined"
+                                            theme={{
+                                                colors: {
+                                                    outline: "#E5E5E5",
+                                                    primary: "#90D400"
+                                                }
+                                            }}
+                                            style={{ backgroundColor: "#FFFFFF", fontSize: 16, lineHeight: 20 }}
+                                            keyboardType="numeric"
+                                        />
+                                    </Animatable.View>
+                                </View>
+                            )}
+                            <View style={{ flexDirection: "row", justifyContent: "flex-end", marginTop: "auto", marginTop: 50 }}>
+                                <Button
+                                    mode="contained"
+                                    onPress={handlePrevious}
+                                    style={{ backgroundColor: "#8C8C8C", alignSelf: "flex-end", borderRadius: 10, marginRight: 20 }}
+                                    contentStyle={{ paddingHorizontal: 30 }}
+
+                                >
+                                    Cancelar
+                                </Button>
+                                <Button
+                                    mode="contained"
+                                    onPress={handleSubmitCloseTurn}
+                                    style={{ backgroundColor: "#80C300", alignSelf: "flex-end", borderRadius: 10, marginLeft: 20 }}
+                                    contentStyle={{
+                                        paddingHorizontal: 30
+                                    }}
+                                >
+                                    Continuar
+                                </Button>
+                            </View>
                         </View>
                     </View>
                 </View>

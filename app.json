@@ -14,9 +14,7 @@
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./src/assets/image/logo.png",
-        "backgroundImage": "./src/assets/image/logo.png",
-        "monochromeImage": "./src/assets/image/logo.png"
+        "foregroundImage": "./src/assets/image/logo.png"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
@@ -56,7 +54,7 @@
     },
     "updates": {
       "url": "https://u.expo.dev/bfc3a7b1-a5e3-4fcb-8237-082dcb2e81a4",
-      "enabled" : true,
+      "enabled": true,
       "fallbackToCacheTimeout": 0
     }
   }

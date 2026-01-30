@@ -45,7 +45,8 @@ const WelcomeTurn = () => {
                             <View>
                                 <Button
                                     mode="contained"
-                                    style={{ backgroundColor: "#90D400", paddingHorizontal: 15, paddingVertical: 2, borderRadius: 10, marginTop: 15 }}
+                                    style={{ backgroundColor: "#90D400", paddingVertical: 2, borderRadius: 10, marginTop: 15 }}
+                                    contentStyle={{ paddingHorizontal: 15 }}
                                     onPress={() => navigation.navigate("movements")}
                                 >
                                     Comenzar turno
