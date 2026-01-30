@@ -5,8 +5,12 @@
   },
   "build": {
     "workingDirectory": {
-      "android": "attendant-app",
-      "ios": "attendant-app"
+      "android": {
+        "path": "attendant-app"
+      },
+      "ios": {
+        "path": "attendant-app"
+      }
     },
     "development": {
       "developmentClient": true,
