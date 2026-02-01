@@ -8,7 +8,10 @@ import { useFonts } from "expo-font";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import { ActivityIndicator, Button, Modal, PaperProvider, Portal, ProgressBar, Text } from "react-native-paper";
 import { Provider } from "react-redux";
+import AlertManager from "../common/components/AlertManager";
+import AlertManagerButton from "../common/components/AlertManagerButton";
 import useCheckForUpdates from "../common/hook/useCheckForUpdates";
+import useInternetAlerts from "../common/hook/useInternetAlerts";
 import AppNavigator from "../presentation/navigation/AppNavigator";
 import { theme } from "../presentation/theme/theme";
 import { store } from "../state/store";
@@ -72,6 +75,7 @@ const RootLayout = () => {
         downloadProgress,
         timeRemaining
     } = useCheckForUpdates();
+    useInternetAlerts();
     const [fontsLoaded] = useFonts({
         Montserrat_400Regular,
         Montserrat_500Medium,
@@ -187,6 +191,9 @@ const RootLayout = () => {
                         </View>
                     </Modal>
                 </Portal>
+
+                <AlertManager />
+                <AlertManagerButton />
 
                 <AppNavigator />
             </PaperProvider>

@@ -369,6 +369,7 @@ const useOpenTurnHook = () => {
     const handleRemovePlate = (plate) => {
         dispatch(removeManualPlate(plate));
         console.log("Se eliminó la placa:", plate);
+        showAlert("info", `Se eliminó la placa: ${plate}`);
     };
 
     const handleObservacionChange = (text) => {

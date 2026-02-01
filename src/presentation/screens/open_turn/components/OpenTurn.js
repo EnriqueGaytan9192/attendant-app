@@ -33,7 +33,6 @@ const OpenTurnScreen = () => {
         handleObservacionChange,
         onContinue,
     } = useOpenTurnHook();
-    //useInternetAlerts();
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

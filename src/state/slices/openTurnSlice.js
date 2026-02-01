@@ -30,32 +30,34 @@ const initialState = {
 
     //Tercer pantalla
     dispositivos: [
-        { name: "Tablets", cantidad: '', estado: "Buen Estado", observaciones: "" },
-        { name: "Impresora", cantidad: '', estado: "Buen Estado", observaciones: "" },
-        { name: "Datáfonos", cantidad: '', estado: "Buen Estado", observaciones: "" },
-        { name: "Radios", cantidad: '', estado: "Buen Estado", observaciones: "" },
-        { name: "Hub de pagos", cantidad: '', estado: "Buen Estado", observaciones: "" },
+        { name: "Tablets", cantidad: '', estado: "Buen Estado", observaciones: "", cantidadError: false, estadoError: false },
+        { name: "Impresora", cantidad: '', estado: "Buen Estado", observaciones: "", cantidadError: false, estadoError: false },
+        { name: "Datáfonos", cantidad: '', estado: "Buen Estado", observaciones: "", cantidadError: false, estadoError: false },
+        { name: "Radios", cantidad: '', estado: "Buen Estado", observaciones: "", cantidadError: false, estadoError: false },
+        { name: "Hub de pagos", cantidad: '', estado: "Buen Estado", observaciones: "", cantidadError: false, estadoError: false },
     ],
     seguridad: [
-        { name: "Aviso tarifas", cantidad: '', estado: "Buen Estado", observaciones: "" },
-        { name: "Av. responsabilidad", cantidad: '', estado: "Buen Estado", observaciones: "" },
-        { name: "Aviso horarios", cantidad: '', estado: "Buen Estado", observaciones: "" },
-        { name: "Botiquín", cantidad: '', estado: "Buen Estado", observaciones: "" },
-        { name: "Extintores", cantidad: '', estado: "Buen Estado", observaciones: "" },
-        { name: "Llaveros", cantidad: '', estado: "Buen Estado", observaciones: "" },
+        { name: "Aviso tarifas", cantidad: '', estado: "Buen Estado", observaciones: "", cantidadError: false, estadoError: false },
+        { name: "Av. responsabilidad", cantidad: '', estado: "Buen Estado", observaciones: "", cantidadError: false, estadoError: false },
+        { name: "Aviso horarios", cantidad: '', estado: "Buen Estado", observaciones: "", cantidadError: false, estadoError: false },
+        { name: "Botiquín", cantidad: '', estado: "Buen Estado", observaciones: "", cantidadError: false, estadoError: false },
+        { name: "Extintores", cantidad: '', estado: "Buen Estado", observaciones: "", cantidadError: false, estadoError: false },
+        { name: "Llaveros", cantidad: '', estado: "Buen Estado", observaciones: "", cantidadError: false, estadoError: false },
     ],
     infraestructura: [
-        { name: "Lamparas", cantidad: '', estado: "Buen Estado", observaciones: "" },
-        { name: "Bombillos", cantidad: '', estado: "Buen Estado", observaciones: "" },
-        { name: "Piso", cantidad: '', estado: "Buen Estado", observaciones: "" },
-        { name: "Techo", cantidad: '', estado: "Buen Estado", observaciones: "" },
-        { name: "Topellantas", cantidad: '', estado: "Buen Estado", observaciones: "" },
-        { name: "Demarcación", cantidad: '', estado: "Buen Estado", observaciones: "" },
-        { name: "Desagues", cantidad: '', estado: "Buen Estado", observaciones: "" },
-        { name: "Baños", cantidad: '', estado: "Buen Estado", observaciones: "" },
+        { name: "Lamparas", cantidad: '', estado: "Buen Estado", observaciones: "", cantidadError: false, estadoError: false },
+        { name: "Bombillos", cantidad: '', estado: "Buen Estado", observaciones: "", cantidadError: false, estadoError: false },
+        { name: "Piso", cantidad: '', estado: "Buen Estado", observaciones: "", cantidadError: false, estadoError: false },
+        { name: "Techo", cantidad: '', estado: "Buen Estado", observaciones: "", cantidadError: false, estadoError: false },
+        { name: "Topellantas", cantidad: '', estado: "Buen Estado", observaciones: "", cantidadError: false, estadoError: false },
+        { name: "Demarcación", cantidad: '', estado: "Buen Estado", observaciones: "", cantidadError: false, estadoError: false },
+        { name: "Desagues", cantidad: '', estado: "Buen Estado", observaciones: "", cantidadError: false, estadoError: false },
+        { name: "Baños", cantidad: '', estado: "Buen Estado", observaciones: "", cantidadError: false, estadoError: false },
     ],
     loadingInfrastructure: false,
     errorInfrastructure: null,
+    candidadError: false,
+    estadoError: false,
 
     stepOne: true,
     stepTwo: false,
@@ -146,6 +148,17 @@ const openTurnSlice = createSlice({
 
         setErrorInfrastructure(state, action) {
             state.errorInfrastructure = action.payload;
+        },
+        setFieldError: (state, action) => {
+            const { category, index, field, value } = action.payload;
+            state[category][index][`${field}Error`] = value;
+        },
+        clearFieldErrors: (state, action) => {
+            const { category } = action.payload;
+            state[category].forEach(item => {
+                item.cantidadError = false;
+                item.estadoError = false;
+            });
         },
 
 
@@ -252,6 +265,8 @@ export const {
     updateEstado,
     updateObservation,
     addInfrastructure,
+    setFieldError,
+    clearFieldErrors,
 
     setStepFour,
     nextStep,

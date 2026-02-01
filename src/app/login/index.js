@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { Keyboard, StyleSheet } from "react-native";
 import { Modal, Portal } from "react-native-paper";
 import { useDispatch } from "react-redux";
-import AlertManager from "../../common/components/AlertManager";
 import { ForgotPasswordModal, ForgotUsernameModal, LoginScreen } from "../../presentation/screens/login";
 import { useAppSelector } from "../../state/hooks";
 import { changeValueForm, changeValueFormRecovery, showForgotPasswordModal, showForgotUsernameModal } from "../../state/slices/authSlice";
@@ -88,8 +87,6 @@ const Login = () => {
                 >
                     <ForgotUsernameModal />
                 </Modal>
-                
-                <AlertManager />
             </Portal>
         </>
     );

@@ -1,5 +1,3 @@
-import AlertManager from "../../common/components/AlertManager";
-import AlertManagerButton from "../../common/components/AlertManagerButton";
 import { InfrastructureTurn, OpenTurnScreen, SummaryTurn, WelcomeTurn } from "../../presentation/screens/open_turn";
 import { useAppSelector } from "../../state/hooks";
 
@@ -24,9 +22,6 @@ const OpenTurn = () => {
             {stepFour &&
                 <WelcomeTurn />
             }
-            
-            <AlertManager />
-            <AlertManagerButton />
         </>
     )
 }

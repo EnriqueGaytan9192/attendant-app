@@ -26,12 +26,20 @@ const InfrastructureRow = ({
                     onChangeText={(text) =>
                         onCantidadChange(category, index, text)
                     }
+                    error={item.cantidadError}
+                    theme={{
+                        colors: {
+                            error: "#FF3B30",
+                        }
+                    }}
                     style={{
                         width: "auto",
                         textAlign: 'center',
                         backgroundColor: 'transparent',
                         marginTop: 15,
                         marginBottom: 15,
+                        borderBottomWidth: item.cantidadError ? 2 : 0,
+                        borderBottomColor: item.cantidadError ? "#FF3B30" : "transparent",
                     }}
                 />
             </DataTable.Cell>

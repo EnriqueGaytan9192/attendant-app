@@ -6,27 +6,14 @@ import { useAppSelector } from "../../../../state/hooks";
 import { nextStep, previousStep, setBaseCaja, setIsComplete } from "../../../../state/slices/openTurnSlice";
 
 const useSummaryTurnHook = () => {
+    const { numeroIdentificacion, parqueaderoId, terminalId, empleado } = useAppSelector(state => state.auth);
+    const { isComplete, baseCaja, enganchados, manualPlates } = useAppSelector(state => state.openTurn);
     const dispatch = useDispatch();
-
-    const {
-        isComplete,
-        baseCaja,
-        enganchados,
-        manualPlates
-    } = useAppSelector(state => state.openTurn);
-
-    const {
-        numeroIdentificacion,
-        parqueaderoId,
-        terminalId,
-        empleado
-    } = useAppSelector(state => state.auth);
-
+    const { getDataFetch } = useLazyFetch();
     const [boxBase, setBoxBase] = useState("");
     const [turnInfo, setTurnInfo] = useState(null);
     const [empleadoNombre, setEmpleadoNombre] = useState(empleado);
-
-    const { getDataFetch } = useLazyFetch();
+    const [isBoxBaseFocused, setIsBoxBaseFocused] = useState(false);
 
     /* ========= TURNO ========= */
     useFetch(
@@ -80,6 +67,38 @@ const useSummaryTurnHook = () => {
         if (value) setBoxBase("");
     };
 
+    const formatCurrency = (value) => {
+        if (!value) return "$ 0.00";
+
+        const numericValue = value.replace(/\D/g, "");
+        const number = Number(numericValue);
+
+        return number.toLocaleString("es-CO", {
+            style: "currency",
+            currency: "COP",
+            minimumFractionDigits: 2,
+        });
+    };
+
+    const formatThousands = (value) => {
+        if (!value) return "";
+        const numericValue = value.replace(/\D/g, "");
+        return new Intl.NumberFormat("es-CO").format(Number(numericValue));
+    };
+
+    const handleBoxBaseChange = (text) => {
+        const hasSpace = /\s/.test(text);
+
+        const cleaned = text.replace(/\D/g, "");
+        const formatted = formatThousands(cleaned);
+
+        setBoxBase(formatted);
+
+        if (hasSpace) {
+            showAlert("warning", "No se permite ingresar espacios.");
+        }
+    };
+
     const handlePrevious = () => {
         dispatch(previousStep());
     };
@@ -91,12 +110,13 @@ const useSummaryTurnHook = () => {
                 return;
             }
 
-            const baseValue = Number(boxBase);
+            const baseValue = Number(boxBase.replace(/\D/g, ""));
+            console.log("Base de caja incompleta: ", baseValue);
 
             if (isNaN(baseValue) || baseValue <= 0 || baseValue % 50 !== 0) {
                 showAlert(
                     "error",
-                    "La base debe ser un valor mayor a 0 y múltiplo de 50."
+                    "La base de caja debe ser un valor mayor a 0 y múltiplo de 50."
                 );
                 return;
             }
@@ -119,6 +139,10 @@ const useSummaryTurnHook = () => {
         toggleBase,
         handlePrevious,
         handleNextStep,
+        isBoxBaseFocused,
+        setIsBoxBaseFocused,
+        handleBoxBaseChange,
+        formatCurrency,
     };
 };
 

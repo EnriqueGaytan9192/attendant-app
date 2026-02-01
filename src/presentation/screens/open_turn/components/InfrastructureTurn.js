@@ -16,9 +16,14 @@ const InfrastructureTurn = () => {
         seguridad,
         infraestructura,
         loading,
+        observacionesInfra,
+        dispositivosRef,
+        infraestructuraRef,
+        seguridadRef,
         handleCantidadChange,
         handleEstadoChange,
         handleObservationChange,
+        handleObservacionChangeInfra,
         handlePrevious,
         handleNextStep,
     } = useInfrastructureTurnHook();
@@ -47,7 +52,7 @@ const InfrastructureTurn = () => {
                             <Text style={stylesInfrastructureTurn.subTitle}>Reporte de estado de los elementos recibidos</Text>
                         </View>
                         <View style={{ marginTop: 35 }}>
-                            <InfrastructureAccordion title="Dispositivos y Equipos">
+                            <InfrastructureAccordion ref={dispositivosRef} title="Dispositivos y Equipos">
                                 <InfrastructureSection
                                     data={dispositivos}
                                     category="dispositivos"
@@ -57,7 +62,7 @@ const InfrastructureTurn = () => {
                                 />
                             </InfrastructureAccordion>
 
-                            <InfrastructureAccordion title="Elementos de Seguridad y Avisos">
+                            <InfrastructureAccordion ref={seguridadRef} title="Elementos de Seguridad y Avisos">
                                 <InfrastructureSection
                                     data={seguridad}
                                     category="seguridad"
@@ -67,7 +72,7 @@ const InfrastructureTurn = () => {
                                 />
                             </InfrastructureAccordion>
 
-                            <InfrastructureAccordion title="Infraestructura">
+                            <InfrastructureAccordion ref={infraestructuraRef} title="Infraestructura">
                                 <InfrastructureSection
                                     data={infraestructura}
                                     category="infraestructura"
@@ -83,6 +88,8 @@ const InfrastructureTurn = () => {
                                 <CustomTextInput
                                     label="Observaciones (opcional)"
                                     mode="outlined"
+                                    value={observacionesInfra}
+                                    onChangeText={handleObservacionChangeInfra}
                                     theme={{
                                         colors: {
                                             outline: "#E5E5E5",

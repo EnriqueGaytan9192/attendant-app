@@ -1,39 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { showAlert } from "../../../../common/components/AlertManager";
 import { useLazyFetch } from "../../../../common/hook/useFetch";
-import {
-    addInfrastructure,
-    nextStep,
-    previousStep,
-    updateCantidad,
-    updateEstado,
-    updateObservation,
-} from "../../../../state/slices/openTurnSlice";
+import { addInfrastructure, clearFieldErrors, nextStep, previousStep, setFieldError, updateCantidad, updateEstado, updateObservation } from "../../../../state/slices/openTurnSlice";
 
 const useInfrastructureTurnHook = () => {
+    const { dispositivos, seguridad, infraestructura, plates, observaciones, enganchados, baseCaja, isComplete, selectedPlates, manualPlates } = useSelector((state) => state.openTurn);
+    const { numeroIdentificacion, terminalId, parqueaderoId } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
-
-    const {
-        dispositivos,
-        seguridad,
-        infraestructura,
-        plates,
-        observaciones,
-        enganchados,
-        baseCaja,
-        isComplete,
-        selectedPlates,
-        manualPlates
-    } = useSelector((state) => state.openTurn);
-
-    const { numeroIdentificacion, terminalId, parqueaderoId } =
-        useSelector((state) => state.auth);
-
+    const { getDataFetch: lazyFetch } = useLazyFetch();
     const [loading, setLoading] = useState(false);
     const [turnoId, setTurnoId] = useState(null);
+    const [observacionesInfra, setObservacionesInfra] = useState("");
+    const dispositivosRef = useRef(null);
+    const seguridadRef = useRef(null);
+    const infraestructuraRef = useRef(null);
 
-    const { getDataFetch: lazyFetch } = useLazyFetch();
 
     /* ================= PRELOAD TURNO + INFRA ================= */
 
@@ -61,24 +43,55 @@ const useInfrastructureTurnHook = () => {
                 }
             } catch (err) {
                 console.error("Error cargando infraestructura:", err);
+                showAlert("error", err)
             }
         })();
     }, [numeroIdentificacion]);
 
     /* ================= VALIDACIÓN ================= */
 
-    const validateFields = () => {
-        const valid = (arr) =>
-            arr.every(item => item.cantidad !== "" && item.estado !== "");
+    const findInvalidIndex = (arr) =>
+        arr.findIndex(i => i.cantidad === "" || i.estado === "");
 
-        if (!valid(dispositivos) || !valid(seguridad) || !valid(infraestructura)) {
-            showAlert(
-                "warning",
-                "Debes completar cantidad y estado en todos los elementos."
-            );
-            return false;
-        }
-        return true;
+    const validateFields = () => {
+
+        const check = (category, ref, data, label) => {
+            dispatch(clearFieldErrors({ category }));
+
+            const index = findInvalidIndex(data);
+            if (index !== -1) {
+
+                if (data[index].cantidad === "") {
+                    dispatch(setFieldError({
+                        category,
+                        index,
+                        field: "cantidad",
+                        value: true,
+                    }));
+                }
+
+                if (data[index].estado === "") {
+                    dispatch(setFieldError({
+                        category,
+                        index,
+                        field: "estado",
+                        value: true,
+                    }));
+                }
+
+                showAlert("error", `Completa los campos en ${label}`);
+                ref.current?.open();
+                ref.current?.shake();
+                return false;
+            }
+            return true;
+        };
+
+        return (
+            check("dispositivos", dispositivosRef, dispositivos, "Dispositivos y Equipos") &&
+            check("seguridad", seguridadRef, seguridad, "Elementos de Seguridad") &&
+            check("infraestructura", infraestructuraRef, infraestructura, "Infraestructura")
+        );
     };
 
     /* ================= TRANSFORM ================= */
@@ -131,7 +144,7 @@ const useInfrastructureTurnHook = () => {
         const { errorFetch } = await lazyFetch("/api/shiftOpen", "POST", { rq });
 
         if (errorFetch) {
-            showAlert("error", "Error al guardar apertura de turno.");
+            showAlert("error", errorFetch.msg);
             return false;
         }
         return true;
@@ -151,7 +164,7 @@ const useInfrastructureTurnHook = () => {
         );
 
         if (errorFetch) {
-            showAlert("error", "Error al guardar infraestructura.");
+            showAlert("error", errorFetch.msg);
             return false;
         }
         return true;
@@ -189,6 +202,31 @@ const useInfrastructureTurnHook = () => {
         return true;
     };
 
+    const handleObservacionChangeInfra = (text) => {
+        const hasLeadingSpaces = /^\s+/.test(text);
+        const hasEmojis = /[\p{Extended_Pictographic}]/u.test(text);
+        const hasInvalidChars = /[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑ.,;:()\- ]/.test(text);
+        const maxLength = 250;
+
+        let sanitizedValue = text
+            .replace(/^\s+/, "")
+            .replace(/[\p{Extended_Pictographic}]/gu, "")
+            .replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑ.,;:()\- ]/g, "");
+
+        if (hasLeadingSpaces) {
+            showAlert("warning", "No se permiten espacios al inicio.");
+        } else if (hasEmojis) {
+            showAlert("warning", "No se permiten emojis en las observaciones.");
+        } else if (hasInvalidChars) {
+            showAlert("warning", "Se eliminaron caracteres no permitidos.");
+        } else if (sanitizedValue.length > maxLength) {
+            sanitizedValue = sanitizedValue.slice(0, maxLength);
+            showAlert("warning", `Las observaciones no pueden exceder ${maxLength} caracteres.`);
+        }
+
+        setObservacionesInfra(sanitizedValue);
+    };
+
     /* ================= HANDLERS ================= */
 
     const handleNextStep = async () => {
@@ -212,12 +250,17 @@ const useInfrastructureTurnHook = () => {
         seguridad,
         infraestructura,
         loading,
+        observacionesInfra,
+        dispositivosRef,
+        seguridadRef,
+        infraestructuraRef,
         handleCantidadChange: (c, i, v) =>
             dispatch(updateCantidad({ category: c, index: i, value: v })),
         handleEstadoChange: (c, i, v) =>
             dispatch(updateEstado({ category: c, index: i, value: v })),
         handleObservationChange: (c, i, v) =>
             dispatch(updateObservation({ category: c, index: i, value: v })),
+        handleObservacionChangeInfra,
         handlePrevious: () => dispatch(previousStep()),
         handleNextStep,
     };

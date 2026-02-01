@@ -21,6 +21,10 @@ const SummaryTurn = () => {
         toggleBase,
         handlePrevious,
         handleNextStep,
+        formatCurrency,
+        handleBoxBaseChange,
+        isBoxBaseFocused,
+        setIsBoxBaseFocused
     } = useSummaryTurnHook();
 
     return (
@@ -64,7 +68,12 @@ const SummaryTurn = () => {
                             <View style={{ flexDirection: "row" }}>
                                 <View>
                                     <Text style={stylesSummaryTurn.subTitle}>Base de caja</Text>
-                                    <Text style={stylesSummaryTurn.infoTwo}>${baseCaja.toLocaleString()}</Text>
+                                    <Text style={stylesSummaryTurn.infoTwo}>
+                                        {`$ ${Number(baseCaja).toLocaleString("es-CO", {
+                                            minimumFractionDigits: 2,
+                                        })}`}
+                                    </Text>
+
                                 </View>
                                 <View style={stylesSummaryTurn.contentSwitch}>
                                     <Switch
@@ -93,8 +102,14 @@ const SummaryTurn = () => {
                                     <Animatable.View style={{ width: "18%", marginLeft: 20 }}>
                                         <CustomTextInput
                                             label="Base de Caja *"
-                                            value={boxBase}
-                                            onChangeText={text => setBoxBase(text.replace(/[^0-9]/g, ""))}
+                                            value={
+                                                isBoxBaseFocused
+                                                    ? boxBase
+                                                    : formatCurrency(boxBase)
+                                            }
+                                            onChangeText={handleBoxBaseChange}
+                                            onFocus={() => setIsBoxBaseFocused(true)}
+                                            onBlur={() => setIsBoxBaseFocused(false)}
                                             mode="outlined"
                                             theme={{
                                                 colors: {
