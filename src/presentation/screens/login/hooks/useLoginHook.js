@@ -230,7 +230,7 @@ const useLoginHook = () => {
             parqueaderoId: terminalData?.parqueaderoId,
             terminal: terminalData?.terminal,
             terminalId: terminalData?.terminal_id,
-            exitTurnOpen: loginData?.existTurnOpen,
+            existTurnOpen: loginData?.existTurnOpen,
             nombreParking: terminalData?.name,
         }));
 
@@ -239,7 +239,7 @@ const useLoginHook = () => {
             parqueaderoId: terminalData?.parqueaderoId,
             terminal: terminalData?.terminal,
             terminalId: terminalData?.terminal_id,
-            exitTurnOpen: loginData?.existTurnOpen,
+            existTurnOpen: loginData?.existTurnOpen,
             nombreParking: terminalData?.name,
         };
 

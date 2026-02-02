@@ -17,6 +17,8 @@ const CloseTurnScreen = () => {
         closeValue,
         isFocused,
         formatCurrency,
+        formatCurrencyTwo,
+        handleChangeValueTwo,
         handleChangeValue,
         setIsFocused,
         handledNext,
@@ -62,10 +64,9 @@ const CloseTurnScreen = () => {
                         <Divider style={stylesCloseTurn.divider} />
                         <View style={{ marginTop: 25, marginLeft: 20 }}>
                             <Text style={stylesCloseTurn.subTitle}>Base de caja</Text>
-                            <Text style={stylesCloseTurn.infoTwo}>{turnDet
-                                ? formatCurrency(turnDet.box_base)
-                                : "$ 0.00"}
-                            </Text>
+                            <Text style={stylesCloseTurn.infoTwo}>{`$${Number(turnDet?.box_base).toLocaleString("es-CO", {
+                                minimumFractionDigits: 2
+                            })}`}</Text>
                         </View>
                         <Divider style={stylesCloseTurn.divider} />
                         <View style={{ marginTop: 25, marginBottom: 15 }}>
@@ -76,11 +77,9 @@ const CloseTurnScreen = () => {
                                     value={
                                         isFocused
                                             ? closeValue
-                                            : closeValue
-                                                ? formatCurrency(closeValue)
-                                                : ""
+                                                : formatCurrencyTwo(closeValue)
                                     }
-                                    onChangeText={handleChangeValue}
+                                    onChangeText={handleChangeValueTwo}
                                     onFocus={() => setIsFocused(true)}
                                     onBlur={() => setIsFocused(false)}
                                     theme={{

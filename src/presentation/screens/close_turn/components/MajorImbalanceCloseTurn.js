@@ -2,12 +2,9 @@ import { Image, ScrollView, TouchableWithoutFeedback, View } from "react-native"
 import { Button, Card, Text } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../../../state/hooks";
-import { resetAuth as resetAdvance } from "../../../../state/slices/advanceSlice";
-import { resetAuth as resetArching } from "../../../../state/slices/archingSlice";
 import { resetAuth } from "../../../../state/slices/authSlice";
 import { resetCloseTurn } from "../../../../state/slices/closeTurnSlice";
 import { resetAuth as resetInventory } from "../../../../state/slices/inventorySlice";
-import { resetAuth as resetManagement } from "../../../../state/slices/managementSlice";
 import { resetAuth as resetMovements } from "../../../../state/slices/movementsSlice";
 import { resetOpenTurn } from "../../../../state/slices/openTurnSlice";
 import stylesMajorImbalanceCloseTurn from "../styles/stylesMajorImbalanceCloseTurn";
@@ -19,10 +16,7 @@ const MajorImbalanceCloseTurn = () => {
         dispatch(resetAuth());
         dispatch(resetOpenTurn());
         dispatch(resetCloseTurn());
-        dispatch(resetAdvance());
-        dispatch(resetArching());
         dispatch(resetInventory());
-        dispatch(resetManagement());
         dispatch(resetMovements());
     };
 

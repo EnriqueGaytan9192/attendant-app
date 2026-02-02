@@ -1,4 +1,6 @@
+import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { showAlert } from "../../../../common/components/AlertManager";
 import { useFetch, useLazyFetch } from "../../../../common/hook/useFetch";
 import { useAppSelector } from "../../../../state/hooks";
 import {
@@ -6,6 +8,7 @@ import {
     nextStep,
     previousStep,
     setDescuento,
+    setFieldError,
     setFinTicket,
     setIniTicket,
     setIsComplete,
@@ -16,7 +19,7 @@ import {
     setStepSix,
     updateCantidad,
     updateEstado,
-    updateObservation,
+    updateObservation
 } from "../../../../state/slices/closeTurnSlice";
 
 const useInfrastructureCloseTurnHook = () => {
@@ -39,6 +42,10 @@ const useInfrastructureCloseTurnHook = () => {
         useAppSelector(state => state.auth);
 
     const turnoId = useSelector(state => state.movements.turnoIdObjects);
+    const dispositivosRef = useRef(null);
+    const seguridadRef = useRef(null);
+    const infraestructuraRef = useRef(null);
+
 
     // ===============================
     // 🔹 Precarga infraestructura
@@ -55,10 +62,110 @@ const useInfrastructureCloseTurnHook = () => {
 
     const { getDataFetch } = useLazyFetch();
 
+
+    const validateCategory = (category, data, ref) => {
+        let hasError = false;
+
+        data.forEach((item, index) => {
+            if (!item.cantidad || item.cantidad <= 0) {
+                dispatch(setFieldError({
+                    category,
+                    index,
+                    field: "cantidad",
+                    value: true,
+                }));
+                hasError = true;
+            } else {
+                dispatch(setFieldError({
+                    category,
+                    index,
+                    field: "cantidad",
+                    value: false,
+                }));
+            }
+
+            if (!item.estado) {
+                dispatch(setFieldError({
+                    category,
+                    index,
+                    field: "estado",
+                    value: true,
+                }));
+                hasError = true;
+            } else {
+                dispatch(setFieldError({
+                    category,
+                    index,
+                    field: "estado",
+                    value: false,
+                }));
+            }
+        });
+
+        if (hasError) {
+            ref.current?.open();
+            ref.current?.shake();
+            return false;
+        }
+
+        return true;
+    };
+
+    const validateInfrastructure = () => {
+        const dispositivosOk = validateCategory(
+            "dispositivos",
+            dispositivos,
+            dispositivosRef
+        );
+
+        if (!dispositivosOk) {
+            showAlert(
+                "error",
+                "Debes completar cantidad y estado en Dispositivos y Equipos."
+            );
+            return false;
+        }
+
+        const seguridadOk = validateCategory(
+            "seguridad",
+            seguridad,
+            seguridadRef
+        );
+
+        if (!seguridadOk) {
+            showAlert(
+                "error",
+                "Debes completar cantidad y estado en Elementos de Seguridad."
+            );
+            return false;
+        }
+
+        const infraestructuraOk = validateCategory(
+            "infraestructura",
+            infraestructura,
+            infraestructuraRef
+        );
+
+        if (!infraestructuraOk) {
+            showAlert(
+                "error",
+                "Debes completar cantidad y estado en Infraestructura."
+            );
+            return false;
+        }
+
+        return true;
+    };
+
+
+
     // ===============================
     // 🔥 CIERRE DE TURNO (LÓGICA ORIGINAL)
     // ===============================
     const handleSubmitCloseTurn = async () => {
+
+        if (!validateInfrastructure()) return;
+
         const validatorPayload = {
             id: String(numeroIdentificacion),
             reportableValue: String(reportedValue),
@@ -164,6 +271,9 @@ const useInfrastructureCloseTurnHook = () => {
 
         handleSubmitCloseTurn,
         handlePrevious: () => dispatch(previousStep()),
+        dispositivosRef,
+        infraestructuraRef,
+        seguridadRef
     };
 };
 

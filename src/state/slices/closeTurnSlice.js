@@ -5,31 +5,32 @@ const initialState = {
     reportedValue: "",
 
     //Segunda pantalla
+
     //Tercer pantalla
     dispositivos: [
-        { name: "Tablets", cantidad: "", estado: "Buen Estado", observaciones: "" },
-        { name: "Impresora", cantidad: "", estado: "Buen Estado", observaciones: "" },
-        { name: "Datáfonos", cantidad: "", estado: "Buen Estado", observaciones: "" },
-        { name: "Radios", cantidad: "", estado: "Buen Estado", observaciones: "" },
-        { name: "Hub de pagos", cantidad: "", estado: "Buen Estado", observaciones: "" },
+        { name: "Tablets", cantidad: "", estado: "Buen Estado", observaciones: "", cantidadError: false, estadoError: false },
+        { name: "Impresora", cantidad: "", estado: "Buen Estado", observaciones: "", cantidadError: false, estadoError: false },
+        { name: "Datáfonos", cantidad: "", estado: "Buen Estado", observaciones: "", cantidadError: false, estadoError: false },
+        { name: "Radios", cantidad: "", estado: "Buen Estado", observaciones: "", cantidadError: false, estadoError: false },
+        { name: "Hub de pagos", cantidad: "", estado: "Buen Estado", observaciones: "", cantidadError: false, estadoError: false },
     ],
     seguridad: [
-        { name: "Aviso tarifas", cantidad: "", estado: "Buen Estado", observaciones: "" },
-        { name: "Av. responsabilidad", cantidad: "", estado: "Buen Estado", observaciones: "" },
-        { name: "Aviso horarios", cantidad: "", estado: "Buen Estado", observaciones: "" },
-        { name: "Botiquín", cantidad: "", estado: "Buen Estado", observaciones: "" },
-        { name: "Extintores", cantidad: "", estado: "Buen Estado", observaciones: "" },
-        { name: "Llaveros", cantidad: "", estado: "Buen Estado", observaciones: "" },
+        { name: "Aviso tarifas", cantidad: "", estado: "Buen Estado", observaciones: "", cantidadError: false, estadoError: false },
+        { name: "Av. responsabilidad", cantidad: "", estado: "Buen Estado", observaciones: "", cantidadError: false, estadoError: false },
+        { name: "Aviso horarios", cantidad: "", estado: "Buen Estado", observaciones: "", cantidadError: false, estadoError: false },
+        { name: "Botiquín", cantidad: "", estado: "Buen Estado", observaciones: "", cantidadError: false, estadoError: false },
+        { name: "Extintores", cantidad: "", estado: "Buen Estado", observaciones: "", cantidadError: false, estadoError: false },
+        { name: "Llaveros", cantidad: "", estado: "Buen Estado", observaciones: "", cantidadError: false, estadoError: false },
     ],
     infraestructura: [
-        { name: "Lamparas", cantidad: "", estado: "Buen Estado", observaciones: "" },
-        { name: "Bombillos", cantidad: "", estado: "Buen Estado", observaciones: "" },
-        { name: "Piso", cantidad: "", estado: "Buen Estado", observaciones: "" },
-        { name: "Techo", cantidad: "", estado: "Buen Estado", observaciones: "" },
-        { name: "Topellantas", cantidad: "", estado: "Buen Estado", observaciones: "" },
-        { name: "Demarcación", cantidad: "", estado: "Buen Estado", observaciones: "" },
-        { name: "Desagües", cantidad: "", estado: "Buen Estado", observaciones: "" },
-        { name: "Baños", cantidad: "", estado: "Buen Estado", observaciones: "" },
+        { name: "Lamparas", cantidad: "", estado: "Buen Estado", observaciones: "", cantidadError: false, estadoError: false },
+        { name: "Bombillos", cantidad: "", estado: "Buen Estado", observaciones: "", cantidadError: false, estadoError: false },
+        { name: "Piso", cantidad: "", estado: "Buen Estado", observaciones: "", cantidadError: false, estadoError: false },
+        { name: "Techo", cantidad: "", estado: "Buen Estado", observaciones: "", cantidadError: false, estadoError: false },
+        { name: "Topellantas", cantidad: "", estado: "Buen Estado", observaciones: "", cantidadError: false, estadoError: false },
+        { name: "Demarcación", cantidad: "", estado: "Buen Estado", observaciones: "", cantidadError: false, estadoError: false },
+        { name: "Desagües", cantidad: "", estado: "Buen Estado", observaciones: "", cantidadError: false, estadoError: false },
+        { name: "Baños", cantidad: "", estado: "Buen Estado", observaciones: "", cantidadError: false, estadoError: false },
     ],
     reportedValueOverride: "",
     observationClose: "",
@@ -39,6 +40,11 @@ const initialState = {
     finTicket: "",
     descuento: 0,
     shifValidatorResponse: null,
+    loadingInfrastructure: false,
+    errorInfrastructure: null,
+    cantidadError: false,
+    estadoError: false,
+
 
     stepOne: true,
     stepTwo: false,
@@ -59,6 +65,7 @@ const closeTurnSlice = createSlice({
         },
 
         //Segunda pantalla
+
         //Tercer pantalla
         updateObservation: (state, action) => {
             const { category, index, value } = action.payload;
@@ -101,6 +108,23 @@ const closeTurnSlice = createSlice({
         },
         setDescuento: (state, action) => {
             state.descuento = action.payload;
+        },
+        setLoadingInfrastructure(state, action) {
+            state.loadingInfrastructure = action.payload;
+        },
+        setErrorInfrastructure(state, action) {
+            state.errorInfrastructure = action.payload;
+        },
+        setFieldError: (state, action) => {
+            const { category, index, field, value } = action.payload;
+            state[category][index][`${field}Error`] = value;
+        },
+        clearFieldErrors: (state, action) => {
+            const { category } = action.payload;
+            state[category].forEach(item => {
+                item.cantidadError = false;
+                item.estadoError = false;
+            });
         },
 
         nextStep(state) {
@@ -206,6 +230,7 @@ export const {
     setReportedValue,
 
     //Segunda pantalla
+
     //Tercer pantalla
     updateCantidad,
     updateEstado,
@@ -219,6 +244,8 @@ export const {
     setFinTicket,
     setShifValidatorResponse,
     setDescuento,
+    setFieldError,
+    clearFieldErrors,
 
     nextStep,
     previousStep,

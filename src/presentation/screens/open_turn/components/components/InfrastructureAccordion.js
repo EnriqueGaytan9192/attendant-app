@@ -15,7 +15,7 @@ const InfrastructureAccordion = forwardRef(({ title, children }, ref) => {
 
     return (
         <Animatable.View ref={animRef} style={{ marginBottom: 20 }}>
-            <View style={{ marginBottom: 20 }}>
+            <View>
                 <Card
                     style={{
                         borderRadius: 12,

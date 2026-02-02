@@ -1,5 +1,7 @@
 import { DataTable, Text } from "react-native-paper";
+import { useDispatch } from "react-redux";
 import CustomTextInput from "../../../../../common/components/CustomTextInput";
+import { setFieldError } from "../../../../../state/slices/closeTurnSlice";
 import StatusDropdown from "./StatusDropdown";
 
 const InfrastructureRow = ({
@@ -10,6 +12,8 @@ const InfrastructureRow = ({
     onEstadoChange,
     onCantidadChange,
 }) => {
+    const dispatch = useDispatch();
+
     return (
         <DataTable.Row>
             <DataTable.Cell style={{ justifyContent: "flex-start", flex: 0.35 }}>
@@ -23,9 +27,21 @@ const InfrastructureRow = ({
                     placeholder="0"
                     keyboardType="numeric"
                     value={item.cantidad?.toString() ?? ""}
-                    onChangeText={(text) =>
-                        onCantidadChange(category, index, text)
-                    }
+                    error={item.cantidadError}
+                    onChangeText={(text) => {
+                        onCantidadChange(category, index, text);
+                        dispatch(setFieldError({
+                            category,
+                            index,
+                            field: "cantidad",
+                            value: false,
+                        }));
+                    }}
+                    theme={{
+                        colors: {
+                            error: "#FF3B30",
+                        }
+                    }}
                     style={{
                         width: "auto",
                         textAlign: 'center',
@@ -38,10 +54,18 @@ const InfrastructureRow = ({
             <DataTable.Cell style={{ justifyContent: "flex-start", flex: 0.3 }}>
                 <StatusDropdown
                     value={item.estado}
-                    onChange={(value) =>
-                        onEstadoChange(category, index, value)
-                    }
+                    error={item.estadoError}
+                    onChange={(value) => {
+                        onEstadoChange(category, index, value);
+                        dispatch(setFieldError({
+                            category,
+                            index,
+                            field: "estado",
+                            value: false,
+                        }));
+                    }}
                 />
+
             </DataTable.Cell>
             <DataTable.Cell>
                 <CustomTextInput

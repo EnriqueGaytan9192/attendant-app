@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { showAlert } from "../../../../common/components/AlertManager";
 import { useLazyFetch } from "../../../../common/hook/useFetch";
-import { addInfrastructure, clearFieldErrors, nextStep, previousStep, setFieldError, updateCantidad, updateEstado, updateObservation } from "../../../../state/slices/openTurnSlice";
+import { setStepOne } from "../../../../state/slices/closeTurnSlice";
+import { addInfrastructure, clearFieldErrors, nextStep, previousStep, setFieldError, setStepFour, updateCantidad, updateEstado, updateObservation } from "../../../../state/slices/openTurnSlice";
 
 const useInfrastructureTurnHook = () => {
     const { dispositivos, seguridad, infraestructura, plates, observaciones, enganchados, baseCaja, isComplete, selectedPlates, manualPlates } = useSelector((state) => state.openTurn);
@@ -141,7 +142,13 @@ const useInfrastructureTurnHook = () => {
             observation: observaciones,
         };
 
-        const { errorFetch } = await lazyFetch("/api/shiftOpen", "POST", { rq });
+        const { data: openTurnData, errorFetch } = await lazyFetch("/api/shiftOpen", "POST", { rq });
+
+        if (openTurnData.data.message === "Turno abierto exitosamente") {
+            console.log("/*********************** Entrando a actualizar pantallas *****************************/")
+            dispatch(setStepFour());
+            dispatch(setStepOne());
+        }
 
         if (errorFetch) {
             showAlert("error", errorFetch.msg);

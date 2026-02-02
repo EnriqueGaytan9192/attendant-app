@@ -8,6 +8,8 @@ import MainLayout from "../../common/components/MainLayout";
 import { useAppSelector } from "../../state/hooks";
 import { resetAuth } from "../../state/slices/authSlice";
 import { resetCloseTurn } from "../../state/slices/closeTurnSlice";
+import { resetAuth as resetInventory } from "../../state/slices/inventorySlice";
+import { resetAuth as resetMovements } from "../../state/slices/movementsSlice";
 import { resetOpenTurn } from "../../state/slices/openTurnSlice";
 import useProfileInfoHook from "../screens/profile/hooks/useProfileInfoHook";
 import routes from "./routes";
@@ -38,6 +40,8 @@ const CustomDrawerContent = ({ navigation }) => {
         dispatch(resetAuth());
         dispatch(resetOpenTurn());
         dispatch(resetCloseTurn());
+        dispatch(resetInventory());
+        dispatch(resetMovements());
     };
 
     const { userInfo, loadingUser, user, initials } = useProfileInfoHook();

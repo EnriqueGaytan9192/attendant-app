@@ -151,7 +151,7 @@ const LoginScreen = () => {
                                     lineHeight: 20
                                 }}
                             >
-                                Versión 5.0.0.2
+                                Versión 5.0.0.4
                             </Text>
                         </View>
                     </View>

@@ -6,10 +6,10 @@ import { nextStep, previousStep } from "../../../../state/slices/closeTurnSlice"
 import { setTurnoId } from "../../../../state/slices/movementsSlice";
 
 const formatCurrency = (value) => {
-    if (!value && value !== 0) return "$ 0.00";
-    return `$ ${Number(value).toLocaleString("en-US", {
+    if (!value && value !== 0) return "$0.00";
+    return `$${Number(value).toLocaleString("en-CO", {
         minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
+        maximumFractionDigits: 2
     })}`;
 };
 

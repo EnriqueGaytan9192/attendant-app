@@ -141,11 +141,9 @@ const openTurnSlice = createSlice({
             state.seguridad = resultado.seguridad;
             state.infraestructura = resultado.infraestructura;
         },
-
         setLoadingInfrastructure(state, action) {
             state.loadingInfrastructure = action.payload;
         },
-
         setErrorInfrastructure(state, action) {
             state.errorInfrastructure = action.payload;
         },

@@ -23,7 +23,7 @@ const StatusDropdown = ({ value, onChange }) => {
                 onChange={onChange}
                 style={{
                     borderWidth: value === "" ? 2 : 0,
-                    borderColor: "#FF3B30",
+                    borderColor: "#FF6E64",
                     borderRadius: 6,
                 }}
             />

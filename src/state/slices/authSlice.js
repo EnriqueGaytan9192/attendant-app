@@ -23,7 +23,7 @@ const initialState = {
     terminal: null,
     terminalId: null,
     menus: [],
-    exitTurnOpen: null,
+    existTurnOpen: null,
     cedulaBeParking: "",
 }
 
@@ -38,7 +38,7 @@ const authSlice = createSlice({
             state.parqueaderoId = payload.parqueaderoId;
             state.terminal = payload.terminal;
             state.terminalId = payload.terminalId;
-            state.exitTurnOpen = payload.existTurnOpen;
+            state.existTurnOpen = payload.existTurnOpen;
             state.nombreParking = payload.nombreParking;
         },
         logout(state) {
@@ -49,7 +49,7 @@ const authSlice = createSlice({
             state.empleado = null;
             state.parqueaderoId = null;
             state.terminal = null;
-            state.exitTurnOpen = null;
+            state.existTurnOpen = null;
         },
         setToken(state, action) {
             state.token = action.payload;
