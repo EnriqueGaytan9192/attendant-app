@@ -9,7 +9,7 @@ import { useAppSelector } from "../../state/hooks";
 import { resetAuth } from "../../state/slices/authSlice";
 import { resetCloseTurn } from "../../state/slices/closeTurnSlice";
 import { resetAuth as resetInventory } from "../../state/slices/inventorySlice";
-import { resetAuth as resetMovements } from "../../state/slices/movementsSlice";
+import { resetMovements } from "../../state/slices/movementsSlice";
 import { resetOpenTurn } from "../../state/slices/openTurnSlice";
 import useProfileInfoHook from "../screens/profile/hooks/useProfileInfoHook";
 import routes from "./routes";
