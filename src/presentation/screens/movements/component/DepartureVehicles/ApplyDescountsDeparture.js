@@ -617,7 +617,7 @@ const ApplyDescountsDeparture = () => {
                             if (!canApply) {
                               Alert.alert(
                                 "Alianza no disponible",
-                                "Esta alianza bancaria no puede aplicarse porque ya se utilizó un producto no permitido."
+                                "Esta alianza bancaria no puede aplicarse porque ya se utilizó un descuento."
                               );
                               return;
                             }

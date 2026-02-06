@@ -3,13 +3,14 @@ import CustomAlert from "./CustomAlert";
 
 let addAlertHandler;
 
-export const showAlert = (type, message, duration = 3000) => {
+export const showAlert = (type, message, duration = 3000, options = {}) => {
     if (addAlertHandler) {
         addAlertHandler({
             id: `${Date.now()}-${Math.random()}`,
             type,
             message,
-            duration
+            duration,
+            persistent: options.persistent || false
         });
     }
 };
@@ -30,9 +31,11 @@ const AlertManager = () => {
                 return updated;
             })
 
-            setTimeout(() => {
-                setAlerts((prev) => prev.filter((a) => a.id !== alert.id));
-            }, alert.duration + 400);
+            if (!alert.persistent) {
+                setTimeout(() => {
+                    setAlerts((prev) => prev.filter((a) => a.id !== alert.id));
+                }, alert.duration + 400);
+            }
         };
 
         return () => {
@@ -60,6 +63,7 @@ const AlertManager = () => {
                     type={alert.type}
                     message={alert.message}
                     duration={alert.duration}
+                    persistent={alert.persistent}
                     offsetTop={getOffsetTop(index)}
                     onHeight={(height) =>
                         setAlertHeights((prev) => ({

@@ -141,10 +141,10 @@ const useInfrastructureTurnHook = () => {
             plates: transformPlates(),
             observation: observaciones,
         };
-
+        console.log("Request Body /api/shiftOpen:", rq);
         const { data: openTurnData, errorFetch } = await lazyFetch("/api/shiftOpen", "POST", { rq });
-
-        if (openTurnData.data.message === "Turno abierto exitosamente") {
+        console.log("Respuesta de /api/shiftOpen:", openTurnData);
+        if (openTurnData.message === "Turno abierto exitosamente") {
             console.log("/*********************** Entrando a actualizar pantallas *****************************/")
             dispatch(setStepFour());
             dispatch(setStepOne());

@@ -1,3 +1,5 @@
+import { useIsFocused } from '@react-navigation/native';
+import { useEffect, useState } from "react";
 import { Image, ScrollView, TouchableOpacity, View } from "react-native";
 import {
   Button,
@@ -6,10 +8,8 @@ import {
   Text,
   TextInput,
 } from "react-native-paper";
-import styles from "../styles/listVehicle";
-import { useState, useEffect } from "react";
 import useInventoryHook from "../hooks/useInventoryHook";
-import { useIsFocused } from '@react-navigation/native';
+import styles from "../styles/listVehicle";
 
 const ListVehicle = () => {
   const { functions, states } = useInventoryHook();
@@ -217,12 +217,13 @@ const ListVehicle = () => {
                               onPress={() => handleViewVehicle(item.id)}
                               labelStyle={styles.actionButtonLabel}
                               contentStyle={styles.buttonContent}
-                            >
-                              <Image
-                                source={require("../../../../assets/images/eye.png")}
-                                style={styles.iconImage}
-                              />
-                            </Button>
+                              icon={() => (
+                                <Image
+                                  source={require("../../../../assets/icons/viewIcon.png")}
+                                  style={styles.iconImage}
+                                />
+                              )}
+                            />
                             {/*<Button
                               mode="text"
                               onPress={() => handleEditVehicle(item.id)}
@@ -242,59 +243,60 @@ const ListVehicle = () => {
                               onPress={() => handleViewBike(item.id)}
                               labelStyle={styles.actionButtonLabel}
                               contentStyle={styles.buttonContent}
-                            >
-                              <Image
-                                source={require("../../../../assets/images/eye.png")}
-                                style={styles.iconImage}
-                              />
-                            </Button>
+                              icon={() => (
+                                <Image
+                                  source={require("../../../../assets/icons/viewIcon.png")}
+                                  style={styles.iconImage}
+                                />
+                              )}
+                            />
                             {item.editado === 0 && (
                               < Button
-                              mode="text"
-                            onPress={() => handleEditBike(item.id)}
-                            labelStyle={styles.actionButtonLabel}
-                            contentStyle={styles.buttonContent}
-                              
-                            >
-                            <Image
-                              source={require("../../../../assets/images/pencil.png")}
-                              style={styles.iconImage}
-                            />
-                          </Button>
-                      )}
-                      </>
+                                mode="text"
+                                onPress={() => handleEditBike(item.id)}
+                                labelStyle={styles.actionButtonLabel}
+                                contentStyle={styles.buttonContent}
+                                icon={() => (
+                                  <Image
+                                    source={require("../../../../assets/icons/editIcon.png")}
+                                    style={{ width: 18, height: 18 }}
+                                  />
+                                )}
+                              />
+                            )}
+                          </>
                         )}
-                    </DataTable.Cell>
+                      </DataTable.Cell>
                     </DataTable.Row>
-              ))
-              ) : (
-              <View style={{ alignItems: "center", marginTop: 15 }}>
-                <Text style={styles.count}>
-                  {selectedTab === "vehicles"
-                    ? "No hay vehículos disponibles"
-                    : "No hay bicicletas disponibles"}
-                </Text>
-              </View>
+                  ))
+                ) : (
+                  <View style={{ alignItems: "center", marginTop: 15 }}>
+                    <Text style={{ marginBottom: 20 }}>
+                      {selectedTab === "vehicles"
+                        ? "No hay vehículos disponibles"
+                        : "No hay bicicletas disponibles"}
+                    </Text>
+                  </View>
                 )}
-            </DataTable>
+              </DataTable>
 
-            {/* Paginación */}
-            <DataTable.Pagination
-              style={{ justifyContent: "center" }}
-              page={page}
-              numberOfPages={Math.ceil(filteredData.length / itemsPerPage)}
-              onPageChange={(newPage) => setPage(newPage)}
-              label={`${from + 1}-${to} de ${filteredData.length}`}
-              numberOfItemsPerPageList={numberOfItemsPerPageList}
-              numberOfItemsPerPage={itemsPerPage}
-              onItemsPerPageChange={setItemsPerPage}
-              showFastPaginationControls
-              selectPageDropdownLabel="Items por página:"
-            />
-          </View>
-        </Card.Content>
-      </Card>
-    </View>
+              {/* Paginación */}
+              <DataTable.Pagination
+                style={{ justifyContent: "center" }}
+                page={page}
+                numberOfPages={Math.ceil(filteredData.length / itemsPerPage)}
+                onPageChange={(newPage) => setPage(newPage)}
+                label={`${from + 1}-${to} de ${filteredData.length}`}
+                numberOfItemsPerPageList={numberOfItemsPerPageList}
+                numberOfItemsPerPage={itemsPerPage}
+                onItemsPerPageChange={setItemsPerPage}
+                showFastPaginationControls
+                selectPageDropdownLabel="Items por página:"
+              />
+            </View>
+          </Card.Content>
+        </Card>
+      </View>
     </ScrollView >
   );
 };

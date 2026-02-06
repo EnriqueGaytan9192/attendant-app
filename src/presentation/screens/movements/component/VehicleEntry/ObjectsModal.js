@@ -1,6 +1,6 @@
+import { useEffect, useState } from "react";
 import { Image, View } from "react-native";
 import { Button, Checkbox, DataTable, Divider, IconButton, Text, TextInput } from "react-native-paper";
-import { useEffect, useState } from "react";
 import useObjectsModal from "../../hooks/HooksVehicleEntry/useObjectsModal";
 import styles from "../../styles/styleVehicleEntry/stylesObjectModal";
 import ElectronicSignature from "./ElectronicSignature";
@@ -60,6 +60,16 @@ const ObjectsModal = ({ onFinish }) => {
 
     const from = page * itemsPerPage;
     const to = Math.min((page + 1) * itemsPerPage, objectsList.length);
+
+    const step3Objects = existingObject?.objects ?? [];
+
+    const fromStep3 = page * itemsPerPage;
+    const toStep3 = Math.min(
+        (page + 1) * itemsPerPage,
+        step3Objects.length
+    );
+
+
 
     useEffect(() => {
         setPage(0);
@@ -257,11 +267,11 @@ const ObjectsModal = ({ onFinish }) => {
                                         numberOfPages={Math.ceil(objectsList.length / itemsPerPage)}
                                         onPageChange={(newPage) => setPage(newPage)}
                                         label={`${from + 1}-${to} de ${objectsList.length}`}
-                                        numberOfItemsPerPageList={numberOfItemsPerPageList}
-                                        numberOfItemsPerPage={itemsPerPage}
-                                        onItemsPerPageChange={setItemsPerPage}
+                                        //numberOfItemsPerPageList={numberOfItemsPerPageList}
+                                        //numberOfItemsPerPage={itemsPerPage}
+                                        //onItemsPerPageChange={setItemsPerPage}
                                         showFastPaginationControls
-                                        selectPageDropdownLabel="Items por página:"
+                                    //selectPageDropdownLabel="Items por página:"
                                     />
                                 )}
                             </View>
@@ -348,11 +358,11 @@ const ObjectsModal = ({ onFinish }) => {
                                             numberOfPages={Math.ceil(objectsList.length / itemsPerPage)}
                                             onPageChange={(newPage) => setPage(newPage)}
                                             label={`${from + 1}-${to} de ${objectsList.length}`}
-                                            numberOfItemsPerPageList={numberOfItemsPerPageList}
-                                            numberOfItemsPerPage={itemsPerPage}
-                                            onItemsPerPageChange={setItemsPerPage}
+                                            //numberOfItemsPerPageList={numberOfItemsPerPageList}
+                                            //numberOfItemsPerPage={itemsPerPage}
+                                            //onItemsPerPageChange={setItemsPerPage}
                                             showFastPaginationControls
-                                            selectPageDropdownLabel="Items por página:"
+                                        //selectPageDropdownLabel="Items por página:"
                                         />
                                     )}
                                 </View>
@@ -437,12 +447,16 @@ const ObjectsModal = ({ onFinish }) => {
                             <View style={{ flexDirection: 'row' }}>
                                 <View>
                                     <Text style={{ color: '#666666', marginLeft: 10 }}>Nombre</Text>
-                                    <Text style={{ color: '#666666', marginLeft: 20, marginTop: 10 }}>{existingObject?.nombrePropietario}</Text>
+                                    <Text style={{ color: '#666666', marginLeft: 20, marginTop: 10 }}>
+                                        {existingObject?.nombrePropietario}
+                                    </Text>
                                 </View>
 
                                 <View style={{ marginLeft: 50 }}>
                                     <Text style={{ color: '#666666', marginLeft: 10 }}>Documento Identidad</Text>
-                                    <Text style={{ color: '#666666', marginLeft: 20, marginTop: 10 }}>{existingObject?.numeroIdentificacion}</Text>
+                                    <Text style={{ color: '#666666', marginLeft: 20, marginTop: 10 }}>
+                                        {existingObject?.numeroIdentificacion}
+                                    </Text>
                                 </View>
                             </View>
 
@@ -456,8 +470,8 @@ const ObjectsModal = ({ onFinish }) => {
                                             <DataTable.Title style={{ color: "#90D400" }}>Objeto</DataTable.Title>
                                         </DataTable.Header>
 
-                                        {existingObject?.objects && existingObject.objects.length > 0 ? (
-                                            existingObject.objects.map((item, index) => (
+                                        {step3Objects.length > 0 ? (
+                                            step3Objects.slice(fromStep3, toStep3).map((item, index) => (
                                                 <DataTable.Row key={index}>
                                                     <DataTable.Cell>
                                                         {new Date(item.fechaHoraEntrada).toLocaleString("es-CO", {
@@ -475,23 +489,25 @@ const ObjectsModal = ({ onFinish }) => {
                                             ))
                                         ) : (
                                             <View style={{ alignItems: 'center', marginBlock: 15 }}>
-                                                <Text style={{ color: '#005A6D' }}>No hay objetos para mostrar.</Text>
+                                                <Text style={{ color: '#005A6D' }}>
+                                                    No hay objetos para mostrar.
+                                                </Text>
                                             </View>
                                         )}
                                     </DataTable>
 
-                                    {objectsList.length > 0 && (
+                                    {step3Objects.length > 0 && (
                                         <DataTable.Pagination
                                             style={{ justifyContent: "center" }}
                                             page={page}
-                                            numberOfPages={Math.ceil(objectsList.length / itemsPerPage)}
-                                            onPageChange={(newPage) => setPage(newPage)}
-                                            label={`${from + 1}-${to} de ${objectsList.length}`}
-                                            numberOfItemsPerPageList={numberOfItemsPerPageList}
-                                            numberOfItemsPerPage={itemsPerPage}
-                                            onItemsPerPageChange={setItemsPerPage}
+                                            numberOfPages={Math.ceil(step3Objects.length / itemsPerPage)}
+                                            onPageChange={setPage}
+                                            label={`${fromStep3 + 1}-${toStep3} de ${step3Objects.length}`}
+                                            //numberOfItemsPerPage={itemsPerPage}
+                                            //numberOfItemsPerPageList={numberOfItemsPerPageList}
+                                            //onItemsPerPageChange={setItemsPerPage}
                                             showFastPaginationControls
-                                            selectPageDropdownLabel="Items por página:"
+                                        //selectPageDropdownLabel="Items por página:"
                                         />
                                     )}
                                 </View>
@@ -500,35 +516,31 @@ const ObjectsModal = ({ onFinish }) => {
 
                         <View style={{ marginTop: 10, width: '48%' }}>
                             <View style={{ flexDirection: 'row' }}>
-                                <Checkbox
-                                    status={"checked"}
-                                    color="#90D400"
-                                />
-                                <Text>Autorizo a Parking International S.A.S a realizar el tratamiento de mis datos personales de acuerdo con su Política de Tratamiento de Datos.</Text>
-                            </View>
-                            {showError && (
-                                <Text style={{ color: "red", marginTop: 5 }}>
-                                    Debes autorizar el tratamiento de datos para continuar.
+                                <Checkbox status="checked" color="#90D400" />
+                                <Text>
+                                    Autorizo a Parking International S.A.S a realizar el tratamiento de mis datos personales de acuerdo con su Política de Tratamiento de Datos.
                                 </Text>
-                            )}
+                            </View>
 
                             <Text style={styles.subTitle}>Firma Propietario</Text>
 
                             {signatureUrl ? (
-                                <Image source={{ uri: signatureUrl }} style={{ width: 250, height: 200, alignSelf: 'center' }} />
+                                <Image
+                                    source={{ uri: signatureUrl }}
+                                    style={{
+                                        width: "100%",
+                                        height: 200,
+                                        alignSelf: "center",
+                                        resizeMode: "contain",
+                                    }}
+                                />
                             ) : (
                                 <Text>No se ha registrado firma.</Text>
                             )}
                         </View>
                     </View>
 
-                    <View
-                        style={{
-                            flexDirection: "row",
-                            justifyContent: "flex-end",
-                            marginTop: 40,
-                        }}
-                    >
+                    <View style={{ flexDirection: "row", justifyContent: "flex-end", marginTop: 40 }}>
                         <Button
                             mode="outlined"
                             onPress={onCloseModal}
@@ -540,6 +552,7 @@ const ObjectsModal = ({ onFinish }) => {
                 </View>
             </View>
         ),
+
     };
 
     return <>{steps[currentStep]}</>;

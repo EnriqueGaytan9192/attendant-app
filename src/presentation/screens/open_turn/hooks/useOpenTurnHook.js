@@ -74,6 +74,13 @@ const useOpenTurnHook = () => {
         setOpenDropdown(prev => (prev === type ? null : type));
     };
 
+    const closeDropdown = () => {
+        if (openDropdown !== null) {
+            setOpenDropdown(null);
+        }
+    };
+
+
     const togglePlateSelection = (plate) => {
         dispatch(togglePlate(plate));
     };
@@ -428,6 +435,7 @@ const useOpenTurnHook = () => {
         plateError,
         plateRef,
         toggleDropdown,
+        closeDropdown,
         togglePlateSelection,
         toggleSelectAll,
         isAllSelected,

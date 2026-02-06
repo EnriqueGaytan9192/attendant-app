@@ -318,7 +318,7 @@ const useVehicleDetailCardHook = () => {
           const now = new Date().toISOString();
 
           const minutosExcedidos = calcularMinutosExcedidos(
-            selectedVehicle.entryAt,
+            selectedVehicle.exitAt,
             now,
             tiempoGracia
           );

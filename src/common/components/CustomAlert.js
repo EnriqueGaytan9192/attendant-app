@@ -71,6 +71,7 @@ const CustomAlert = ({
     duration = 3000,
     offsetTop = 35,
     onHeight,
+    persistent = false,
 }) => {
     const colors = getAlertColors(type);
     const translateX = useSharedValue(300);
@@ -89,22 +90,24 @@ const CustomAlert = ({
                 easing: Easing.out(Easing.exp),
             });
 
-            const timeout = setTimeout(() => {
-                translateX.value = withTiming(300, {
-                    duration: 300,
-                    easing: Easing.in(Easing.exp),
-                });
-                onDismiss();
-            }, duration);
+            if (!persistent) {
+                const timeout = setTimeout(() => {
+                    translateX.value = withTiming(300, {
+                        duration: 300,
+                        easing: Easing.in(Easing.exp),
+                    });
+                    onDismiss();
+                }, duration);
 
-            return () => clearTimeout(timeout);
+                return () => clearTimeout(timeout);
+            }
         } else {
             translateX.value = withTiming(300, {
                 duration: 300,
                 easing: Easing.in(Easing.exp),
             });
         }
-    }, [visible]);
+    }, [visible, persistent]);
 
     if (!visible) return null;
 

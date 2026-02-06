@@ -104,8 +104,17 @@ const LoginScreen = () => {
                                                 onPress={() => setPasswordVisible(!passwordVisible)}
                                                 icon={() => (
                                                     <Image
-                                                        source={require("../../../../assets/icons/visibility_off.png")}
-                                                        style={stylesLogin.iconInput}
+                                                        source={
+                                                            passwordVisible
+                                                                ? require("../../../../assets/icons/visibility_off.png")
+                                                                : require("../../../../assets/icons/viewIcon.png")
+                                                        }
+                                                        //style={stylesLogin.iconInput}
+                                                        style={[
+                                                            passwordVisible
+                                                                ? stylesLogin.iconHidden
+                                                                : stylesLogin.iconVisible
+                                                        ]}
                                                     />
                                                 )}
                                             />
@@ -151,7 +160,7 @@ const LoginScreen = () => {
                                     lineHeight: 20
                                 }}
                             >
-                                Versión 5.0.0.4
+                                Versión DEV 5.0.1.2
                             </Text>
                         </View>
                     </View>

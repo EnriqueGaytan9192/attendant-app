@@ -696,8 +696,12 @@ const VehicleDetailCard = () => {
                 <TouchableOpacity
                   style={[styles.button, { justifyContent: "center" }]}
                   onPress={lostTicketModal}
-                  disabled={selectedVehicle.digitalTicket === 1 ||
-                    (!selectedVehicle && selectedVehicle?.estadoTicket !== 1)}
+                  disabled={
+                    selectedVehicle?.digitalTicket === 1 ||
+                    selectedVehicle?.estadoTicket === 1 ||
+                    selectedVehicle?.estadoTicket === 3
+                  }
+
                 >
                   <Text style={styles.text}>Tiquete Perdido</Text>
                 </TouchableOpacity>

@@ -1,17 +1,16 @@
+import { MaterialIcons } from "@expo/vector-icons";
 import { useState } from "react";
+import { Alert, TouchableOpacity, View } from "react-native";
+import { Dropdown } from "react-native-element-dropdown";
 import {
   ActivityIndicator,
   Button,
   Card,
-  Checkbox,
   Text,
-  TextInput,
+  TextInput
 } from "react-native-paper";
-import { Alert, Image, TouchableOpacity, View } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
-import styles from "../../styles/styleVehicleEntry/stylesVehicleEntry";
-import { Dropdown } from "react-native-element-dropdown";
 import useVehicleEntryCardHook from "../../hooks/HooksVehicleEntry/useVehicleEntryCardHook";
+import styles from "../../styles/styleVehicleEntry/stylesVehicleEntry";
 import GoParkingScanner from "./GoParkingScanner";
 
 const CameraButton = ({ onPress }) => (
@@ -449,7 +448,7 @@ const VehicleEntryCard = () => {
 
                 <View>
                   <TextInput
-                    label="# documento *"
+                    label="# Documento *"
                     value={documentNumber}
                     onChangeText={(text) => {
                       // 1. Eliminar espacios y todo lo que no sea número

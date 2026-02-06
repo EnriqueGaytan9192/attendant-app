@@ -71,6 +71,16 @@ const stylesLogin = StyleSheet.create({
         height: 25,
         marginBottom: 5
     },
+    iconVisible: {
+        width: 22,
+        height: 17,
+        marginBottom: 5
+    },
+    iconHidden: {
+        width: 25,
+        height: 25,
+        marginBottom: 5
+    },
     button: {
         backgroundColor: '#80C300',
         marginBottom: 20,

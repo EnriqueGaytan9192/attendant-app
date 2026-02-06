@@ -106,7 +106,7 @@ const useVehicleEntryCardHook = () => {
           dispatch(setTurnoIdEntry(data.turn.turnoId));
           console.log("Turno Id obtenido en Entrada:", data.turn.turnoId);
         } else {
-          console.error("No se pudo obtener el turnoId de objects");
+          console.error("No se pudo obtener el turnoId de objects vehicleEntryCard");
         }
 
         handleError(errorFetch);
@@ -608,9 +608,9 @@ const useVehicleEntryCardHook = () => {
 
     const validPlaca =
       /^[A-Z]{3}[0-9]{3}$/.test(placa) ||
-      /^[A-Z]{3}[0-9]{2}$/.test(plate) ||
-      /^[A-Z]{3}[0-9]{2}[A-Z]$/.test(plate) ||
-      /^[A-Z][0-9]{2}[A-Z]{2}[0-9][A-Z]$/.test(plate)
+      /^[A-Z]{3}[0-9]{2}$/.test(placa) ||
+      /^[A-Z]{3}[0-9]{2}[A-Z]$/.test(placa) ||
+      /^[A-Z][0-9]{2}[A-Z]{2}[0-9][A-Z]$/.test(placa)
 
     if (!validPlaca) {
       Alert.alert(

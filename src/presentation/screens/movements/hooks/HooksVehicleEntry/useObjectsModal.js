@@ -168,7 +168,7 @@ const useObjectsModal = () => {
           dispatch(setTurnoId(data.turn.turnoId));
           console.log("Turno Id obtenido:", data.turn.turnoId);
         } else {
-          console.error("No se pudo obtener el turnoId de objects");
+          console.error("No se pudo obtener el turnoId de objects useObjectsModal");
         }
 
         handleError(errorFetch);

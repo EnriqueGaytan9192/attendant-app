@@ -53,7 +53,7 @@ const SummaryTurn = () => {
                             <Text style={stylesSummaryTurn.subTitle}>Turno</Text>
                             <Text style={stylesSummaryTurn.info}>
                                 {turnInfo
-                                    ? `Turno ${turnInfo.turnoId} - ${turnInfo.initial_hour} - ${turnInfo.final_hour}`
+                                    ? `Turno ${turnInfo?.turnoId} - ${turnInfo?.initial_hour} - ${turnInfo?.final_hour}`
                                     : "Cargando turno..."
                                 }
                             </Text>

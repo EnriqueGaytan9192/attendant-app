@@ -14,6 +14,7 @@ const useSummaryTurnHook = () => {
     const [turnInfo, setTurnInfo] = useState(null);
     const [empleadoNombre, setEmpleadoNombre] = useState(empleado);
     const [isBoxBaseFocused, setIsBoxBaseFocused] = useState(false);
+    console.log("Valor de base caja redux openturn: ", baseCaja);
 
     /* ========= TURNO ========= */
     useFetch(

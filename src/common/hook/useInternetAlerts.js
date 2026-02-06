@@ -43,11 +43,16 @@ const useInternetAlerts = () => {
                 if (lastStatus.current !== "no-connection") {
                     clearAllIntervals();
 
-                    showAlert("error", "Sin conexión. Activa WiFi o datos móviles.");
+                    showAlert(
+                        "error",
+                        "Sin conexión. Activa WiFi o datos móviles.",
+                        3000,
+                        {persistent: true}
+                    );
 
-                    noConnectionInterval.current = setInterval(() => {
+                    {/*noConnectionInterval.current = setInterval(() => {
                         showAlert("error", "Sin conexión. Activa WiFi o datos móviles.");
-                    }, 30000);
+                    }, 30000);*/}
 
                     lastStatus.current = "no-connection";
                 }
@@ -60,11 +65,16 @@ const useInternetAlerts = () => {
                 if (lastStatus.current !== "no-internet") {
                     clearAllIntervals();
 
-                    showAlert("warning", "Red conectada pero sin acceso a internet.");
+                    showAlert(
+                        "warning", 
+                        "Red conectada pero sin acceso a internet.",
+                        3000,
+                        {persistent: true}
+                    );
 
-                    noInternetInterval.current = setInterval(() => {
+                    {/*noInternetInterval.current = setInterval(() => {
                         showAlert("warning", "Red conectada pero sin acceso a internet.");
-                    }, 30000);
+                    }, 30000);*/}
 
                     lastStatus.current = "no-internet";
                 }

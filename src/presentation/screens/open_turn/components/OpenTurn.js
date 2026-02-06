@@ -1,4 +1,4 @@
-import { Dimensions, Image, Keyboard, ScrollView, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import { Dimensions, Image, ScrollView, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { Button, Card, DataTable, Divider, IconButton, Text } from "react-native-paper";
 import CustomTextInput from "../../../../common/components/CustomTextInput";
@@ -24,6 +24,7 @@ const OpenTurnScreen = () => {
         plateError,
         plateRef,
         toggleDropdown,
+        closeDropdown,
         togglePlateSelection,
         toggleSelectAll,
         isAllSelected,
@@ -35,10 +36,27 @@ const OpenTurnScreen = () => {
     } = useOpenTurnHook();
 
     return (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View>
+            {openDropdown && (
+                <TouchableWithoutFeedback onPress={closeDropdown}>
+                    <View
+                        style={{
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            zIndex: 5,
+                        }}
+                    />
+                </TouchableWithoutFeedback>
+            )}
+
             <ScrollView
                 contentContainerStyle={{ flexGrow: 1 }}
                 keyboardShouldPersistTaps="handled"
+                keyboardDismissMode="on-drag"
+                onScrollBeginDrag={closeDropdown}
             >
                 <View style={stylesOpenTurn.container}>
                     <View style={stylesOpenTurn.subContainer}>
@@ -154,6 +172,7 @@ const OpenTurnScreen = () => {
                                                 <ScrollView
                                                     style={{ maxHeight: 195 }}
                                                     nestedScrollEnabled
+                                                    keyboardShouldPersistTaps="handled"
                                                 >
                                                     {manualPlates.map((item) => (
                                                         <DataTable.Row style={{ borderBottomWidth: 1, borderBlockColor: "#E5E5E5" }} key={item.plate}>
@@ -217,7 +236,7 @@ const OpenTurnScreen = () => {
                     </View>
                 </View>
             </ScrollView>
-        </TouchableWithoutFeedback>
+        </View>
     )
 }
 
