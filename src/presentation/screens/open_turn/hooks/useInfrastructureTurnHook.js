@@ -115,19 +115,19 @@ const useInfrastructureTurnHook = () => {
     };
 
     const transformPlates = () => {
-        const selected = Object.keys(selectedPlates)
+        /*const selected = Object.keys(selectedPlates)
             .filter(p => selectedPlates[p])
             .map(plate => ({
                 plate,
                 entry_date: new Date().toISOString(),
-            }));
+            }));*/
 
         const manual = manualPlates.map(p => ({
             plate: p.plate,
-            entry_date: `${p.entry_date} ${p.entry_hour}`,
+            entry_date: `${p.entry_date} ${p.entry_hour.substring(0, 5)}`,
         }));
 
-        return [...selected, ...manual];
+        return [...manual];
     };
 
 

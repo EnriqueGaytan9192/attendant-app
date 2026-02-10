@@ -25,6 +25,8 @@ const initialState = {
     menus: [],
     existTurnOpen: null,
     cedulaBeParking: "",
+
+    isMenuBlocked: false,
 }
 
 const authSlice = createSlice({
@@ -81,6 +83,10 @@ const authSlice = createSlice({
             state.cedulaBeParking = action.payload;
         },
 
+        blockMenu(state, action) {
+            state.isMenuBlocked = action.payload; // true o false
+        },
+
         resetAuth: () => initialState,
     },
 });
@@ -97,6 +103,8 @@ export const {
     changeValueForm,
     changeValueFormRecovery,
     setCedulaBeParking,
+
+    blockMenu,
 
     resetAuth,
 } = authSlice.actions;

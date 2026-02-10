@@ -95,32 +95,53 @@ const useVehicleEntryCardHook = () => {
   };
 
   useEffect(() => {
-    console.log("TurnIdEntry: ", turnoIdEntry)
+    if (!numeroIdentificacion || !parqueaderoId) return;
+    if (turnoIdEntry !== null) return;
+    if (turnoFetchedRef.current) return;
+
+    turnoFetchedRef.current = true;
+
     const fetchTurnoId = async () => {
       try {
-        const { data, errorFetch } = await getDataFetch("/api/turn", "POST", {
-          rq: { id: numeroIdentificacion, parqueaderoId },
-        });
+        console.log("🔎 Consultando turno activo...");
+
+        const { data, errorFetch } = await getDataFetch(
+          "/api/turn",
+          "POST",
+          {
+            rq: {
+              id: numeroIdentificacion,
+              parqueaderoId,
+            },
+          }
+        );
+
+        if (errorFetch) throw errorFetch;
 
         if (data?.turn?.turnoId) {
           dispatch(setTurnoIdEntry(data.turn.turnoId));
-          console.log("Turno Id obtenido en Entrada:", data.turn.turnoId);
+          console.log("✅ Turno obtenido:", data.turn.turnoId);
         } else {
-          console.error("No se pudo obtener el turnoId de objects vehicleEntryCard");
+          console.warn("⚠️ Usuario sin turno activo");
+          dispatch(setTurnoIdEntry(null));
         }
 
-        handleError(errorFetch);
       } catch (error) {
-        console.error("Error al obtener el turnoIdEntry:", error);
-        handleError(error);
+        console.error("❌ Error obteniendo turno:", error);
+        dispatch(setTurnoIdEntry(null));
       }
     };
 
-    if (!turnoIdEntry) {
-      turnoFetchedRef.current = true; // ✅ Evitamos llamadas múltiples
-      fetchTurnoId();
-    }
-  }, [turnoIdEntry, numeroIdentificacion, parqueaderoId, dispatch, getDataFetch]);
+    fetchTurnoId();
+
+  }, [
+    numeroIdentificacion,
+    parqueaderoId,
+    turnoIdEntry,
+    dispatch,
+    getDataFetch
+  ]);
+
 
   useEffect(() => {
     if (documentTypes) {

@@ -1,17 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useLazyFetch } from "../../../../common/hook/useFetch";
-import { resetAuth as resetAdvance } from "../../../../state/slices/advanceSlice";
-import { resetAuth as resetArching } from "../../../../state/slices/archingSlice";
 import { resetAuth } from "../../../../state/slices/authSlice";
 import {
-    nextStep,
-    resetCloseTurn,
-    setDescuento,
-    setStepFive,
-    setStepSix,
+  nextStep,
+  resetCloseTurn,
+  setDescuento,
+  setStepFive,
+  setStepSix,
 } from "../../../../state/slices/closeTurnSlice";
 import { resetAuth as resetInventory } from "../../../../state/slices/inventorySlice";
-import { resetAuth as resetManagement } from "../../../../state/slices/managementSlice";
 import { resetAuth as resetMovements } from "../../../../state/slices/movementsSlice";
 import { resetOpenTurn } from "../../../../state/slices/openTurnSlice";
 
@@ -52,10 +49,7 @@ const useMinorImbalanceCloseTurnHook = () => {
     dispatch(resetAuth());
     dispatch(resetOpenTurn());
     dispatch(resetCloseTurn());
-    dispatch(resetAdvance());
-    dispatch(resetArching());
     dispatch(resetInventory());
-    dispatch(resetManagement());
     dispatch(resetMovements());
   };
 

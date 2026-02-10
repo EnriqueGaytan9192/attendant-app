@@ -614,6 +614,12 @@ const VehicleDetailCard = () => {
     });
   };
 
+  const isDisabled =
+    selectedVehicle?.digitalTicket === 1 ||
+    selectedVehicle?.estadoTicket === 1 ||
+    selectedVehicle?.estadoTicket === 3;
+
+
 
   const renderCardCarVehiCule = () => {
     if (selectedVehicle?.stateTransaction === 0) {
@@ -694,17 +700,25 @@ const VehicleDetailCard = () => {
               {/* Botones de Tiquete Perdido y Objetos */}
               <View style={styles.centeredView}>
                 <TouchableOpacity
-                  style={[styles.button, { justifyContent: "center" }]}
+                  style={[
+                    styles.button,
+                    { justifyContent: "center" },
+                    isDisabled && styles.buttonDisabled,   // 👈 estilo cuando está deshabilitado
+                  ]}
                   onPress={lostTicketModal}
-                  disabled={
-                    selectedVehicle?.digitalTicket === 1 ||
-                    selectedVehicle?.estadoTicket === 1 ||
-                    selectedVehicle?.estadoTicket === 3
-                  }
-
+                  disabled={isDisabled}
+                  activeOpacity={isDisabled ? 1 : 0.7}     // evita efecto visual al tocar
                 >
-                  <Text style={styles.text}>Tiquete Perdido</Text>
+                  <Text
+                    style={[
+                      styles.text,
+                      isDisabled && styles.textDisabled,   // 👈 texto deshabilitado
+                    ]}
+                  >
+                    Tiquete Perdido
+                  </Text>
                 </TouchableOpacity>
+
 
                 <TouchableOpacity
                   style={[styles.button, { justifyContent: "center", marginTop: 20 }]}

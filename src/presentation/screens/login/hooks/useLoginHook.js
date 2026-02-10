@@ -31,7 +31,6 @@ const useLoginHook = () => {
 
                 setDeviceId(id || "ID no disponible.");
             } catch {
-                console.error("Error obteniendo ID del dispositivo:", error?.message || "");
                 setDeviceId("Error al obtener ID.");
             };
         };
@@ -125,15 +124,24 @@ const useLoginHook = () => {
                 }
             },
         );
-
+        console.log("1");
         if (errorFetch) {
             showAlert("error", errorFetch?.message || "Credenciales inválidas.");
             return;
         };
+        console.log("2");
         if (!loginData?.token) {
             showAlert("error", "No fue posible iniciar sesión.");
             return;
         };
+        console.log("3");
+        if (loginData.existTurnClose === 2) {
+            showAlert(
+                "info",
+                "El cierre del turno se realizó con éxito. El acceso al sistema estará disponible en el próximo turno."
+            );
+            return;
+        }
 
         console.log("Respuesta de api Login: ", loginData);
         const toke = loginData.token.replace("Bearer ", "");

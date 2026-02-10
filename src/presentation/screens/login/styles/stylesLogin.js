@@ -49,8 +49,9 @@ const stylesLogin = StyleSheet.create({
         lineHeight: 20
     },
     logo: {
-        width: 225,
-        height: 180,
+        width: 300,
+        height: 200,
+        marginRight: 50
     },
     title: {
         fontSize: 30,

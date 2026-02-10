@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import CustomAlert from "./CustomAlert";
 
 let addAlertHandler;
+let removeAlertsHandler;
 
 export const showAlert = (type, message, duration = 3000, options = {}) => {
     if (addAlertHandler) {
@@ -10,8 +11,15 @@ export const showAlert = (type, message, duration = 3000, options = {}) => {
             type,
             message,
             duration,
-            persistent: options.persistent || false
+            persistent: options.persistent || false,
+            onClose: options.onClose || null,
         });
+    }
+};
+
+export const clearPersistentAlerts = () => {
+    if (removeAlertsHandler) {
+        removeAlertsHandler();
     }
 };
 
@@ -38,8 +46,15 @@ const AlertManager = () => {
             }
         };
 
+        removeAlertsHandler = () => {
+            setAlerts((prev) =>
+                prev.filter((a) => !a.persistent)
+            );
+        };
+
         return () => {
             addAlertHandler = null;
+            removeAlertsHandler = null;
         };
     }, []);
 
@@ -71,9 +86,11 @@ const AlertManager = () => {
                             [alert.id]: height,
                         }))
                     }
-                    onDismiss={() =>
+                    onDismiss={() => {
+                        alert.onClose?.();
+
                         setAlerts((prev) => prev.filter((a) => a.id !== alert.id))
-                    }
+                    }}
                 />
             ))}
 

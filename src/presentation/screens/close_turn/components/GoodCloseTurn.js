@@ -1,7 +1,7 @@
 import { Dimensions, Image, ScrollView, TouchableWithoutFeedback, View } from "react-native";
 import { Button, Card, Text } from "react-native-paper";
 import { useDispatch } from "react-redux";
-import { resetAuth } from "../../../../state/slices/authSlice";
+import { blockMenu, resetAuth } from "../../../../state/slices/authSlice";
 import { resetCloseTurn } from "../../../../state/slices/closeTurnSlice";
 import { resetAuth as resetInventory } from "../../../../state/slices/inventorySlice";
 import { resetAuth as resetMovements } from "../../../../state/slices/movementsSlice";
@@ -19,6 +19,8 @@ const GoodCloseTurn = () => {
         dispatch(resetCloseTurn());
         dispatch(resetInventory());
         dispatch(resetMovements());
+
+        dispatch(blockMenu(true));
     };
 
     return (

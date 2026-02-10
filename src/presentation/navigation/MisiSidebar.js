@@ -2,6 +2,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import { Tooltip } from "react-native-paper";
 import { useDispatch } from "react-redux";
+import { showAlert } from "../../common/components/AlertManager";
 import routes from "../../presentation/navigation/routes";
 import { useAppSelector } from "../../state/hooks";
 import { resetAuth } from "../../state/slices/authSlice";
@@ -11,7 +12,7 @@ import { resetAuth as resetMovements } from "../../state/slices/movementsSlice";
 import { resetOpenTurn } from "../../state/slices/openTurnSlice";
 
 const MiniSidebar = ({ navigation, isDrawerOpen }) => {
-    const { menus } = useAppSelector((state) => state.auth);
+    const { menus, isMenuBlocked } = useAppSelector((state) => state.auth);
 
     const dispatch = useDispatch();
     const handleLogOut = () => {
@@ -34,28 +35,43 @@ const MiniSidebar = ({ navigation, isDrawerOpen }) => {
     );
 
     const navigateRoute = (route) => {
-        const menu = menuMap[route.key];
+        if (isMenuBlocked) {
+            showAlert(
+                "info",
+                "El turno ha sido cerrado. El acceso al menú se encuentra restringido."
+            );
+            return;
+        }
 
-        // Si tiene children, ir al primero permitido
+        const menu = menus.find((m) => m.key === route.key);
+        if (!menu) return;
+
         if (route.children?.length && menu.children?.length) {
             navigation.navigate(menu.children[0].key);
             return;
         }
 
-        // Si tiene submodulos (pero no rutas)
         if (menu.submodulos?.length) {
             navigation.navigate(route.key);
             return;
         }
 
-        // Ruta directa
         navigation.navigate(route.key);
     };
 
     return (
         <View style={[styles.sidebar, { paddingTop: 10 }]}>
             <TouchableOpacity
-                onPress={() => navigation.toggleDrawer()}
+                onPress={() => {
+                    if (isMenuBlocked) {
+                        showAlert(
+                            "info",
+                            "El turno ha sido cerrado. El acceso al menú se encuentra restringido."
+                        );
+                        return;
+                    }
+                    navigation.toggleDrawer();
+                }}
                 style={styles.menuButton}
             >
                 <Ionicons

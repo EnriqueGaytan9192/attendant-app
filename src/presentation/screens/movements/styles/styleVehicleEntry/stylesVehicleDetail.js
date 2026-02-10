@@ -8,10 +8,6 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
         padding: 10,
     },
-    title: {
-        fontSize: 16,
-        color: "#005A6D",
-    },
     plateText: {
         fontSize: 16,
         color: "#005A6D",
@@ -43,7 +39,6 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         width: "60%",
         marginTop: 15,
-        borderRadius: 15,
     },
     timeInfoContainer: {
         flexDirection: "row",
@@ -71,7 +66,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         marginBottom: 5,
-        marginRight: 10
+        marginRight: 10,
     },
     button: {
         flexDirection: "row",
@@ -159,6 +154,15 @@ const styles = StyleSheet.create({
         marginLeft: 35,
         color: '#8C8C8C'
     },
+    buttonDisabled: {
+        backgroundColor: "#D3D3D3",
+        opacity: 0.6,
+    },
+
+    textDisabled: {
+        color: "#8A8A8A",
+    },
+
 });
 
 export default styles;

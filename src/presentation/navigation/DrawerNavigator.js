@@ -48,7 +48,7 @@ const CustomDrawerContent = ({ navigation }) => {
     const { userInfo, loadingUser, user, initials } = useProfileInfoHook();
 
     return (
-        <SafeAreaView style={{ flex: 1 }} edges={[ "top", "bottom" ]}>
+        <SafeAreaView style={{ flex: 1 }} edges={["top", "bottom"]} >
             <View style={{ flex: 1 }}>
                 <ScrollView
                     contentContainerStyle={styles.scrollContent}
@@ -225,6 +225,7 @@ const DrawerNavigator = () => {
 const styles = StyleSheet.create({
     drawerContainer: {
         flex: 1,
+        marginBottom: 46,
         backgroundColor: "#fff",
         paddingHorizontal: 15,
         width: "95%",
@@ -252,6 +253,7 @@ const styles = StyleSheet.create({
         fontSize: 17,
         //fontWeight: "bold",
         color: "#90D400",
+        marginTop: 5,
         fontFamily: "Montserrat_500Medium"
     },
     profileRole: {
@@ -261,6 +263,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: "auto",
         paddingVertical: 2,
         borderRadius: 5,
+        marginTop: 5,
         width: 125,
         textAlign: 'center',
         fontFamily: "Montserrat_400Regular"
@@ -350,6 +353,7 @@ const styles = StyleSheet.create({
     logoutDynamic: {
         borderTopWidth: 1,
         borderTopColor: "#eee",
+        marginBottom: 10,
     },
 
 })

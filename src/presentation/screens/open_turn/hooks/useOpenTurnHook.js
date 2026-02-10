@@ -42,6 +42,9 @@ const useOpenTurnHook = () => {
     const getColombiaDateTime = () => {
         const now = new Date();
 
+        /* =========================
+           FECHA (igual que antes)
+        ========================= */
         const dateFormatter = new Intl.DateTimeFormat("es-CO", {
             timeZone: "America/Bogota",
             year: "numeric",
@@ -49,25 +52,44 @@ const useOpenTurnHook = () => {
             day: "2-digit",
         });
 
-        const timeFormatter = new Intl.DateTimeFormat("es-CO", {
-            timeZone: "America/Bogota",
-            hour: "numeric",
-            minute: "2-digit",
-            hour12: true,
-        });
-
         const [{ value: day }, , { value: month }, , { value: year }] =
             dateFormatter.formatToParts(now);
 
-        const time = timeFormatter
-            .format(now)
-            .replace("a. m.", "a.m.")
-            .replace("p. m.", "p.m.");
+        /* =========================
+           HORA 24h CON SEGUNDOS
+           (Redux / Backend)
+        ========================= */
+        const timeRawFormatter = new Intl.DateTimeFormat("es-CO", {
+            timeZone: "America/Bogota",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: false,
+        });
 
+        const entry_hour = timeRawFormatter.format(now);
+
+        /* =========================
+           RETURN (igual estructura)
+        ========================= */
         return {
             entry_date: `${day}-${month}-${year}`,
-            entry_hour: time,
+            entry_hour,
         };
+    };
+
+    const formatHourView = (hourRaw) => {
+        if (!hourRaw) return "";
+
+        const [hourStr, minute] = hourRaw.split(":");
+        let hour = parseInt(hourStr, 10);
+
+        const period = hour >= 12 ? "p.m." : "a.m.";
+
+        hour = hour % 12;
+        if (hour === 0) hour = 12;
+
+        return `${hour}:${minute} ${period}`;
     };
 
     const toggleDropdown = (type) => {
@@ -316,10 +338,11 @@ const useOpenTurnHook = () => {
                                     );
 
                                     const typeMapping = {
-                                        cars: 1,
+                                        car: 1,
                                         diplomatic: 1,
-                                        frontier: 1,
-                                        motorBikes: 2,
+                                        foreign: 1,
+                                        motorcycle: 2,
+                                        vintageMotorcycle: 2,
                                         bikes: 3,
                                     };
 
@@ -334,6 +357,7 @@ const useOpenTurnHook = () => {
                                         entry_hour,
                                     }));
 
+
                                     setPlate("");
                                     setShowErrors(false);
                                     setPlateError(false);
@@ -344,10 +368,11 @@ const useOpenTurnHook = () => {
                 };
 
                 const typeMapping = {
-                    cars: 1,
+                    car: 1,
                     diplomatic: 1,
-                    frontier: 1,
-                    motorBikes: 2,
+                    foreign: 1,
+                    motorcycle: 2,
+                    vintageMotorcycle: 2,
                     bikes: 3,
                 };
 
@@ -361,6 +386,8 @@ const useOpenTurnHook = () => {
                     entry_date,
                     entry_hour,
                 }));
+
+
 
                 setPlate("");
                 setShowErrors(false);
@@ -436,6 +463,7 @@ const useOpenTurnHook = () => {
         plateRef,
         toggleDropdown,
         closeDropdown,
+        formatHourView,
         togglePlateSelection,
         toggleSelectAll,
         isAllSelected,

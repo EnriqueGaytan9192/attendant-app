@@ -39,7 +39,7 @@ const LoginScreen = () => {
                                 <Image
                                     source={require('../../../../assets/images/logoParkingGo.png')}
                                     style={stylesLogin.logo}
-                                    resizeMode="contain"
+                                    resizeMode="center"
                                 />
                             </View>
 
@@ -160,7 +160,7 @@ const LoginScreen = () => {
                                     lineHeight: 20
                                 }}
                             >
-                                Versión DEV 5.0.1.2
+                                Versión DEV 5.0.1.8
                             </Text>
                         </View>
                     </View>
