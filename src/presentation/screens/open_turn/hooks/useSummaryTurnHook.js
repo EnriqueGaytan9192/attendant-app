@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { showAlert } from "../../../../common/components/AlertManager";
 import { useFetch, useLazyFetch } from "../../../../common/hook/useFetch";
@@ -14,7 +14,15 @@ const useSummaryTurnHook = () => {
     const [turnInfo, setTurnInfo] = useState(null);
     const [empleadoNombre, setEmpleadoNombre] = useState(empleado);
     const [isBoxBaseFocused, setIsBoxBaseFocused] = useState(false);
+    console.log("Valor de base caja redux openturn: ", baseCaja);
 
+    useEffect(() => {
+        console.log("Enganchados en Redux:", enganchados);
+    }, [enganchados]);
+
+    useEffect(() => {
+        console.log("ManualesPlate en Redux:", manualPlates);
+    }, [manualPlates]);
     /* ========= TURNO ========= */
     useFetch(
         numeroIdentificacion ? "/api/turn" : null,

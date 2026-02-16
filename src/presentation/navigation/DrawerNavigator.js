@@ -3,6 +3,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { useState } from "react";
 import { Image, ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 import { Text } from "react-native-paper";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
 import MainLayout from "../../common/components/MainLayout";
 import { useAppSelector } from "../../state/hooks";
@@ -47,29 +48,30 @@ const CustomDrawerContent = ({ navigation }) => {
     const { userInfo, loadingUser, user, initials } = useProfileInfoHook();
 
     return (
-        <View style={{ flex: 1 }}>
-            <ScrollView
-                contentContainerStyle={styles.scrollContent}
-                showsVerticalScrollIndicator={false}
-            >
-                <View style={styles.drawerContainer}>
-                    {/*<Image
+        <SafeAreaView style={{ flex: 1 }} edges={["top", "bottom"]} >
+            <View style={{ flex: 1 }}>
+                <ScrollView
+                    contentContainerStyle={styles.scrollContent}
+                    showsVerticalScrollIndicator={false}
+                >
+                    <View style={styles.drawerContainer}>
+                        {/*<Image
                         source={require('../../assets/icons/logoParking.png')}
                         style={styles.logoParking}
                     />*/}
-                    <View style={styles.profileSection}>
-                        <TouchableOpacity onPress={() => navigation.navigate('profile')}>
-                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                {/*<Image
+                        <View style={styles.profileSection}>
+                            <TouchableOpacity onPress={() => navigation.navigate('profile')}>
+                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                    {/*<Image
                                     source={require('../../assets/icons/avatar.png')}
                                     style={styles.profileImage}
                                 />*/}
-                                <View style={styles.initialsAvatarSmall}>
-                                    <Text style={styles.initialsTextSmall}>
-                                        {initials}
-                                    </Text>
-                                </View>
-                                {/*<View style={{ marginLeft: 10 }}>
+                                    <View style={styles.initialsAvatarSmall}>
+                                        <Text style={styles.initialsTextSmall}>
+                                            {initials}
+                                        </Text>
+                                    </View>
+                                    {/*<View style={{ marginLeft: 10 }}>
                                     <Text style={styles.profileName}>
                                         {`${user.firstName} ${user.lastName}`}
                                     </Text>
@@ -77,92 +79,93 @@ const CustomDrawerContent = ({ navigation }) => {
                                         {user.role}
                                     </Text>
                                 </View>*/}
-                                <View style={{ marginLeft: 10 }}>
-                                    <Text style={styles.profileName}>
-                                        {loadingUser ? "Cargando..." : userInfo?.empleado}
-                                    </Text>
-                                    <Text style={styles.profileRole}>
-                                        {loadingUser ? "" : userInfo?.rol}
-                                    </Text>
-                                </View>
-                            </View>
-                        </TouchableOpacity>
-                    </View>
-                    {/*<View style={styles.greenLine} />*/}
-                    {profileFilter.map((menu) => {
-                        //const route = menu;
-                        const route = routes.find((r) => r.key === menu.key);
-
-                        if (!route) return null;
-
-                        if (route.children) {
-                            return (
-                                <View key={route.key}>
-                                    <TouchableOpacity
-                                        style={styles.menuItem}
-                                        onPress={() => toggleSubMenu(route.key)}
-                                    >
-                                        <Image
-                                            source={route.icon}
-                                            style={styles.icon}
-                                        />
-                                        <Text style={styles.menuText}>{route.title}</Text>
-                                        <Text style={styles.arrow}>
-                                            {expandedMenus[route.key] ?
-                                                <Ionicons
-                                                    name="chevron-up"
-                                                    size={16}
-                                                    color={"#4DADB9"}
-                                                />
-                                                :
-                                                <Ionicons
-                                                    name="chevron-down"
-                                                    size={16}
-                                                    color={"#4DADB9"}
-                                                />
-                                            }
+                                    <View style={{ marginLeft: 10 }}>
+                                        <Text style={styles.profileName}>
+                                            {loadingUser ? "Cargando..." : userInfo?.empleado}
                                         </Text>
-                                    </TouchableOpacity>
-
-                                    {expandedMenus[route.key] &&
-                                        route.children.map((subRoute) => (
-                                            <TouchableOpacity
-                                                key={subRoute.key}
-                                                style={styles.subMenuItem}
-                                                onPress={() => navigation.navigate(subRoute.key)}
-                                            >
-                                                <Image
-                                                    source={subRoute.icon}
-                                                    style={styles.subIcon}
-                                                />
-                                                <Text style={styles.subMenuText}>{subRoute.title}</Text>
-                                            </TouchableOpacity>
-                                        ))}
+                                        <Text style={styles.profileRole}>
+                                            {loadingUser ? "" : userInfo?.rol}
+                                        </Text>
+                                    </View>
                                 </View>
-                            );
-                        }
-
-                        return (
-                            <TouchableOpacity
-                                key={route.key}
-                                style={styles.menuItem}
-                                onPress={() => navigation.navigate(route.key)}
-                            >
-                                <Image source={route.icon} style={styles.icon} />
-                                <Text style={styles.menuText}>{route.title}</Text>
                             </TouchableOpacity>
-                        )
-                    })}
-                </View>
-            </ScrollView>
-            <TouchableOpacity style={[styles.menuItem, styles.logoutDynamic, { marginLeft: 15 }]} onPress={handleLogOut}>
-                <Image
-                    source={require("../../assets/icons/logOut.png")}
-                    style={styles.icon}
-                />
-                <Text style={styles.menuText}>Cerrar sesión</Text>
-            </TouchableOpacity>
-        </View>
+                        </View>
+                        {/*<View style={styles.greenLine} />*/}
+                        {profileFilter.map((menu) => {
+                            //const route = menu;
+                            const route = routes.find((r) => r.key === menu.key);
+
+                            if (!route) return null;
+
+                            if (route.children) {
+                                return (
+                                    <View key={route.key}>
+                                        <TouchableOpacity
+                                            style={styles.menuItem}
+                                            onPress={() => toggleSubMenu(route.key)}
+                                        >
+                                            <Image
+                                                source={route.icon}
+                                                style={styles.icon}
+                                            />
+                                            <Text style={styles.menuText}>{route.title}</Text>
+                                            <Text style={styles.arrow}>
+                                                {expandedMenus[route.key] ?
+                                                    <Ionicons
+                                                        name="chevron-up"
+                                                        size={16}
+                                                        color={"#4DADB9"}
+                                                    />
+                                                    :
+                                                    <Ionicons
+                                                        name="chevron-down"
+                                                        size={16}
+                                                        color={"#4DADB9"}
+                                                    />
+                                                }
+                                            </Text>
+                                        </TouchableOpacity>
+
+                                        {expandedMenus[route.key] &&
+                                            route.children.map((subRoute) => (
+                                                <TouchableOpacity
+                                                    key={subRoute.key}
+                                                    style={styles.subMenuItem}
+                                                    onPress={() => navigation.navigate(subRoute.key)}
+                                                >
+                                                    <Image
+                                                        source={subRoute.icon}
+                                                        style={styles.subIcon}
+                                                    />
+                                                    <Text style={styles.subMenuText}>{subRoute.title}</Text>
+                                                </TouchableOpacity>
+                                            ))}
+                                    </View>
+                                );
+                            }
+
+                            return (
+                                <TouchableOpacity
+                                    key={route.key}
+                                    style={styles.menuItem}
+                                    onPress={() => navigation.navigate(route.key)}
+                                >
+                                    <Image source={route.icon} style={styles.icon} />
+                                    <Text style={styles.menuText}>{route.title}</Text>
+                                </TouchableOpacity>
+                            )
+                        })}
+                    </View>
+                </ScrollView>
+                <TouchableOpacity style={[styles.menuItem, styles.logoutDynamic, { marginLeft: 15 }]} onPress={handleLogOut}>
+                    <Image
+                        source={require("../../assets/icons/logOut.png")}
+                        style={styles.icon}
+                    />
+                    <Text style={styles.menuText}>Cerrar sesión</Text>
+                </TouchableOpacity>
+            </View>
+        </SafeAreaView>
     )
 }
 
@@ -222,10 +225,8 @@ const DrawerNavigator = () => {
 const styles = StyleSheet.create({
     drawerContainer: {
         flex: 1,
-        marginTop: 25,
         marginBottom: 46,
         backgroundColor: "#fff",
-        paddingVertical: 5,
         paddingHorizontal: 15,
         width: "95%",
         //borderColor: '#d80000ff',

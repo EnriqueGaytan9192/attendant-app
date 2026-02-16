@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { showAlert } from "../../../../common/components/AlertManager";
 import { useFetch, useLazyFetch } from "../../../../common/hook/useFetch";
 import { useAppSelector } from "../../../../state/hooks";
+import { blockMenu } from "../../../../state/slices/authSlice";
 import {
     addInfrastructure,
     nextStep,
@@ -182,64 +183,54 @@ const useInfrastructureCloseTurnHook = () => {
 
         dispatch(setShifValidatorResponse(validatorRes));
 
-        /**
-         * 🔥 MISMA LÓGICA QUE EL CÓDIGO VIEJO
-         */
-        if (
-            validatorRes.statusShift === 0 ||
-            validatorRes.statusShift === 4 ||
-            validatorRes.statusShift === 1
-        ) {
+        const ballotStatus = isComplete ? 0 : 1;
 
-            const ballotStatus = isComplete ? 0 : 1;
+        const infraPayload = [
+            ...dispositivos,
+            ...seguridad,
+            ...infraestructura,
+        ].map(item => ({
+            id: item.id || 0,
+            turnoId,
+            quantity: String(item.cantidad || 0),
+            status: item.estado,
+            observations: item.observaciones,
+            name: item.name,
+        }));
 
-            const infraPayload = [
-                ...dispositivos,
-                ...seguridad,
-                ...infraestructura,
-            ].map(item => ({
-                id: item.id || 0,
-                turnoId,
-                quantity: String(item.cantidad || 0),
-                status: item.estado,
-                observations: item.observaciones,
-                name: item.name,
-            }));
+        const payload = {
+            id: String(numeroIdentificacion),
+            turnoId,
+            reportableValue: reportedValue,
+            observations: observationClose,
+            ballotStatus,
+            numberBallots: ballotStatus ? Number(numTicket) || 0 : 0,
+            initialBallot: ballotStatus ? Number(iniTicket) || 0 : 0,
+            finalBallot: ballotStatus ? Number(finTicket) || 0 : 0,
+            infrastructure: infraPayload,
+            adjustment: validatorRes.ajuste ?? 0,
+            terminalId,
+        };
 
-            const payload = {
-                id: String(numeroIdentificacion),
-                turnoId,
-                reportableValue: reportedValue,
-                observations: observationClose,
-                ballotStatus,
-                numberBallots: ballotStatus ? Number(numTicket) || 0 : 0,
-                initialBallot: ballotStatus ? Number(iniTicket) || 0 : 0,
-                finalBallot: ballotStatus ? Number(finTicket) || 0 : 0,
-                infrastructure: infraPayload,
-                adjustment: validatorRes.ajuste ?? 0,
-                terminalId,
-            };
+        const { data: response, errorFetch } =
+            await getDataFetch("/api/shiftClose", "POST", { rq: payload });
 
-            const { data: response, errorFetch } =
-                await getDataFetch("/api/shiftClose", "POST", { rq: payload });
-
-            if (errorFetch) {
-                alert("Error al cerrar turno");
-                return;
-            }
-
-            dispatch(setDescuento(response?.descuento ?? 0));
-
-            if (validatorRes.statusShift === 0 || validatorRes.statusShift === 4) {
-                dispatch(nextStep());
-            } else if (validatorRes.statusShift === 1) {
-                dispatch(setStepSix());
-            }
-        } else {
-            if (validatorRes.statusShift === 2 || validatorRes.statusShift === 3) {
-                dispatch(setStepFive());
-            }
+        if (errorFetch) {
+            alert("Error al cerrar turno");
+            return;
         }
+
+        dispatch(setDescuento(response?.descuento ?? 0));
+
+        if (validatorRes.statusShift === 0 || validatorRes.statusShift === 4) {
+            dispatch(nextStep());
+        } else if (validatorRes.statusShift === 1) {
+            dispatch(setStepSix());
+        }
+        if (validatorRes.statusShift === 2 || validatorRes.statusShift === 3) {
+            dispatch(setStepFive());
+        }
+        dispatch(blockMenu(true));
     };
 
     return {

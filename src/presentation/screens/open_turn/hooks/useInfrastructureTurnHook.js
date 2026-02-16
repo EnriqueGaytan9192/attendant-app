@@ -115,19 +115,19 @@ const useInfrastructureTurnHook = () => {
     };
 
     const transformPlates = () => {
-        const selected = Object.keys(selectedPlates)
+        /*const selected = Object.keys(selectedPlates)
             .filter(p => selectedPlates[p])
             .map(plate => ({
                 plate,
                 entry_date: new Date().toISOString(),
-            }));
+            }));*/
 
         const manual = manualPlates.map(p => ({
             plate: p.plate,
-            entry_date: `${p.entry_date} ${p.entry_hour}`,
+            entry_date: `${p.entry_date} ${p.entry_hour.substring(0, 5)}`,
         }));
 
-        return [...selected, ...manual];
+        return [...manual];
     };
 
 
@@ -141,10 +141,10 @@ const useInfrastructureTurnHook = () => {
             plates: transformPlates(),
             observation: observaciones,
         };
-
+        console.log("Request Body /api/shiftOpen:", rq);
         const { data: openTurnData, errorFetch } = await lazyFetch("/api/shiftOpen", "POST", { rq });
-
-        if (openTurnData.data.message === "Turno abierto exitosamente") {
+        console.log("Respuesta de /api/shiftOpen:", openTurnData);
+        if (openTurnData.message === "Turno abierto exitosamente") {
             console.log("/*********************** Entrando a actualizar pantallas *****************************/")
             dispatch(setStepFour());
             dispatch(setStepOne());

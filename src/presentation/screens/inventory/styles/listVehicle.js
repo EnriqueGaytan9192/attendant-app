@@ -97,8 +97,8 @@ const styles = StyleSheet.create({
   },
   iconImage: {
     width: 20, // Ajusta el tamaño según necesites
-    height: 20, // Ajusta el tamaño según necesites
-    marginRight: 5, // Espacio entre el icono y el texto
+    height: 15, // Ajusta el tamaño según necesites
+    //marginRight: 5, // Espacio entre el icono y el texto
   },
   actionButtonLabel: {
     fontSize: 12, // Ajusta el tamaño del texto si es necesario

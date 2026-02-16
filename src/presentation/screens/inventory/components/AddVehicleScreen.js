@@ -1,6 +1,6 @@
 import * as ImagePicker from "expo-image-picker";
 import { useEffect, useState } from "react";
-import { Image, ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Alert, Image, ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import { ActivityIndicator, Button, Card, Text, TextInput } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -19,6 +19,8 @@ const AddVehicleScreen = () => {
   const [placa, setPlaca] = useState("");
   const [observaciones, setObservaciones] = useState("");
   const [plateError, setPlateError] = useState("");
+  const [errors, setErrors] = useState({});
+
   // Partes
   const [inventoryDetails, setInventoryDetails] = useState({
     chapas: "",
@@ -66,6 +68,7 @@ const AddVehicleScreen = () => {
   const [rawPlates, setRawPlates] = useState([]);
   // el id de la placa seleccionada
   const [selectedPlateId, setSelectedPlateId] = useState(null);
+  const isPlateSelected = !!selectedPlateId;
   // y el tipo de vehículo precargado
   const [vehiculo, setVehiculo] = useState("");
   // ====== OPCIONES PARA DROPDOWNS ======
@@ -92,22 +95,26 @@ const AddVehicleScreen = () => {
     const sel = rawPlates.find(r => r.vehicleId === vehicleId);
     if (!sel) return;
 
-    // 1️⃣ Actualiza también tu estado local de 'placa'
     setPlaca(sel.plate);
     dispatch(setPlacaInventario(sel.plate));
-    console.log("Placa seleccionada:", sel.plate);
-    // 2️⃣ Prepara el tipo de vehículo
+
+    // 🔴 LIMPIAR ERROR
+    setErrors(prev => {
+      const copy = { ...prev };
+      delete copy.placa;
+      return copy;
+    });
+
     const tipo = sel.typeVehicle === 1 ? "Carro" : "Moto";
 
-    // 3️⃣ Un solo dispatch para que tu form slice tenga ambos campos
     dispatch(setFullForm({
       placa: sel.plate,
       vehiculo: tipo
     }));
 
-    // 4️⃣ Local state de 'vehiculo', para tu <TextInput>
     setVehiculo(tipo);
   };
+
 
 
   /*const dataType = [
@@ -264,7 +271,7 @@ const AddVehicleScreen = () => {
   };
 
   const takePhoto = async (photoKey) => {
-    if (isReadOnly) return;
+    if (isReadOnly || !isPlateSelected) return;
 
     const hasPermission = await requestCameraPermission();
     if (!hasPermission) {
@@ -280,11 +287,24 @@ const AddVehicleScreen = () => {
     if (!result.canceled) {
       setPhotoUrls((prev) => {
         const newUri = result.assets[0].uri;
+
         const updatedPhotos = {
           ...prev,
           [photoKey]: newUri,
         };
-        dispatch(setFullForm({ [photoKey]: newUri, photos: Object.values(updatedPhotos).filter(Boolean) }));
+
+        dispatch(setFullForm({
+          [photoKey]: newUri,
+          photos: Object.values(updatedPhotos).filter(Boolean),
+        }));
+
+        // 🔴 LIMPIAR ERROR
+        setErrors(prevErrors => {
+          const copy = { ...prevErrors };
+          delete copy[photoKey];
+          return copy;
+        });
+
         return updatedPhotos;
       });
     }
@@ -292,22 +312,95 @@ const AddVehicleScreen = () => {
 
 
   // Render de cada foto
-  const renderPhotoSection = (photoKey) => (
-    <TouchableOpacity
-      style={styles.photoContainer}
-      onPress={() => takePhoto(photoKey)}
-      disabled={isReadOnly}
-    >
-      {photoUrls[photoKey] ? (
-        <Image source={{ uri: photoUrls[photoKey] }} style={styles.photo} />
-      ) : (
-        <Icon name="camera-alt" size={50} color="#4CAF50" />
-      )}
-    </TouchableOpacity>
-  );
+  const renderPhotoSection = (photoKey) => {
+    return (
+      <View style={styles.photoWrapper}>
+        <TouchableOpacity
+          style={[
+            styles.photoContainer,
+            errors[photoKey] && errorStyles.input
+          ]}
+          onPress={() => takePhoto(photoKey)}
+        >
+          {photoUrls[photoKey] ? (
+            <Image
+              source={{ uri: photoUrls[photoKey] }}
+              style={styles.photo}
+            />
+          ) : (
+            <Icon name="camera-alt" size={50} color="#4CAF50" />
+          )}
+        </TouchableOpacity>
+
+        {renderError(photoKey)}
+      </View>
+    );
+  };
+
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    // ===== Placa =====
+    if (!placa) {
+      newErrors.placa = "Debe seleccionar una placa";
+    }
+
+    // ===== Detalles externos =====
+    Object.entries(invDetails).forEach(([key, value]) => {
+      if (!value) {
+        newErrors[key] = "Campo obligatorio";
+      }
+    });
+
+    // ===== Partes =====
+    Object.entries(inventoryDetails).forEach(([key, value]) => {
+      if (!value) {
+        newErrors[key] = "Campo obligatorio";
+      }
+    });
+
+    // ===== Fotos =====
+    Object.entries(photoUrls).forEach(([key, value]) => {
+      if (!value) {
+        newErrors[key] = "Debe tomar la fotografía";
+      }
+    });
+
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const errorStyles = {
+    text: {
+      color: "#D32F2F",
+      fontSize: 12,
+      marginTop: 4,
+    },
+    input: {
+      borderColor: "#D32F2F",
+      borderWidth: 1,
+    },
+  };
+
+  const renderError = (key) =>
+    errors[key] ? (
+      <Text style={errorStyles.text}>{errors[key]}</Text>
+    ) : null;
 
   // ====== Preparar y llamar a handleSave ======
   const doBeforeSave = () => {
+    const isValid = validateForm();
+
+    if (!isValid) {
+      Alert.alert(
+        "Campos incompletos",
+        "Debes completar los campos obligatorios antes de continuar."
+      );
+      return;
+    }
+
     console.log("Entrando a doBeforeSave...");
     console.log("Vehículo:", vehiculo);
     const completeData = {
@@ -424,28 +517,90 @@ const AddVehicleScreen = () => {
                   {[
                     { label: "Lateral Izquierdo", key: "lateralIzquierdo" },
                     { label: "Lateral Derecho", key: "lateralDerecho" },
+                  ].map(({ label, key }) => (
+                    <View key={key} style={styles.row}>
+                      <Text style={styles.subtitle}>{label}</Text>
+                      <View>
+                        <Dropdown
+                          style={[
+                            styles.dropdownThree,
+                            errors[key] && errorStyles.input,
+                          ]}
+                          placeholderStyle={styles.dropdownPlaceholder}
+                          selectedTextStyle={styles.dropdownText}
+                          containerStyle={styles.dropdownContainer}
+                          data={invOptions}
+                          labelField="label"
+                          valueField="value"
+                          disable={isReadOnly || !isPlateSelected}
+                          placeholder="Seleccionar Detalle *"
+                          value={invDetails[key]}
+                          onChange={(item) => {
+                            const newValue = item.value;
+
+                            setInvDetails(prev => ({
+                              ...prev,
+                              [key]: newValue,
+                            }));
+
+                            dispatch(setFullForm({ [key]: newValue }));
+
+                            // 🔴 LIMPIAR ERROR
+                            setErrors(prev => {
+                              const copy = { ...prev };
+                              delete copy[key];
+                              return copy;
+                            });
+                          }}
+
+                        />
+                        {renderError(key)}
+                      </View>
+                    </View>
+                  ))}
+                  {[
                     { label: "Frente", key: "frente" },
                     { label: "Posterior", key: "posterior" },
                   ].map(({ label, key }) => (
                     <View key={key} style={styles.row}>
                       <Text style={styles.subtitle}>{label}</Text>
-                      <Dropdown
-                        style={styles.dropdownThree}
-                        placeholderStyle={styles.dropdownPlaceholder}
-                        selectedTextStyle={styles.dropdownText}
-                        containerStyle={styles.dropdownContainer}
-                        data={invOptions}
-                        labelField="label"
-                        valueField="value"
-                        disable={isReadOnly}
-                        placeholder="Seleccionar Detalle *"
-                        value={invDetails[key]}
-                        onChange={(item) => {
-                          const newValue = item.value;
-                          setInvDetails((prev) => ({ ...prev, [key]: newValue }));
-                          dispatch(setFullForm({ [key]: newValue }));
-                        }}
-                      />
+                      <View>
+                        <Dropdown
+                          style={[
+                            styles.dropdownThree,
+                            errors[key] && errorStyles.input,
+                          ]}
+                          placeholderStyle={styles.dropdownPlaceholder}
+                          selectedTextStyle={styles.dropdownText}
+                          containerStyle={styles.dropdownContainer}
+                          data={invOptions}
+                          labelField="label"
+                          valueField="value"
+                          disable={isReadOnly || !isPlateSelected}
+                          dropdownPosition="top"
+                          placeholder="Seleccionar Detalle *"
+                          value={invDetails[key]}
+                          onChange={(item) => {
+                            const newValue = item.value;
+
+                            setInvDetails(prev => ({
+                              ...prev,
+                              [key]: newValue,
+                            }));
+
+                            dispatch(setFullForm({ [key]: newValue }));
+
+                            // 🔴 LIMPIAR ERROR
+                            setErrors(prev => {
+                              const copy = { ...prev };
+                              delete copy[key];
+                              return copy;
+                            });
+                          }}
+
+                        />
+                        {renderError(key)}
+                      </View>
                     </View>
                   ))}
                 </View>
@@ -466,23 +621,42 @@ const AddVehicleScreen = () => {
                     ].map(({ label, key }) => (
                       <View key={key} style={styles.row}>
                         <Text style={styles.subtitle}>{label}</Text>
-                        <Dropdown
-                          style={styles.dropdownTwo}
-                          placeholderStyle={styles.dropdownPlaceholder}
-                          selectedTextStyle={styles.dropdownText}
-                          containerStyle={styles.dropdownContainer}
-                          data={inventoryOptions}
-                          labelField="label"
-                          valueField="value"
-                          disable={isReadOnly}
-                          placeholder="Seleccionar Detalle *"
-                          value={inventoryDetails[key]}
-                          onChange={(item) => {
-                            const newValue = item.value;
-                            setInventoryDetails((prev) => ({ ...prev, [key]: newValue }));
-                            dispatch(setFullForm({ [key]: newValue }));
-                          }}
-                        />
+                        <View>
+                          <Dropdown
+                            style={[
+                              styles.dropdownTwo,
+                              errors[key] && errorStyles.input
+                            ]}
+                            placeholderStyle={styles.dropdownPlaceholder}
+                            selectedTextStyle={styles.dropdownText}
+                            containerStyle={styles.dropdownContainer}
+                            data={inventoryOptions}
+                            labelField="label"
+                            valueField="value"
+                            disable={isReadOnly || !isPlateSelected}
+                            placeholder="Seleccionar Detalle *"
+                            value={inventoryDetails[key]}
+                            onChange={(item) => {
+                              const newValue = item.value;
+
+                              setInventoryDetails(prev => ({
+                                ...prev,
+                                [key]: newValue,
+                              }));
+
+                              dispatch(setFullForm({ [key]: newValue }));
+
+                              // 🔴 LIMPIAR ERROR
+                              setErrors(prev => {
+                                const copy = { ...prev };
+                                delete copy[key];
+                                return copy;
+                              });
+                            }}
+
+                          />
+                          {renderError(key)}
+                        </View>
                       </View>
                     ))}
                   </View>
@@ -495,27 +669,46 @@ const AddVehicleScreen = () => {
                       { label: "Antena", key: "antena" },
                       { label: "Tapa Gasolina", key: "tapaGasolina" },
                       { label: "Limpiabrisas", key: "limpiaBrisas" },
-                      { label: "Bahul", key: "bahul" },
+                      { label: "Baúl", key: "bahul" },
                     ].map(({ label, key }) => (
                       <View key={key} style={styles.row}>
                         <Text style={styles.subtitle}>{label}</Text>
-                        <Dropdown
-                          style={styles.dropdownTwo}
-                          placeholderStyle={styles.dropdownPlaceholder}
-                          selectedTextStyle={styles.dropdownText}
-                          containerStyle={styles.dropdownContainer}
-                          data={inventoryOptions}
-                          labelField="label"
-                          valueField="value"
-                          disable={isReadOnly}
-                          placeholder="Seleccionar Detalle *"
-                          value={inventoryDetails[key]}
-                          onChange={(item) => {
-                            const newValue = item.value;
-                            setInventoryDetails((prev) => ({ ...prev, [key]: newValue }));
-                            dispatch(setFullForm({ [key]: newValue }));
-                          }}
-                        />
+                        <View>
+                          <Dropdown
+                            style={[
+                              styles.dropdownTwo,
+                              errors[key] && errorStyles.input
+                            ]}
+                            placeholderStyle={styles.dropdownPlaceholder}
+                            selectedTextStyle={styles.dropdownText}
+                            containerStyle={styles.dropdownContainer}
+                            data={inventoryOptions}
+                            labelField="label"
+                            valueField="value"
+                            disable={isReadOnly || !isPlateSelected}
+                            placeholder="Seleccionar Detalle *"
+                            value={inventoryDetails[key]}
+                            onChange={(item) => {
+                              const newValue = item.value;
+
+                              setInventoryDetails(prev => ({
+                                ...prev,
+                                [key]: newValue,
+                              }));
+
+                              dispatch(setFullForm({ [key]: newValue }));
+
+                              // 🔴 LIMPIAR ERROR
+                              setErrors(prev => {
+                                const copy = { ...prev };
+                                delete copy[key];
+                                return copy;
+                              });
+                            }}
+
+                          />
+                          {renderError(key)}
+                        </View>
                       </View>
                     ))}
                   </View>
@@ -532,7 +725,7 @@ const AddVehicleScreen = () => {
                       dispatch(setFullForm({ observaciones: text }));
                     }}
                     mode="outlined"
-                    disabled={isReadOnly}
+                    disabled={isReadOnly || !isPlateSelected}
                     theme={{
                       colors: {
                         outline: "#E5E5E5",

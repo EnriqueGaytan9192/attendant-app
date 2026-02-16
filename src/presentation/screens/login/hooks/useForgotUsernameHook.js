@@ -42,7 +42,7 @@ const useForgotUsernameHook = () => {
             showAlert("warning", "El correo electrónico no puede contener espacios.");
         } else if (hasEmojis) {
             showAlert("warning", "El correo electrónico no puede contener emojis.");
-        } else if (isEmailInvalid && isValidEmail(noSpaces)) {
+        } else if (isEmailInvalid && isValidEmail(noSpacesNoEmojis)) {
             setIsEmailInvalid(false);
         };
     };

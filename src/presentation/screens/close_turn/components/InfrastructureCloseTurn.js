@@ -120,7 +120,7 @@ const InfrastructureCloseTurn = () => {
                             </Animatable.View>
                         </View>
                         <View style={{ marginTop: 35 }}>
-                            <Text style={stylesInfrastructureCloseTurn.title}>Boletería Mnaual</Text>
+                            <Text style={stylesInfrastructureCloseTurn.title}>Boletería Manual</Text>
                             <View style={{ alignItems: "flex-start", flexDirection: "row", alignItems: "center" }}>
                                 <Switch
                                     value={isComplete}

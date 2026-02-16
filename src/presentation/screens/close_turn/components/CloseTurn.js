@@ -64,9 +64,9 @@ const CloseTurnScreen = () => {
                         <Divider style={stylesCloseTurn.divider} />
                         <View style={{ marginTop: 25, marginLeft: 20 }}>
                             <Text style={stylesCloseTurn.subTitle}>Base de caja</Text>
-                            <Text style={stylesCloseTurn.infoTwo}>{`$${Number(turnDet?.box_base).toLocaleString("es-CO", {
+                            <Text style={stylesCloseTurn.infoTwo}>{turnDet ? `$${Number(turnDet?.box_base).toLocaleString("es-CO", {
                                 minimumFractionDigits: 2
-                            })}`}</Text>
+                            })}` : ""}</Text>
                         </View>
                         <Divider style={stylesCloseTurn.divider} />
                         <View style={{ marginTop: 25, marginBottom: 15 }}>

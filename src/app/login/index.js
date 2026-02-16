@@ -16,7 +16,7 @@ const Login = () => {
         (state) => state.auth.isModalTwoVisible
     );
     const [keyboardOpen, setKeyboardOpen] = useState(false);
-    
+
     useEffect(() => {
         const keyboardDidShowListener = Keyboard.addListener("keyboardDidShow", () =>
             setKeyboardOpen(true)
@@ -54,16 +54,9 @@ const Login = () => {
             <LoginScreen />
 
             <Portal>
-                {isModalOneVisible && (
+                {(isModalOneVisible || isModalTwoVisible) && (
                     <BlurView
-                        intensity={75}
-                        tint="dark"
-                        style={StyleSheet.absoluteFill}
-                    />
-                )}
-                {isModalTwoVisible && (
-                    <BlurView
-                        intensity={75}
+                        intensity={80}
                         tint="dark"
                         style={StyleSheet.absoluteFill}
                     />

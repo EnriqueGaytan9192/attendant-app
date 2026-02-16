@@ -1,4 +1,4 @@
-import { Dimensions, Image, Keyboard, ScrollView, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import { Dimensions, Image, ScrollView, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { Button, Card, DataTable, Divider, IconButton, Text } from "react-native-paper";
 import CustomTextInput from "../../../../common/components/CustomTextInput";
@@ -24,6 +24,8 @@ const OpenTurnScreen = () => {
         plateError,
         plateRef,
         toggleDropdown,
+        closeDropdown,
+        formatHourView,
         togglePlateSelection,
         toggleSelectAll,
         isAllSelected,
@@ -35,12 +37,29 @@ const OpenTurnScreen = () => {
     } = useOpenTurnHook();
 
     return (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={{ flex: 1 }}>
             <ScrollView
                 contentContainerStyle={{ flexGrow: 1 }}
                 keyboardShouldPersistTaps="handled"
+                keyboardDismissMode="on-drag"
+                onScrollBeginDrag={closeDropdown}
             >
                 <View style={stylesOpenTurn.container}>
+                    {openDropdown && (
+                        <TouchableWithoutFeedback onPress={closeDropdown}>
+                            <View
+                                style={{
+                                    position: "absolute",
+                                    top: 0,
+                                    left: 0,
+                                    right: 0,
+                                    bottom: 0,
+                                    zIndex: 50,
+                                }}
+                            />
+                        </TouchableWithoutFeedback>
+                    )}
+
                     <View style={stylesOpenTurn.subContainer}>
                         <View style={stylesOpenTurn.containerTitle}>
                             <Image
@@ -60,6 +79,7 @@ const OpenTurnScreen = () => {
                                     {(autosData ? autosData.total : 0) + (motosData ? motosData.total : 0) + (bicicletasData ? bicicletasData.total : 0)}
                                 </Text>
                             </View>
+
                             <View style={stylesOpenTurn.contentDropdown}>
                                 <VehicleDropdown
                                     title="Carro"
@@ -154,11 +174,12 @@ const OpenTurnScreen = () => {
                                                 <ScrollView
                                                     style={{ maxHeight: 195 }}
                                                     nestedScrollEnabled
+                                                    keyboardShouldPersistTaps="handled"
                                                 >
                                                     {manualPlates.map((item) => (
                                                         <DataTable.Row style={{ borderBottomWidth: 1, borderBlockColor: "#E5E5E5" }} key={item.plate}>
                                                             <DataTable.Cell style={{ flex: 2 }}>
-                                                                <Text style={{ color: "#666666", fontSize: 13, fontFamily: "Montserrat_400Regular", lineHeight: 20 }}>{item.entry_date} {item.entry_hour}</Text>
+                                                                <Text style={{ color: "#666666", fontSize: 13, fontFamily: "Montserrat_400Regular", lineHeight: 20 }}>{item.entry_date} {formatHourView(item.entry_hour)}</Text>
                                                             </DataTable.Cell>
                                                             <DataTable.Cell style={{ flex: 0.9 }}>
                                                                 <Text style={{ color: "#666666", fontSize: 13, fontFamily: "Montserrat_400Regular", lineHeight: 20 }}>{item.plate}</Text>
@@ -217,7 +238,7 @@ const OpenTurnScreen = () => {
                     </View>
                 </View>
             </ScrollView>
-        </TouchableWithoutFeedback>
+        </View>
     )
 }
 

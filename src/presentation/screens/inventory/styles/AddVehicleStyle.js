@@ -37,8 +37,8 @@ const styles = StyleSheet.create({
         backgroundColor: "#FFFFFF",
         shadowColor: "#000",
         shadowOffset: {
-          width: 0,
-          height: 2,
+            width: 0,
+            height: 2,
         },
         shadowOpacity: 0.1,
         shadowRadius: 4,
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
     },
     dropdownThree: {
-        width: "65%",
+        width: 250,
         height: 50,
         borderWidth: 1,
         borderColor: "#ccc",
@@ -105,11 +105,9 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         elevation: 3,
         backgroundColor: "white",
-        padding: 15,
         alignItems: "center",
         justifyContent: "center",
         width: 200,
-        height: 200,
     },
     photo: {
         width: 160,
@@ -120,7 +118,7 @@ const styles = StyleSheet.create({
         width: 160,
         height: 160,
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
     },
     observationsInput: {
         backgroundColor: "#FFFFFF",
@@ -145,6 +143,10 @@ const styles = StyleSheet.create({
         paddingVertical: 2,
         borderRadius: 10,
     },
+    photoWrapper: {
+        alignItems: "center",
+    },
+
 })
 
 export default styles;

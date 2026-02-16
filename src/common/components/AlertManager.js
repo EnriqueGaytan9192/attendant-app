@@ -2,15 +2,24 @@ import { useEffect, useState } from "react";
 import CustomAlert from "./CustomAlert";
 
 let addAlertHandler;
+let removeAlertsHandler;
 
-export const showAlert = (type, message, duration = 3000) => {
+export const showAlert = (type, message, duration = 3000, options = {}) => {
     if (addAlertHandler) {
         addAlertHandler({
             id: `${Date.now()}-${Math.random()}`,
             type,
             message,
-            duration
+            duration,
+            persistent: options.persistent || false,
+            onClose: options.onClose || null,
         });
+    }
+};
+
+export const clearPersistentAlerts = () => {
+    if (removeAlertsHandler) {
+        removeAlertsHandler();
     }
 };
 
@@ -30,13 +39,22 @@ const AlertManager = () => {
                 return updated;
             })
 
-            setTimeout(() => {
-                setAlerts((prev) => prev.filter((a) => a.id !== alert.id));
-            }, alert.duration + 400);
+            if (!alert.persistent) {
+                setTimeout(() => {
+                    setAlerts((prev) => prev.filter((a) => a.id !== alert.id));
+                }, alert.duration + 400);
+            }
+        };
+
+        removeAlertsHandler = () => {
+            setAlerts((prev) =>
+                prev.filter((a) => !a.persistent)
+            );
         };
 
         return () => {
             addAlertHandler = null;
+            removeAlertsHandler = null;
         };
     }, []);
 
@@ -60,6 +78,7 @@ const AlertManager = () => {
                     type={alert.type}
                     message={alert.message}
                     duration={alert.duration}
+                    persistent={alert.persistent}
                     offsetTop={getOffsetTop(index)}
                     onHeight={(height) =>
                         setAlertHeights((prev) => ({
@@ -67,9 +86,11 @@ const AlertManager = () => {
                             [alert.id]: height,
                         }))
                     }
-                    onDismiss={() =>
+                    onDismiss={() => {
+                        alert.onClose?.();
+
                         setAlerts((prev) => prev.filter((a) => a.id !== alert.id))
-                    }
+                    }}
                 />
             ))}
 

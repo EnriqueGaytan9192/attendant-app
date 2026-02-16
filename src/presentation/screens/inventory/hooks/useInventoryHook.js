@@ -417,7 +417,7 @@ const useInventoryHook = () => {
                     dispatch(setTurnoIdEntry(data.turn.turnoId));
                     console.log("Turno Id obtenido en Entrada:", data.turn.turnoId);
                 } else {
-                    console.error("No se pudo obtener el turnoId de objects");
+                    console.error("No se pudo obtener el turnoId de objects inventory");
                 }
             } catch (error) {
                 console.error("Error al obtener el turnoIdEntry:", error);
