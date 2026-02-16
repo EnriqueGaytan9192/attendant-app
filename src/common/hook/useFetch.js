@@ -4,6 +4,7 @@ export const useFetch = (path, method, opt) => {
   //const baseURL = "https://24s14u1qdj.execute-api.us-east-1.amazonaws.com"; //Producción
   //const baseURL = "https://attendant-back-qa.parking.net.co" //QA
   const baseURL = "https://kzifflgdih.execute-api.us-east-1.amazonaws.com" //Desarrollo
+  //const baseURL = "http://192.168.0.200:2001" // Local
 
   //const baseURL = "https://allowed-wallaby-keen.ngrok-free.app"
   const { onComplete, onError, onloading } = opt;
@@ -112,6 +113,7 @@ export const useLazyFetch = () => {
   //const baseURL = "https://24s14u1qdj.execute-api.us-east-1.amazonaws.com"; //Producción
   //const baseURL = "https://attendant-back-qa.parking.net.co" //QA
   const baseURL = "https://kzifflgdih.execute-api.us-east-1.amazonaws.com" //Desarrollo
+  //const baseURL = "http://192.168.0.200:2001" // Local
 
   //const baseURL = "https://allowed-wallaby-keen.ngrok-free.app"
   const token = useAppSelector((state) => state.auth.token);
@@ -206,6 +208,7 @@ export const useLazyFileFetch = () => {
   //const baseURL = "https://24s14u1qdj.execute-api.us-east-1.amazonaws.com"; //Producción
   //const baseURL = "https://attendant-back-qa.parking.net.co" //QA
   const baseURL = "https://kzifflgdih.execute-api.us-east-1.amazonaws.com" //Desarrollo
+  //const baseURL = "http://192.168.0.200:2001" // Local
 
   //const baseURL = "https://allowed-wallaby-keen.ngrok-free.app"
   const token = useAppSelector((state) => state.auth.token);

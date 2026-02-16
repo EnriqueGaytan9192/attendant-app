@@ -379,7 +379,7 @@ const ObjectsModal = ({ onFinish }) => {
                                     }}
                                     color="#90D400"
                                 />
-                                <Text>Autorizo a Parking International S.A.S a realizar el tratamiento de mis datos personales de acuerdo con su Política de Tratamiento de Datos.</Text>
+                                <Text style={{ marginRight: 40 }}>Autorizo a Parking International S.A.S a realizar el tratamiento de mis datos personales de acuerdo con su Política de Tratamiento de Datos.</Text>
                             </View>
                             {showError && (
                                 <Text style={{ color: "red", marginTop: 5 }}>
@@ -517,7 +517,7 @@ const ObjectsModal = ({ onFinish }) => {
                         <View style={{ marginTop: 10, width: '48%' }}>
                             <View style={{ flexDirection: 'row' }}>
                                 <Checkbox status="checked" color="#90D400" />
-                                <Text>
+                                <Text style={{ marginRight: 40 }}>
                                     Autorizo a Parking International S.A.S a realizar el tratamiento de mis datos personales de acuerdo con su Política de Tratamiento de Datos.
                                 </Text>
                             </View>

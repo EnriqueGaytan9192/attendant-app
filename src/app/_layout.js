@@ -190,9 +190,8 @@ const RootLayout = () => {
                             )}
                         </View>
                     </Modal>
-                    <AlertManagerButton />
-
                     <AlertManager />
+                    <AlertManagerButton />
                 </Portal>
 
                 <AppNavigator />

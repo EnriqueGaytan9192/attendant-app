@@ -140,9 +140,14 @@ const useVehicleListCardHook = () => {
 
     if (foundVehicle) {
       dispatch(setSelectedVehicle(foundVehicle));
+      dispatch(setVehicleDetail(foundVehicle));
+      dispatch(setPlate(foundVehicle.plate));
     } else {
-      dispatch(setAlertMessage("No se encontró ningún vehículo/bicicleta con este código."));
+      dispatch(setAlertMessage(
+        "No se encontró ningún vehículo/bicicleta con este código."
+      ));
     }
+
   };
 
   const fetchVehicleByQR = async (ticket) => {

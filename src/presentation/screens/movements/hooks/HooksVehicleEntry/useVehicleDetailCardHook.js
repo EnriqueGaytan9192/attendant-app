@@ -26,6 +26,7 @@ const useVehicleDetailCardHook = () => {
   const [ticketInfoComplementary, setTicketInfoComplementary] = useState(null);
   const { cedulaBeParking } = useAppSelector((state) => state.auth);
   const { numeroIdentificacion, parqueaderoId, token } = useAppSelector((state) => state.auth);
+  const [isConfirming, setIsConfirming] = useState(false);
 
   console.log("Selected Vehicle in Hook:", selectedVehicle);
 
@@ -310,6 +311,11 @@ const useVehicleDetailCardHook = () => {
       return;
     }
 
+    // 🔒 Evita múltiples ejecuciones
+    if (isConfirming) return;
+
+    setIsConfirming(true);
+
     try {
       if (selectedVehicle.stateTransaction === 2) {
         const tiempoGracia = await getTiempoGracia(parqueaderoId, token);
@@ -344,7 +350,11 @@ const useVehicleDetailCardHook = () => {
         entryVehicleId: selectedVehicle.vehicleId,
       };
 
-      const res = await getDataFetch("/api/getInformationEntry", "PUT", { rq: body });
+      const res = await getDataFetch(
+        "/api/getInformationEntry",
+        "PUT",
+        { rq: body }
+      );
 
       if (res?.errorFetch) {
         throw new Error(res.errorFetch.message);
@@ -352,12 +362,15 @@ const useVehicleDetailCardHook = () => {
 
       Alert.alert("Salida registrada exitosamente.");
       dispatch(resetSteps());
+
     } catch (err) {
       console.error("❌ Error confirmVehicleExit:", err);
       Alert.alert("Error", "No se pudo confirmar la salida del vehículo.");
+    } finally {
+      // 🔓 Vuelve a habilitar el botón pase lo que pase
+      setIsConfirming(false);
     }
   };
-
 
 
 
@@ -555,7 +568,8 @@ const useVehicleDetailCardHook = () => {
     actualizarEstadoTicket,
     ticketInfoComplementary,
     getVigenciaFin,
-    turnId
+    turnId,
+    isConfirming
   };
 };
 

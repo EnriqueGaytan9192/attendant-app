@@ -4,7 +4,7 @@ import * as FileSystem from 'expo-file-system/legacy';
 import * as ImagePicker from "expo-image-picker";
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
 import QRCodeGenerator from "qrcode-generator";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Alert } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import biciPng from '../../../../../assets/images/bici.png';
@@ -31,7 +31,6 @@ import {
 
 const useVehicleEntryCardHook = () => {
   const dispatch = useDispatch();
-  const turnoFetchedRef = useRef(false);
   const { getDataFetch } = useLazyFetch();
   const {
     plateRegister,
@@ -95,52 +94,39 @@ const useVehicleEntryCardHook = () => {
   };
 
   useEffect(() => {
-    if (!numeroIdentificacion || !parqueaderoId) return;
-    if (turnoIdEntry !== null) return;
-    if (turnoFetchedRef.current) return;
+    if (turnoIdEntry) {
+      console.log("🧠 Turno ya existe, no consulto otra vez");
+      return;
+    }
 
-    turnoFetchedRef.current = true;
+    if (!numeroIdentificacion || !parqueaderoId) return;
 
     const fetchTurnoId = async () => {
-      try {
-        console.log("🔎 Consultando turno activo...");
+      console.log("🔎 Consultando turno entrada de vehiculos...");
 
-        const { data, errorFetch } = await getDataFetch(
-          "/api/turn",
-          "POST",
-          {
-            rq: {
-              id: numeroIdentificacion,
-              parqueaderoId,
-            },
-          }
-        );
-
-        if (errorFetch) throw errorFetch;
-
-        if (data?.turn?.turnoId) {
-          dispatch(setTurnoIdEntry(data.turn.turnoId));
-          console.log("✅ Turno obtenido:", data.turn.turnoId);
-        } else {
-          console.warn("⚠️ Usuario sin turno activo");
-          dispatch(setTurnoIdEntry(null));
+      const { data } = await getDataFetch(
+        "/api/turn",
+        "POST",
+        {
+          rq: {
+            id: numeroIdentificacion,
+            parqueaderoId,
+          },
         }
+      );
 
-      } catch (error) {
-        console.error("❌ Error obteniendo turno:", error);
+      if (data?.turn?.turnoId) {
+        dispatch(setTurnoIdEntry(data.turn.turnoId));
+      } else {
         dispatch(setTurnoIdEntry(null));
       }
     };
 
     fetchTurnoId();
 
-  }, [
-    numeroIdentificacion,
-    parqueaderoId,
-    turnoIdEntry,
-    dispatch,
-    getDataFetch
-  ]);
+  }, [numeroIdentificacion, parqueaderoId, turnoIdEntry]);
+
+
 
 
   useEffect(() => {

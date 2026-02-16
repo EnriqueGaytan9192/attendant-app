@@ -42,7 +42,7 @@ const VehicleDetailCard = () => {
   const [isPrintingExit, setIsPrintingExit] = useState(false);
   const [isPrintingEntry, setIsPrintingEntry] = useState(false);
   const lostModalVisible = useSelector((s) => s.movements.lostTicketModalVisible);
-  const { handleNextStep, lostTicketModal, objectsModal, confirmVehicleExit, exitInfo, infoTicketExit, infoTicketEntry, ticketInfo, ticketInfoExit, actualizarEstadoTicket, ticketInfoComplementary, getVigenciaFin, turnId } = useVehicleDetailCardHook();
+  const { handleNextStep, lostTicketModal, objectsModal, confirmVehicleExit, exitInfo, infoTicketExit, infoTicketEntry, ticketInfo, ticketInfoExit, actualizarEstadoTicket, ticketInfoComplementary, getVigenciaFin, turnId, isConfirming } = useVehicleDetailCardHook();
   const selectedVehicle = useSelector((state) => state.movements.selectedVehicle);
   const blockNavigation = useSelector((state) => state.movements);
   const scannedData = useSelector((state) => state.movements.scannedData);
@@ -836,6 +836,7 @@ const VehicleDetailCard = () => {
                 onPress={confirmVehicleExit}
                 style={styles.exitButtons}
                 disabled={!selectedVehicle}
+                loading={isConfirming}
               >
                 Confirmar Salida Vehículo
               </Button>
