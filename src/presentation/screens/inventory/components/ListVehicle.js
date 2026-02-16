@@ -20,6 +20,7 @@ const ListVehicle = () => {
     handleEditVehicle,
     handleViewBike,
     handleEditBike,
+    reloadData
   } = functions;
   const { dataSet, dataSetBicycle } = states;
   const isFocused = useIsFocused();
@@ -30,7 +31,7 @@ const ListVehicle = () => {
 
   useEffect(() => {
     if (isFocused) {
-      functions.reloadData();
+      reloadData();
     }
   }, [isFocused]);
   // Mapeo de autos

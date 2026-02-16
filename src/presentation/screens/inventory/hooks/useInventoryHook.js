@@ -8,9 +8,7 @@ import {
     setFullFormToEdit, setFullFormToView, setSelectedView,
     setUrls
 } from "../../../../state/slices/inventorySlice";
-import {
-    setTurnoIdEntry,
-} from "../../../../state/slices/movementsSlice";
+import { setTurnoIdEntry } from "../../../../state/slices/movementsSlice";
 const useInventoryHook = () => {
     const dispatch = useAppDispatch();
     const { getDataFetch: fetchVehicles } = useLazyFetch();
@@ -23,6 +21,41 @@ const useInventoryHook = () => {
     const { numeroIdentificacion, parqueaderoId, terminal } = useSelector((state) => state.auth);
     const { dataSet, dataSetBicycle, selectedView, searchValue, form, urls } = useAppSelector((state) => state.inventory);
     //const facility_id = useAppSelector(item => item.auth.infoAuth.facility_id);
+
+    useEffect(() => {
+        if (turnoIdEntry) {
+            console.log("🧠 Turno ya existe, no consulto otra vez, inventario");
+            return;
+        }
+
+        if (!numeroIdentificacion || !parqueaderoId) return;
+
+        const fetchTurnoId = async () => {
+            console.log("🔎 Consultando turno entrada de vehiculos...");
+
+            const { data } = await getDataFetch(
+                "/api/turn",
+                "POST",
+                {
+                    rq: {
+                        id: numeroIdentificacion,
+                        parqueaderoId,
+                    },
+                }
+            );
+
+            if (data?.turn?.turnoId) {
+                dispatch(setTurnoIdEntry(data.turn.turnoId));
+                console.log("Turno Id obtenido en Entrada:", data.turn.turnoId);
+            } else {
+                dispatch(setTurnoIdEntry(null));
+                console.error("No se pudo obtener el turnoId de objects inventory");
+            }
+
+        };
+        
+        fetchTurnoId();
+    }, [numeroIdentificacion, parqueaderoId, turnoIdEntry]);
     const { loading } = useFetch(`/api/inventory/0/turn/${turnoIdEntry}`, 'GET', {
         onComplete: (data) => {
             console.log("Inventario completo (Carros):", data.inventory);
@@ -149,6 +182,7 @@ const useInventoryHook = () => {
             }
             if (data?.message) {
                 Alert.alert("Éxito", data.message, [{ text: "OK" }]);
+                await reloadData();
             }
             handleCancel();
         } catch (error) {
@@ -399,35 +433,13 @@ const useInventoryHook = () => {
                 console.log("Respuesta", data)
                 showAlert('Vehiculo registrado exitosamente.');
                 dispatch(setUrls(null));
+                await reloadData();
                 handleCancel();
             } else if (errorFetch) {
                 showAlert(errorFetch.msg || errorFetch.message);
             }
         }
     };
-
-    useEffect(() => {
-        const fetchTurnoId = async () => {
-            try {
-                const { data, errorFetch } = await getDataFetch("/api/turn", "POST", {
-                    rq: { id: numeroIdentificacion, parqueaderoId: parqueaderoId },
-                });
-
-                if (data?.turn?.turnoId) {
-                    dispatch(setTurnoIdEntry(data.turn.turnoId));
-                    console.log("Turno Id obtenido en Entrada:", data.turn.turnoId);
-                } else {
-                    console.error("No se pudo obtener el turnoId de objects inventory");
-                }
-            } catch (error) {
-                console.error("Error al obtener el turnoIdEntry:", error);
-            }
-        };
-
-        if (!turnoIdEntry) {
-            fetchTurnoId();
-        }
-    }, [turnoIdEntry, numeroIdentificacion, dispatch, getDataFetch]);
 
     const transformFormToRequest = (formObject, urls, vehiculosList) => {
         const missingFields = [];

@@ -11,6 +11,7 @@ import {
   showLostTicketModal,
   showObjectsModal,
 } from "../../../../../state/slices/movementsSlice";
+import useInventoryHook from "../../../inventory/hooks/useInventoryHook";
 
 const useVehicleDetailCardHook = () => {
   const dispatch = useDispatch();
@@ -27,6 +28,9 @@ const useVehicleDetailCardHook = () => {
   const { cedulaBeParking } = useAppSelector((state) => state.auth);
   const { numeroIdentificacion, parqueaderoId, token } = useAppSelector((state) => state.auth);
   const [isConfirming, setIsConfirming] = useState(false);
+
+  const { functions } = useInventoryHook();
+  const { reloadData } = functions;
 
   console.log("Selected Vehicle in Hook:", selectedVehicle);
 
@@ -147,6 +151,8 @@ const useVehicleDetailCardHook = () => {
 
         dispatch(resetSteps());
         dispatch(setReload({ name: "list", value: true }));
+
+        await reloadData();
         return;
 
       } catch (error) {
@@ -362,6 +368,8 @@ const useVehicleDetailCardHook = () => {
 
       Alert.alert("Salida registrada exitosamente.");
       dispatch(resetSteps());
+
+      await reloadData();
 
     } catch (err) {
       console.error("❌ Error confirmVehicleExit:", err);

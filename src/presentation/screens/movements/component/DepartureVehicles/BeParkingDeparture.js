@@ -6,11 +6,10 @@ import {
   Card,
   Checkbox,
   Divider,
-  Icon,
   Text,
   TextInput
 } from "react-native-paper";
-import { formatDate, formatDateTime, getProductType } from "../../../../../common/actions";
+import { formatDate, formatDateTime } from "../../../../../common/actions";
 import useBeParkingDepartureHook from "../../hooks/HooksDepartureVehicles/useBeParkingDepartureHook";
 import styles from "../../styles/stylesDepartureVehicles/stylesBeParkingDeparture";
 
@@ -87,6 +86,17 @@ const BeParkingDeparture = () => {
       setIsSubmitting(false);
     }
   };
+
+  const isDataReady =
+    !loading &&
+    !error &&
+    vehicleExitData !== null &&
+    vehicleExitData !== undefined;
+
+  const isContinueDisabled =
+    !isDataReady ||
+    isSubmitting ||
+    isCalculatingBonuses;
 
   return (
     <ScrollView keyboardShouldPersistTaps="always" contentContainerStyle={{ alignItems: "center", padding: 16 }}>
@@ -321,7 +331,7 @@ const BeParkingDeparture = () => {
                 <Button
                   mode="contained"
                   loading={isSubmitting || isCalculatingBonuses}
-                  disabled={isSubmitting || isCalculatingBonuses}
+                  disabled={isContinueDisabled}
                   onPress={onContinue}
                   style={styles.continueButton}
                 >
