@@ -121,7 +121,7 @@ const InfrastructureCloseTurn = () => {
                         </View>
                         <View style={{ marginTop: 35 }}>
                             <Text style={stylesInfrastructureCloseTurn.title}>Boletería Manual</Text>
-                            <View style={{ alignItems: "flex-start", flexDirection: "row", alignItems: "center" }}>
+                            <View style={{ flexDirection: "row", alignItems: "center" }}>
                                 <Switch
                                     value={isComplete}
                                     onValueChange={handleIsCompleteChange}
@@ -196,7 +196,7 @@ const InfrastructureCloseTurn = () => {
                                     </Animatable.View>
                                 </View>
                             )}
-                            <View style={{ flexDirection: "row", justifyContent: "flex-end", marginTop: "auto", marginTop: 50 }}>
+                            <View style={{ flexDirection: "row", justifyContent: "flex-end", marginTop: 25 }}>
                                 <Button
                                     mode="contained"
                                     onPress={handlePrevious}
