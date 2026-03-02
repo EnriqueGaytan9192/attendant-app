@@ -311,10 +311,15 @@ const usePaymentForm = (month, onBack) => {
 
     const isConFactura = selectedTabProducts === 'conFactura';
 
+    const documentTypeCode = getDocumentTypeCode(selectedDocumentType);
+
     const payload = {
       correo: isConFactura ? invoiceData?.correo : correo,
       nombre: isConFactura ? invoiceData?.razonSocial : nombre,
-      apellidos: isConFactura ? '-' : (apellidos || '-'),
+      //apellidos: isConFactura ? '-' : (apellidos || '-'),
+      apellidos: isConFactura
+        ? '-'
+        : (documentTypeCode === 'NIT' ? ' ' : apellidos),
       tipoIdentificacionId: isConFactura
         ? parseInt(invoiceData?.tipoDocumento || 0)
         : parseInt(selectedDocumentType || 0),
@@ -613,11 +618,16 @@ const usePaymentForm = (month, onBack) => {
       return !(nitValid && placaValid && tokenValid && medioValid && comprobValid);
     }
 
+    const documentTypeCode = getDocumentTypeCode(selectedDocumentType);
+
     const docValid = validateInputByType(typeDocument, getDocumentTypeCode(selectedDocumentType));
     const plateInvalid = Boolean(plateError);
     const needsComp = medioPagoId === '2';
     const missingComp = needsComp && !numeroComprobante;
-    const missingReq = !correo || !nombre || !apellidos || !placa || !medioPagoId;
+
+    const isApellidosRequired = documentTypeCode === 'CC';
+
+    const missingReq = !correo || !nombre || (isApellidosRequired && !apellidos?.trim()) || !placa || !medioPagoId;
 
     return (
       !docValid ||

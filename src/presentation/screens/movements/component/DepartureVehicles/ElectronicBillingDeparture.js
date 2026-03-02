@@ -1,9 +1,9 @@
-import { ScrollView, View, Alert } from "react-native"; // Se agregó Alert para mostrar mensajes de alerta
-import { Button, Card, Checkbox, Divider, Text, TextInput } from "react-native-paper";
-import styles from "../../styles/stylesDepartureVehicles/stylesElectronicBillingDeparture";
-import useElectronicBillingDepartureHook from "../../hooks/HooksDepartureVehicles/useElectronicBillingDepartureHook";
-import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { Alert, ScrollView, View } from "react-native"; // Se agregó Alert para mostrar mensajes de alerta
+import { Button, Card, Checkbox, Divider, Text, TextInput } from "react-native-paper";
+import { useSelector } from "react-redux";
+import useElectronicBillingDepartureHook from "../../hooks/HooksDepartureVehicles/useElectronicBillingDepartureHook";
+import styles from "../../styles/stylesDepartureVehicles/stylesElectronicBillingDeparture";
 
 const formatCurrency = (value) => {
     const number = Number(value);

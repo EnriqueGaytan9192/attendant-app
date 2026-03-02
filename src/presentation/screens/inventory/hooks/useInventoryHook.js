@@ -1,7 +1,6 @@
-import { useEffect } from "react";
 import { Alert, Platform } from "react-native";
 import { useSelector } from "react-redux";
-import { useFetch, useLazyFetch, useLazyFileFetch } from "../../../../common/hook/useFetch";
+import { useLazyFetch, useLazyFileFetch } from "../../../../common/hook/useFetch";
 import { useAppDispatch, useAppSelector } from "../../../../state/hooks";
 import {
     changeFlagBy, cleanForm, cleanFormBici, searchInDataSet, setDataList, setDataListBicycle,
@@ -20,38 +19,6 @@ const useInventoryHook = () => {
     const { numeroIdentificacion, parqueaderoId, terminal } = useSelector((state) => state.auth);
     const { dataSet, dataSetBicycle, selectedView, searchValue, form, urls } = useAppSelector((state) => state.inventory);
     //const facility_id = useAppSelector(item => item.auth.infoAuth.facility_id);
-
-    const { loading } = useFetch(`/api/inventory/0/turn/${turnoIdEntry}`, 'GET', {
-        onComplete: (data) => {
-            console.log("Inventario completo (Carros):", data.inventory);
-
-            const filtrados = Array.isArray(data.inventory)
-                ? data.inventory.filter(item => item.estadoVehiculo === 1)
-                : [];
-
-            console.log("Filtrados (Carros):", filtrados);
-            dispatch(setDataList(filtrados));
-        },
-        onError: (error) => {
-            console.log("Error en la petición de carros:", error);
-        }
-    });
-
-    const { loading: bicycleLoading } = useFetch(`/api/inventory/1/turn/${turnoIdEntry}`, 'GET', {
-        onComplete: (data) => {
-            console.log("Inventario completo (Bicicletas):", data.inventory);
-
-            const filtrados = Array.isArray(data.inventory)
-                ? data.inventory.filter(item => item.estadoVehiculo === 1)
-                : [];
-
-            console.log("Filtrados (Bicicletas):", filtrados);
-            dispatch(setDataListBicycle(filtrados));
-        },
-        onError: (error) => {
-            console.log("Error en la petición de bicicletas:", error);
-        }
-    });
 
 
     const { getDataFetch, loading: loadingFiles } = useLazyFetch();
@@ -641,24 +608,44 @@ const useInventoryHook = () => {
 
     const reloadData = async () => {
         try {
-            const { data: dv } = await fetchVehicles(`/api/inventory/0/turn/${turnoIdEntry}`, 'GET');
-            const veh = Array.isArray(dv.inventory)
-                ? dv.inventory.filter(i => i.estadoVehiculo === 1)
-                : [];
-            dispatch(setDataList(veh));
-        } catch (e) { console.warn(e) }
+            const { data: dv, errorFetch } = await fetchVehicles(
+                `/api/inventory/0/turn/${turnoIdEntry}`,
+                "GET"
+            );
+
+            if (errorFetch || !dv?.inventory) {
+                dispatch(setDataList([]));
+            } else {
+                const veh = dv.inventory.filter(
+                    i => i.estadoVehiculo === 1
+                );
+                dispatch(setDataList(veh));
+            }
+        } catch (e) {
+            console.warn(e);
+            dispatch(setDataList([])); // 🔥 limpia aunque falle
+        }
 
         try {
-            const { data: db } = await fetchBicycles(`/api/inventory/1/turn/${turnoIdEntry}`, 'GET');
-            const bicis = Array.isArray(db.bicis)
-                ? db.bicis.filter(i => i.estadoVehiculo === 1)
-                : [];
-            console.log("bicis", bicis);
-            dispatch(setDataListBicycle(bicis));
-        } catch (e) { console.warn(e) }
+            const { data: db, errorFetch } = await fetchBicycles(
+                `/api/inventory/1/turn/${turnoIdEntry}`,
+                "GET"
+            );
+
+            if (errorFetch || !db?.bicis) {
+                dispatch(setDataListBicycle([]));
+            } else {
+                const bicis = db.bicis.filter(
+                    i => i.estadoVehiculo === 1
+                );
+                dispatch(setDataListBicycle(bicis));
+            }
+        } catch (e) {
+            console.warn(e);
+            dispatch(setDataListBicycle([]));
+        }
     };
 
-    useEffect(() => { reloadData() }, [turnoIdEntry]);
 
     return {
         functions: {
@@ -681,13 +668,12 @@ const useInventoryHook = () => {
         },
         states: {
             dataSet,
-            bicycleLoading,
-            loading,
             searchValue,
             dataSetBicycle,
             selectedView,
             form,
-            loadingFiles
+            loadingFiles,
+            turnoIdEntry
         }
     }
 }

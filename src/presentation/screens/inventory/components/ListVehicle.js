@@ -22,7 +22,7 @@ const ListVehicle = () => {
     handleEditBike,
     reloadData
   } = functions;
-  const { dataSet, dataSetBicycle } = states;
+  const { dataSet, dataSetBicycle, turnoIdEntry } = states;
   const isFocused = useIsFocused();
   const [selectedTab, setSelectedTab] = useState("vehicles");
   const [page, setPage] = useState(0);
@@ -33,7 +33,7 @@ const ListVehicle = () => {
     if (isFocused) {
       reloadData();
     }
-  }, [isFocused]);
+  }, [isFocused, turnoIdEntry]);
   // Mapeo de autos
   // Después
   const mappedVehicles = Array.isArray(dataSet)

@@ -91,11 +91,19 @@ const VehicleDetailCard = () => {
       // 🧠 Determinar si el producto requiere mostrar vigencia
       const nombreProducto = ticketRes.data.nombreProducto;
       const requiereVigencia = nombreProducto !== "Horas" && nombreProducto !== "GOLD";
+      const esMensualidad = nombreProducto.includes("Mensualidad");
+      const esVIP = nombreProducto.includes("VIP");
 
       // 📏 Tamaño dinámico del ticket
       const pageWidth = 130;
-      const pageHeight = requiereVigencia ? 205 : 185; // +20 pts si hay vigencia
-      console.log(`🧾 Altura del ticket de entrada: ${pageHeight} (${requiereVigencia ? 'con vigencia' : 'sin vigencia'})`);
+      //const pageHeight = requiereVigencia ? 205 : 185; // +20 pts si hay vigencia
+      //console.log(`🧾 Altura del ticket de entrada: ${pageHeight} (${requiereVigencia ? 'con vigencia' : 'sin vigencia'})`);
+
+      let pageHeight = 185;
+
+      const requireMensajeVigencia = esMensualidad || esVIP;
+      if (requireMensajeVigencia) pageHeight += 25;
+      console.log(`🧾 Altura del ticket de entrada: ${pageHeight} (${requireMensajeVigencia ? 'con mensaje de vigencia' : 'sin mensaje de vigencia'})`);
 
       // 🧾 Crear documento
       const pdfDoc = await PDFDocument.create();
@@ -205,7 +213,7 @@ const VehicleDetailCard = () => {
       }
 
       // 🔹 Mostrar vigencia solo si aplica
-      if (requiereVigencia) {
+      if (esMensualidad || esVIP) {
         const vigenciaFin = await getVigenciaFin(ticketRes.data.plate, turnId);
         console.log("📅 Resultado de vigenciaFin:", vigenciaFin);
 
@@ -216,8 +224,16 @@ const VehicleDetailCard = () => {
           const [year, month, day] = onlyDate.split('-');
           const fechaVigencia = `${day}/${month}/${year}`;
 
-          const mensajeVigencia = `Placa ${ticketRes.data.plate} tiene mensualidad en este parqueadero vigente hasta ${fechaVigencia}`;
-          wrapAndCenter(mensajeVigencia, helv, S.date, width - 2 * M);
+          let mensaje;
+
+          if (esVIP) {
+            mensaje = `Placa ${ticketRes.data.plate} tiene VIP vigente hasta: ${fechaVigencia}`;
+          } else {
+            mensaje = `Placa ${ticketRes.data.plate} tiene mensualidad en este parqueadero vigente hasta: ${fechaVigencia}`;
+          }
+          
+          wrapAndCenter(mensaje, helv, S.date, width - 2 * M);
+          y -= 5;
         }
       }
 

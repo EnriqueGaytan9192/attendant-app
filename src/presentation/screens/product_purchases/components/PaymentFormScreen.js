@@ -1,9 +1,9 @@
-import { Button, Card, Checkbox, Divider, Text, TextInput } from "react-native-paper";
-import styles from "../styles/stylesPaymentForm";
-import { Alert, ScrollView, TouchableOpacity, View } from "react-native";
-import usePaymentForm from "../hooks/usePaymentFormScreenHook";
 import { useEffect, useState } from "react";
+import { Alert, ScrollView, TouchableOpacity, View } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
+import { Button, Card, Checkbox, Divider, Text, TextInput } from "react-native-paper";
+import usePaymentForm from "../hooks/usePaymentFormScreenHook";
+import styles from "../styles/stylesPaymentForm";
 
 const PaymentFormScreen = ({ month, onBack }) => {
   const {
@@ -142,8 +142,14 @@ const PaymentFormScreen = ({ month, onBack }) => {
                       value={selectedDocumentType}
                       onChange={(item) => {
                         setSelectedDocumentType(item.value);
-                        setTypeDocumentSelected(false)
+                        setTypeDocumentSelected(false);
                         setTypeDocument("");
+
+                        const code = getDocumentTypeCode(item.value);
+
+                        if (code === 'NIT') {
+                          setApellidos('');
+                        }
                       }}
                     />
                     <View style={{ flexDirection: 'column', flex: 1 }}>
@@ -197,8 +203,17 @@ const PaymentFormScreen = ({ month, onBack }) => {
                         onChangeText={text => {
                           const noLeadingSpaces = text.replace(/^\s+/, '');
 
-                          // Permite letras, números, espacios, puntos, guiones y diagonales
-                          const filtered = noLeadingSpaces.replace(/[^\p{L}\p{N}\s\.\-\/]/gu, '');
+                          let filtered = '';
+
+                          if (documentTypeCode === 'CC') {
+                            // Solo letras y espacios (con acentos)
+                            filtered = noLeadingSpaces.replace(/[^\p{L}\s]/gu, '');
+                          } else if (documentTypeCode === 'NIT') {
+                            // Letras, números y caracteres comunes de razón social
+                            filtered = noLeadingSpaces.replace(/[^\p{L}\p{N}\s\.\-&\/]/gu, '');
+                          } else {
+                            filtered = noLeadingSpaces;
+                          }
 
                           setNombre(filtered);
                         }}
@@ -214,16 +229,17 @@ const PaymentFormScreen = ({ month, onBack }) => {
                       //onChangeText={setApellidos}
                       //onChangeText={text => setApellidos(text.replace(/^\s+/, ''))}
                       onChangeText={text => {
-                        const noLeadingSpaces = text.replace(/^\s+/, '');
+                        if (documentTypeCode !== 'CC') return;
 
-                        const filtered = noLeadingSpaces.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '');
+                        const noLeadingSpaces = text.replace(/^\s+/, '');
+                        const filtered = noLeadingSpaces.replace(/[^\p{L}\s]/gu, '');
 
                         setApellidos(filtered);
                       }}
-
                       theme={{ colors: { outline: "#E5E5E5", primary: "#90D400" } }}
                       style={[styles.textInputThree, { marginTop: 5 }]}
                       keyboardType="default"
+                      disabled={documentTypeCode === 'NIT'}
                     />
                   </View>
                 </View>
@@ -493,8 +509,7 @@ const PaymentFormScreen = ({ month, onBack }) => {
 
             <Button
               mode="contained"
-              onPress={procesarHandleSubmit
-              }
+              onPress={procesarHandleSubmit}
               style={styles.continueButton}
               loading={isSubmitting}
               disabled={isSubmitting || formHasErrors}

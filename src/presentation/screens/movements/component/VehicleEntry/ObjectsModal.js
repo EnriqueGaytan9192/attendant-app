@@ -284,8 +284,8 @@ const ObjectsModal = ({ onFinish }) => {
                         <Button mode="outlined" onPress={onCloseModal} style={styles.cancelButton}>Cancelar</Button>
                         <Button mode="contained" onPress={nextStep} disabled={
                             name.trim() === "" ||
-                            identificationNumber.trim() === "" ||
-                            !/^[1-9][0-9]*$/.test(identificationNumber.trim()) ||
+                            identificationNumber.trim().length < 5 ||
+                            !/^[1-9][0-9]{4,}$/.test(identificationNumber.trim()) ||
                             objectsList.length === 0
                         } style={styles.continueButton}>Continuar</Button>
                     </View>

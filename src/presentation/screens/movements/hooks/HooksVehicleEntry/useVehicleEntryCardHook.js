@@ -330,7 +330,7 @@ const useVehicleEntryCardHook = () => {
       if (!excludedParqueaderosGoPass.includes(parqueaderoId)) {
         try {
           const gopassResponse = await fetch(
-            `https://2uj5iipka9.execute-api.us-east-1.amazonaws.com/dev/gopass/rest/main/getPlacasGopass/${plateRegister}/999`
+            `https://2uj5iipka9.execute-api.us-east-1.amazonaws.com/dev/gopass/rest/main/getPlacasGopass/${plateRegister}/50`
           );
 
           const gopassJson = await gopassResponse.json();

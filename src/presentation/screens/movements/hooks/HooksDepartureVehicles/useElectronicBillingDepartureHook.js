@@ -101,16 +101,16 @@ const useElectronicBillingDepartureHook = () => {
           setIsAuthorized(true); // ✅ documento validado
         } else {
           setUserInfo(null);
+          setIsAuthorized(false);
           dispatch(setElectronicInvoiceNit(nitCedula));
           dispatch(showElectronicInvoiceModal(true));
-          setIsAuthorized(true); // ✅ igual marcamos como validado (abrirá modal para crear factura)
         }
       })
       .catch(() => {
         setUserInfo(null);
+        setIsAuthorized(false);
         dispatch(setElectronicInvoiceNit(nitCedula));
         dispatch(showElectronicInvoiceModal(true));
-        setIsAuthorized(true); // ✅ también validado aunque no exista
       });
   };
 

@@ -1,24 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { View, Image, TouchableOpacity, Alert } from "react-native";
-import { Card, DataTable, Icon, Text, TextInput } from "react-native-paper";
-import QRCodeScanner from "./QRScanner";
-import styles from "../../styles/styleVehicleEntry/stylesVehicleList";
-import useVehicleListCardHook from "../../hooks/HooksVehicleEntry/useVehicleListCardHook";
+import { MaterialIcons } from "@expo/vector-icons";
+import { useEffect, useState } from "react";
+import { Alert, Image, TouchableOpacity, View } from "react-native";
+import { Card, DataTable, Text, TextInput } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { setAlertMessage } from "../../../../../state/slices/movementsSlice";
-import { MaterialIcons } from "@expo/vector-icons"
+import useVehicleListCardHook from "../../hooks/HooksVehicleEntry/useVehicleListCardHook";
+import styles from "../../styles/styleVehicleEntry/stylesVehicleList";
+import QRCodeScanner from "./QRScanner";
 
 const StatusIcon = ({ stateTransaction }) => {
-  const alertMessageQr = useSelector((state) => state.movements.alertMessageQr);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (alertMessageQr) {
-      Alert.alert("No encontrado", alertMessageQr, [{ text: "OK", onPress: () => dispatch(setAlertMessage("")) }]);
-    }
-  }, [alertMessageQr]);
-
-
   switch (stateTransaction) {
     case 0: return <Image source={require("../../../../../assets/images/active.png")} />;
     case 1: return null;
@@ -67,6 +57,20 @@ const VehicleListCard = () => {
   const from = page * itemsPerPage;
   const to = Math.min((page + 1) * itemsPerPage, filteredVehicles.length);
   const paginatedVehicles = filteredVehicles.slice(from, to);
+
+  const alertMessageQr = useSelector((state) => state.movements.alertMessageQr);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (alertMessageQr) {
+      Alert.alert(
+        "Tiquete no encontrado",
+        alertMessageQr,
+        [{ text: "OK", onPress: () => dispatch(setAlertMessage("")) }],
+        { cancelable: false }
+      );
+    }
+  }, [alertMessageQr]);
 
   return (
     <Card style={styles.card}>
@@ -186,9 +190,9 @@ const VehicleListCard = () => {
             visible={scannerVisibleParking}
             onClose={() => toggleScanner(false)}
             onScan={(data) => {
-                      handleScan(data);
-                      toggleScanner(false);
-                    }}
+              handleScan(data);
+              toggleScanner(false);
+            }}
           />
         )}
       </Card.Content>

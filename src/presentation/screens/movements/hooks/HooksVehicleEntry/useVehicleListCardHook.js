@@ -66,14 +66,18 @@ const useVehicleListCardHook = () => {
   useEffect(() => {
     if (!turnId) return;
 
+    let intervalTime = 5000;
+
+    if (selectedVehicle) {
+      intervalTime = 2000;
+    }
+
     const intervalId = setInterval(() => {
       refetch();
-    }, 5000);
+    }, intervalTime);
 
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, [turnId]);
+    return () => clearInterval(intervalId);
+  }, [turnId, selectedVehicle]);
 
   /*const { data: autos, refetch: refetchAutos } = useFetch(`/api/vehiclesActive/1/turnId/${turnoIdPrueba}/facilitie/${parqueaderoId}`, 'GET', {});
   const { data: motos, refetch: refetchMotos } = useFetch(`/api/vehiclesActive/2/turnId/${turnoIdPrueba}/facilitie/${parqueaderoId}`, 'GET', {});

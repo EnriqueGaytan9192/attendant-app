@@ -286,7 +286,7 @@ const useOpenTurnHook = () => {
 
                 if (!excludedParqueaderosGoPass.includes(parqueaderoId)) {
                     const gopassResponse = await fetch(
-                        `https://2uj5iipka9.execute-api.us-east-1.amazonaws.com/dev/gopass/rest/main/getPlacasGopass/${plateValue}/999`
+                        `https://2uj5iipka9.execute-api.us-east-1.amazonaws.com/dev/gopass/rest/main/getPlacasGopass/${plateValue}/50`
                     );
                     const gopassJson = await gopassResponse.json();
                     const mensajeGoPass = gopassJson?.mensaje || "";

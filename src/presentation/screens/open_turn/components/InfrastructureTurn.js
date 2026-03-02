@@ -43,7 +43,7 @@ const InfrastructureTurn = () => {
                             />
                             <View style={stylesInfrastructureTurn.textContainer}>
                                 <Text style={stylesInfrastructureTurn.textTitle}>Apertura de Turno</Text>
-                                <Text style={stylesInfrastructureTurn.textSubtitle}>Bienvenid@ al registro de apertura de turn</Text>
+                                <Text style={stylesInfrastructureTurn.textSubtitle}>Bienvenid@ al registro de apertura de turno.</Text>
                             </View>
                         </View>
                         <View style={stylesInfrastructureTurn.greenLine} />
