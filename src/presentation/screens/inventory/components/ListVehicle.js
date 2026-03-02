@@ -1,3 +1,4 @@
+
 import { useIsFocused } from '@react-navigation/native';
 import { useEffect, useState } from "react";
 import { Image, ScrollView, TouchableOpacity, View } from "react-native";
@@ -8,8 +9,12 @@ import {
   Text,
   TextInput,
 } from "react-native-paper";
+import CustomDropdown from '../../../../common/components/CustomDropdown';
 import useInventoryHook from "../hooks/useInventoryHook";
 import styles from "../styles/listVehicle";
+
+// Declarar fuera del componente para evitar nueva referencia en cada render
+const numberOfItemsPerPageList = [5, 10, 15];
 
 const ListVehicle = () => {
   const { functions, states } = useInventoryHook();
@@ -26,7 +31,6 @@ const ListVehicle = () => {
   const isFocused = useIsFocused();
   const [selectedTab, setSelectedTab] = useState("vehicles");
   const [page, setPage] = useState(0);
-  const numberOfItemsPerPageList = [5, 10, 15];
   const [itemsPerPage, setItemsPerPage] = useState(numberOfItemsPerPageList[0]);
 
   useEffect(() => {
@@ -34,31 +38,36 @@ const ListVehicle = () => {
       reloadData();
     }
   }, [isFocused, turnoIdEntry]);
-  // Mapeo de autos
-  // Después
+
+  // Mapeo y orden descendente de autos
   const mappedVehicles = Array.isArray(dataSet)
-    ? dataSet.map((item) => ({
-      id: item.id,
-      inventoryDate: new Date(item.fechaIngreso).toLocaleString(),
-      entryDate: new Date(item.horaIngreso).toLocaleString(),
-      plate: item.placa,
-      type: item.tipoVehiculo === 1 ? "Carro" : "Moto",
-      status: item.estadoVehiculo === 1 ? "Activo" : "Inactivo",
-    }))
+    ? dataSet
+        .map((item) => ({
+          id: item.id,
+          inventoryDate: new Date(item.fechaIngreso).toLocaleString(),
+          entryDate: new Date(item.horaIngreso).toLocaleString(),
+          plate: item.placa,
+          type: item.tipoVehiculo === 1 ? "Carro" : "Moto",
+          status: item.estadoVehiculo === 1 ? "Activo" : "Inactivo",
+          _sortDate: new Date(item.fechaIngreso).getTime(),
+        }))
+        .sort((a, b) => b._sortDate - a._sortDate)
     : [];
 
-
-  // Mapeo de bicis
+  // Mapeo y orden descendente de bicis
   const mappedBikes = Array.isArray(dataSetBicycle)
-    ? dataSetBicycle.map((item) => ({
-      id: item.id,
-      inventoryDate: new Date(item.fechaHoraInventario).toLocaleString(),
-      entryDate: new Date(item.fechaHoraIngreso).toLocaleString(),
-      plate: item.placa,
-      type: "Bicicleta",
-      status: item.estadoVehiculo === 1 ? "Activo" : "Inactivo",
-      editado: item.editado
-    }))
+    ? dataSetBicycle
+        .map((item) => ({
+          id: item.id,
+          inventoryDate: new Date(item.fechaHoraInventario).toLocaleString(),
+          entryDate: new Date(item.fechaHoraIngreso).toLocaleString(),
+          plate: item.placa,
+          type: "Bicicleta",
+          status: item.estadoVehiculo === 1 ? "Activo" : "Inactivo",
+          editado: item.editado,
+          _sortDate: new Date(item.fechaHoraInventario).getTime(),
+        }))
+        .sort((a, b) => b._sortDate - a._sortDate)
     : [];
 
   console.log("mappedVehicles", mappedVehicles);
@@ -75,6 +84,10 @@ const ListVehicle = () => {
       item.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.status.toLowerCase().includes(searchQuery.toLowerCase())
   );
+  // Reiniciar la página cuando cambia el número de items por página
+  useEffect(() => {
+    setPage(0);
+  }, [itemsPerPage]);
 
   const from = page * itemsPerPage;
   const to = Math.min((page + 1) * itemsPerPage, filteredData.length);
@@ -281,19 +294,53 @@ const ListVehicle = () => {
                 )}
               </DataTable>
 
-              {/* Paginación */}
-              <DataTable.Pagination
-                style={{ justifyContent: "center" }}
-                page={page}
-                numberOfPages={Math.ceil(filteredData.length / itemsPerPage)}
-                onPageChange={(newPage) => setPage(newPage)}
-                label={`${from + 1}-${to} de ${filteredData.length}`}
-                numberOfItemsPerPageList={numberOfItemsPerPageList}
-                numberOfItemsPerPage={itemsPerPage}
-                onItemsPerPageChange={setItemsPerPage}
-                showFastPaginationControls
-                selectPageDropdownLabel="Items por página:"
-              />
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  width: "50%",
+                  marginTop: 10,
+                  marginLeft: 270,
+                }}
+              >
+
+                {/* Items por página */}
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginRight: 20,
+                  }}
+                >
+                  <Text style={{ marginRight: 8 }}>Items por página:</Text>
+                  <CustomDropdown
+                    data={numberOfItemsPerPageList.map(num => ({
+                      label: String(num),
+                      value: num
+                    }))}
+                    value={itemsPerPage}
+                    onChange={setItemsPerPage}
+                    style={{ width: 80 }}
+                    variant="table"
+                  />
+                </View>
+
+                {/* Paginación */}
+                <DataTable.Pagination
+                  style={{
+                    flex: 1,              // 🔥 CLAVE
+                    alignItems: "center", // centra contenido interno
+                  }}
+                  page={page}
+                  numberOfPages={Math.ceil(filteredData.length / itemsPerPage)}
+                  onPageChange={setPage}
+                  label={`${from + 1}-${to} de ${filteredData.length}`}
+                  numberOfItemsPerPage={itemsPerPage}
+                  selectPageDropdownLabel=""
+                  showFastPaginationControls
+                />
+
+              </View>
             </View>
           </Card.Content>
         </Card>
